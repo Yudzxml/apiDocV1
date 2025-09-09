@@ -8,11 +8,13 @@
   "servers": [
     { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
   ],
-  "tags": [
-    { "name": "SEARCH", "description": "Semua API Search dari berbagai platform" },
-    { "name": "DOWNLOAD", "description": "API khusus download berbagai platform" },
-    { "name": "TOOLS", "description": "API tools berbagai platform" }
-  ],
+"tags": [
+  { "name": "SEARCH", "description": "API pencarian lintas platform yang handal" },
+  { "name": "DOWNLOAD", "description": "API unduh cepat dan stabil dari berbagai sumber" },
+  { "name": "TOOLS", "description": "API utilitas lengkap untuk berbagai kebutuhan" },
+  { "name": "ISLAMIC",
+  "description": "API Islami: Al-Qur'an, surah, ayat, doa, dzikir, dan konten keagamaan lainnya" }
+],
   "paths": {
     "/api/xnxx": {
       "get": {
@@ -168,6 +170,67 @@
     }
   }
 },
+    "/api/download/ytdl": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "YouTube Video Downloader",
+    "description": "Ambil video atau audio YouTube berdasarkan URL. Parameter `url` wajib diisi, `format`. Contoh request: `https://api-yudzxzy.vercel.app/api/download/ytdl?url=https://youtube.com/watch?v=-BiVicL1QmU&format=mp3`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video YouTube yang ingin diunduh (WAJIB diisi)",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://youtube.com/watch?v=-BiVicL1QmU"
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Format file yang diinginkan, 'video' atau 'audio' (opsional, default audio)",
+        "schema": {
+          "type": "string",
+          "example": "mp3",
+          "enum": ["mp3", "mp4"]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "result": {
+                "title": "Duka - Last Child ( Afiq Adnan Cover )",
+                "type": "audio",
+                "format": "mp3",
+                "thumbnail": "https://i.ytimg.com/vi_webp/-BiVicL1QmU/maxresdefault.webp",
+                "download": "https://cdn401.savetube.su/media/-BiVicL1QmU/duka-last-child-afiq-adnan-cover-128-ytshorts.savetube.me.mp3",
+                "id": "-BiVicL1QmU",
+                "key": "b7578288bf22c2874e051c02380453f4c6e72b8c",
+                "duration": 249,
+                "quality": "128",
+                "downloaded": false
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter kurang atau URL tidak valid" },
+      "404": { "description": "Video tidak ditemukan" }
+    }
+  }
+},
     "/api/tools/speechtotext": {
       "get": {
         "tags": ["TOOLS"],
@@ -194,6 +257,984 @@
         ],
         "responses": { "200": { "description": "Berhasil diambil" }, "400": { "description": "Parameter tidak valid" }, "404": { "description": "APK tidak ditemukan" } }
       }
+    },
+    "/api/surah": {
+  "get": {
+    "tags": ["ISLAMIC"],
+    "summary": "Ambil Surah Al-Qur'an",
+    "description": "Mengambil surah Al-Qur'an beserta arti dan ayat-ayatnya. Parameter `q` wajib diisi dengan nomor surah.\n\nContoh request: `https://api.yudzxyz.x-server.my.id/api/surah?q=1`",
+    "servers": [
+      { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Nomor surah yang ingin diambil (1 - 114)",
+        "schema": {
+          "type": "integer",
+          "example": 1,
+          "minimum": 1,
+          "maximum": 114
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil surah",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "surah": "Al-Fātiḥah",
+              "arti_surah": "Pembuka",
+              "ayat": [
+                {
+                  "ayat": 1,
+                  "arab": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
+                  "latin": "Bismillāhir-raḥmānir-raḥīm(i).",
+                  "terjemahan": "Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang."
+                },
+                {
+                  "ayat": 2,
+                  "arab": "اَلْحَمْدُ لِلّٰهِ رَبِّ الْعٰلَمِيْنَۙ",
+                  "latin": "Al-ḥamdu lillāhi rabbil-‘ālamīn(a).",
+                  "terjemahan": "Segala puji bagi Allah, Tuhan semesta alam"
+                },
+                {
+                  "ayat": 3,
+                  "arab": "الرَّحْمٰنِ الرَّحِيْمِۙ",
+                  "latin": "Ar-raḥmānir-raḥīm(i).",
+                  "terjemahan": "Yang Maha Pengasih lagi Maha Penyayang,"
+                },
+                {
+                  "ayat": 4,
+                  "arab": "مٰلِكِ يَوْمِ الدِّيْنِۗ",
+                  "latin": "Māliki yaumid-dīn(i).",
+                  "terjemahan": "Pemilik hari Pembalasan."
+                },
+                {
+                  "ayat": 5,
+                  "arab": "اِيَّاكَ نَعْبُدُ وَاِيَّاكَ نَسْتَعِيْنُۗ",
+                  "latin": "Iyyāka na‘budu wa iyyāka nasta‘īn(u),",
+                  "terjemahan": "Hanya kepada Engkaulah kami menyembah dan hanya kepada Engkaulah kami memohon pertolongan."
+                },
+                {
+                  "ayat": 6,
+                  "arab": "اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَۙ",
+                  "latin": "Ihdinaṣ-ṣirāṭal-mustaqīm(a).",
+                  "terjemahan": "Bimbinglah kami ke jalan yang lurus,"
+                },
+                {
+                  "ayat": 7,
+                  "arab": "صِرَاطَ الَّذِيْنَ اَنْعَمْتَ عَلَيْهِمْ ەۙ غَيْرِ الْمَغْضُوْبِ عَلَيْهِمْ وَلَا الضَّاۤلِّيْنَ ࣖ",
+                  "latin": "Ṣirāṭal-lażīna an‘amta ‘alaihim, gairil-magḍūbi ‘alaihim wa laḍ-ḍāllīn(a).",
+                  "terjemahan": "(yaitu) jalan orang-orang yang telah Engkau beri nikmat, bukan mereka yang dimurkai dan bukan pula yang sesat."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter `q` kurang atau tidak valid" },
+      "404": { "description": "Surah tidak ditemukan" }
     }
+  }
+},
+    "/api/tools/check-host": {
+  "get": {
+    "tags": ["TOOLS"],
+    "summary": "Cek status host/domain",
+    "description": "Memeriksa status host atau domain menggunakan tipe koneksi tertentu. Tipe yang tersedia: `ping`, `http`, `udp`, `tcp`, `info`.\n\nContoh request: `https://api-yudzxzy.vercel.app/api/tools/check-host?host=example.com&type=http`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "host",
+        "in": "query",
+        "required": true,
+        "description": "Host atau domain yang ingin diperiksa",
+        "schema": {
+          "type": "string",
+          "example": "https://api-yudzxzy.vercel.app"
+        }
+      },
+      {
+        "name": "type",
+        "in": "query",
+        "required": true,
+        "description": "Tipe pengecekan host: ping, http, udp, tcp, info",
+        "schema": {
+          "type": "string",
+          "example": "http",
+          "enum": ["ping", "http", "udp", "tcp", "info"]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Host berhasil diperiksa",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "host": "example.com",
+              "type": "http",
+              "online": true,
+              "responseTime": "123ms",
+              "info": "Host aktif dan merespon HTTP"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter `host` atau `type` kurang / tidak valid" },
+      "404": { "description": "Host tidak ditemukan" }
+    }
+  }
+},
+"/api/search/jadwalshalat": {
+  "get": {
+    "tags": ["ISLAMIC"],
+    "summary": "Jadwal Shalat Harian",
+    "description": "Mengambil jadwal shalat harian berdasarkan kota. Parameter `kota` wajib diisi.\n\nContoh request: `https://api-yudzxzy.vercel.app/api/search/jadwalshalat?kota=Karimun`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "kota",
+        "in": "query",
+        "required": true,
+        "description": "Nama kota untuk jadwal shalat",
+        "schema": {
+          "type": "string",
+          "example": "Karimun"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil jadwal shalat",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "kota": "Karimun",
+              "periode": "September 2025",
+              "jadwal": {
+                "Tanggal": "09",
+                "Imsyak": "04:36",
+                "Shubuh": "04:46",
+                "Terbit": "05:59",
+                "Dhuha": "06:23",
+                "Dzuhur": "12:06",
+                "Ashr": "15:15",
+                "Maghrib": "18:10",
+                "Isya": "19:19"
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter `kota` kurang atau tidak valid" },
+      "404": { "description": "Jadwal shalat tidak ditemukan" }
+    }
+  }
+},
+"/api/remini": {
+  "get": {
+    "tags": ["TOOLS"],
+    "summary": "AI Image Processing (Remini)",
+    "description": "Memproses gambar menggunakan AI. Parameter `url` wajib diisi dengan URL gambar, dan `tools` menentukan jenis pemrosesan.\n\nTools yang tersedia: `enhance`, `upscale`, `removebg`, `restore`, `colorize`.\n\nContoh request: `https://api-yudzxml.koyeb.app/api/remini?url=https://example.com/image.jpg&tools=enhance`",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar yang ingin diproses",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://example.com/image.jpg"
+        }
+      },
+      {
+        "name": "tools",
+        "in": "query",
+        "required": true,
+        "description": "Jenis pemrosesan gambar AI",
+        "schema": {
+          "type": "string",
+          "example": "enhance",
+          "enum": ["enhance", "upscale", "removebg", "restore", "colorize"]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Gambar berhasil diproses",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "tools": "enhance",
+              "original_url": "https://example.com/image.jpg",
+              "result_url": "https://cdn.example.com/result/enhanced-image.jpg"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter `url` atau `tools` kurang / tidak valid" },
+      "404": { "description": "Gambar tidak ditemukan" }
+    }
+  }
+},
+"/api/search/komiku": {
+  "get": {
+    "tags": ["SEARCH"],
+    "summary": "Komiku API - Satu endpoint untuk semua fitur",
+    "description": "Satu endpoint untuk mengambil data dari Komiku. Gunakan parameter `action` untuk menentukan jenis data yang diambil:\n\n- `populer` → daftar komik populer (`page` opsional)\n- `genre` → daftar atau filter komik berdasarkan genre (`genre` + `page` opsional)\n- `chapter` → daftar chapter dari URL komik (`url` wajib)\n- `detail` → detail komik dari URL (`url` wajib)\n- `search` → mencari komik berdasarkan query (`query` wajib)\n- `latest` → komik terbaru (`page` opsional)\n\nContoh request: `https://api-yudzxzy.vercel.app/api/search/komiku?action=populer&page=1`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "action",
+        "in": "query",
+        "required": true,
+        "description": "Jenis aksi Komiku: populer, genre, chapter, detail, search, latest",
+        "schema": {
+          "type": "string",
+          "example": "populer",
+          "enum": ["populer", "genre", "chapter", "detail", "search", "latest"]
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Nomor halaman untuk paging (opsional, digunakan untuk populer, genre, latest)",
+        "schema": {
+          "type": "integer",
+          "example": 1,
+          "minimum": 1
+        }
+      },
+      {
+        "name": "genre",
+        "in": "query",
+        "required": false,
+        "description": "Filter genre (opsional, digunakan saat action=genre)",
+        "schema": {
+          "type": "string",
+          "example": "shonen"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "required": false,
+        "description": "URL komik (diperlukan untuk action=chapter/detail)",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://komiku.example/komik-a"
+        }
+      },
+      {
+        "name": "query",
+        "in": "query",
+        "required": false,
+        "description": "Kata kunci pencarian komik (diperlukan untuk action=search)",
+        "schema": {
+          "type": "string",
+          "example": "naruto"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil data Komiku sesuai action",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "author": "Yudzxml",
+              "action": "populer",
+              "page": 1,
+              "data": [
+                { "title": "Komik A", "genre": "Shonen", "url": "https://komiku.example/komik-a" },
+                { "title": "Komik B", "genre": "Shojo", "url": "https://komiku.example/komik-b" }
+              ],
+              "available_genres": ["Shonen", "Shojo", "Seinen", "Josei", "Action", "Romance", "Comedy"]
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter kurang atau tidak valid" },
+      "404": { "description": "Data tidak ditemukan" }
+    }
+  }
+},
+"/api/download/soundcloud": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "SoundCloud Downloader",
+    "description": "Mengunduh atau mencari musik dari SoundCloud. Gunakan parameter `search` untuk mencari lagu, atau `download` untuk mengunduh lagu dari URL.\n\nContoh request search: `https://api-yudzxzy.vercel.app/api/download/soundcloud?search=track name`\nContoh request download: `https://api-yudzxzy.vercel.app/api/download/soundcloud?download=https://soundcloud.com/artist/track`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "description": "Kata kunci lagu yang ingin dicari di SoundCloud",
+        "schema": {
+          "type": "string",
+          "example": "Lost Frequencies - Are You With Me"
+        }
+      },
+      {
+        "name": "download",
+        "in": "query",
+        "required": false,
+        "description": "URL SoundCloud dari lagu yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://soundcloud.com/artist/track"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil melakukan pencarian atau unduhan lagu",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "type": "search",
+              "query": "Lost Frequencies - Are You With Me",
+              "results": [
+                {
+                  "title": "Are You With Me",
+                  "artist": "Lost Frequencies",
+                  "url": "https://soundcloud.com/lostfrequencies/are-you-with-me",
+                  "duration": "3:25"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter search atau download kurang / tidak valid" },
+      "404": { "description": "Lagu tidak ditemukan" }
+    }
+  }
+},
+"/api/search/lirik": {
+  "get": {
+    "tags": ["SEARCH"],
+    "summary": "Cari Lirik Lagu",
+    "description": "Mencari lirik lagu berdasarkan kata kunci.\n\nContoh request: `https://api-yudzxzy.vercel.app/api/search/lirik?query=Shape%20of%20You`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "query",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci judul lagu atau artis",
+        "schema": {
+          "type": "string",
+          "example": "Shape of You"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menemukan lirik lagu",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "query": "Shape of You",
+              "result": {
+                "title": "Shape of You",
+                "artist": "Ed Sheeran",
+                "lyrics": "The club isn't the best place to find a lover...\n"
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter query kurang atau tidak valid" },
+      "404": { "description": "Lirik lagu tidak ditemukan" }
+    }
+  }
+},
+"/api/download/pindl": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "Pindl Downloader",
+    "description": "Mengunduh file atau media dari Pindl. Gunakan parameter `url` untuk URL file yang ingin diunduh.\n\nContoh request: `https://api-yudzxzy.vercel.app/api/download/pindl?url=https%3A%2F%2Fpindl.example.com%2Ffile123`",
+    "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL file atau media yang ingin diunduh dari Pindl",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://pindl.example.com/file123"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mengambil file dari Pindl",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "original_url": "https://pindl.example.com/file123",
+              "download_url": "https://cdn.example.com/pindl/file123.mp4"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter `url` kurang atau tidak valid" },
+      "404": { "description": "File tidak ditemukan" }
+    }
+  }
+},
+"/api/ytdlv2": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "YouTube Video Downloader (dengan fallback API)",
+    "description": "Mengunduh video YouTube dengan berbagai resolusi.\n\nGunakan parameter `url` untuk URL video, dan `quality` untuk resolusi.\nResolusi yang tersedia: 360, 480, 720, 1080, 1440, 4k.\n\nAPI akan mencoba API utama terlebih dahulu, jika gagal menggunakan fallback API.",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video YouTube yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://youtube.com/watch?v=8zwz2fVgfVM"
+        }
+      },
+      {
+        "name": "quality",
+        "in": "query",
+        "required": true,
+        "description": "Resolusi video yang diinginkan",
+        "schema": {
+          "type": "string",
+          "example": "low",
+          "enum": ["low", "medium", "hd", "fullHd", "hdHigh", "ultraHd"]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video berhasil diunduh",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "url": "https://cdn.example.com/video/8zwz2fVgfVM_low.mp4",
+              "quality": "low",
+              "format": "mp4",
+              "message": "Video berhasil diunduh menggunakan API utama/fallback"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter url atau quality kurang / tidak valid" },
+      "404": { "description": "Video tidak ditemukan" },
+      "500": { "description": "Gagal mengunduh video dari API utama dan fallback" }
+    }
+  }
+},
+"/api/tiktok": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "TikTok Video Downloader",
+    "description": "Mengunduh video TikTok dari URL yang diberikan.\n\nContoh request: `https://api.yudzxyz.x-server.my.id/api/tiktok?url=https%3A%2F%2Fwww.tiktok.com%2F@user%2Fvideo%2F1234567890`",
+    "servers": [
+      { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video TikTok yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://www.tiktok.com/@user/video/1234567890"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video TikTok berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "title": "Contoh Video TikTok",
+              "downloadUrl": "https://cdn.example.com/tiktok/video1234567890.mp4",
+              "duration": 15,
+              "message": "Video berhasil diunduh"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter url kurang atau tidak valid" },
+      "404": { "description": "Video tidak ditemukan" },
+      "500": { "description": "Gagal mengunduh video TikTok" }
+    }
+  }
+},
+"/api/enc": {
+  "post": {
+    "tags": ["TOOLS"],
+    "summary": "Obfuscate code via file upload",
+    "description": "Mengubah kode menjadi versi yang ter-obfuscate melalui file upload.\n\nGunakan form-data dengan key `file` untuk mengunggah file JavaScript.",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "format": "binary",
+                "description": "File JavaScript yang ingin di-obfuscate"
+              }
+            },
+            "required": ["file"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Kode berhasil di-obfuscate",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "obfuscatedCode": "var _0x1234 = '...'; console.log(_0x1234);",
+              "message": "Kode berhasil di-obfuscate"
+            }
+          }
+        }
+      },
+      "400": { "description": "File tidak disertakan atau format tidak valid" },
+      "500": { "description": "Gagal memproses obfuscate kode" }
+    }
+  },
+  "get": {
+    "tags": ["TOOLS"],
+    "summary": "Obfuscate code via query parameter",
+    "description": "Mengubah kode menjadi versi yang ter-obfuscate melalui query parameter `code`.\n\nContoh request: `https://api-yudzxml.koyeb.app/api/enc?code=console.log(\"Hello World\")`",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "code",
+        "in": "query",
+        "required": true,
+        "description": "Kode JavaScript yang ingin di-obfuscate",
+        "schema": {
+          "type": "string",
+          "example": "console.log('Hello World');"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Kode berhasil di-obfuscate",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "obfuscatedCode": "var _0x1234 = '...'; console.log(_0x1234);",
+              "message": "Kode berhasil di-obfuscate"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter code tidak disertakan" },
+      "500": { "description": "Gagal memproses obfuscate kode" }
+    }
+  }
+},
+"/api/ytsearch": {
+  "get": {
+    "tags": ["SEARCH"],
+    "summary": "YouTube Search",
+    "description": "Mencari video YouTube berdasarkan kata kunci. Gunakan parameter `query` untuk kata kunci atau URL YouTube.",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "query",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian atau URL video YouTube",
+        "schema": {
+          "type": "string",
+          "example": "duka"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Hasil pencarian video YouTube",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "results": [
+                {
+                  "title": "Duka - Last Child (Afiq Adnan Cover)",
+                  "url": "https://youtube.com/watch?v=-BiVicL1QmU",
+                  "duration": "4:09",
+                  "thumbnail": "https://i.ytimg.com/vi_webp/-BiVicL1QmU/maxresdefault.webp"
+                },
+                {
+                  "title": "Duka - Last Child (Official Video)",
+                  "url": "https://youtube.com/watch?v=xxxxxxx",
+                  "duration": "4:15",
+                  "thumbnail": "https://i.ytimg.com/vi_webp/xxxxxxx/maxresdefault.webp"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter query tidak disertakan" },
+      "404": { "description": "Video tidak ditemukan" },
+      "500": { "description": "Terjadi kesalahan server saat mencari video" }
+    }
+  }
+},
+"/api/aio": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "AIO Video Downloader",
+    "description": "Mengunduh video dari berbagai platform menggunakan satu endpoint. Gunakan parameter `url` untuk URL video.",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video dari platform apa pun (misal TikTok, Instagram, dll.)",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://vt.tiktok.com/ZSDJ4Uayx/"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": [
+                {
+                  "title": "😋😋",
+                  "thumbnail": "https://on4t.com/storage/downloads/1757434316-8Vk5WniDdk.png",
+                  "video_file_url": "https://v3.tiktokcdn.com/1e22b5e34b5f4766bd6975b875b9181e/68c1a369/video/tos/alisg/tos-alisg-pve-0037c001/oMCa07SJDIlbGf6EAsFgQXR9tBfqoDBQEag2Ev/?a=1233...",
+                  "preview_image": "https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/ooeiZ8GLRIGfXfGI3YLP7QAfGsANgAJx2DAAJA~tplv-tiktokx-origin.image?dr=1364..."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter url tidak disertakan atau tidak valid" },
+      "404": { "description": "Video tidak ditemukan" },
+      "500": { "description": "Gagal mengunduh video" }
+    }
+  }
+},
+"/api/2fa-live": {
+  "get": {
+    "tags": ["TOOLS"],
+    "summary": "2FA Live Checker",
+    "description": "Memeriksa status live 2FA berdasarkan ID yang diberikan.\n\nGunakan parameter `id` untuk mengecek status.",
+    "servers": [
+      { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "query",
+        "required": true,
+        "description": "ID akun atau layanan yang ingin dicek status 2FA-nya",
+        "schema": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Status 2FA berhasil diperiksa",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "id": "123456",
+              "is2FALive": true,
+              "message": "2FA aktif untuk ID ini"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter id tidak disertakan atau tidak valid" },
+      "404": { "description": "ID tidak ditemukan" },
+      "500": { "description": "Terjadi kesalahan server saat memeriksa 2FA" }
+    }
+  }
+},
+"/api/fb": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "Facebook Video Downloader",
+    "description": "Mengunduh video Facebook dari URL yang diberikan.\n\nGunakan parameter `url` untuk URL video Facebook.",
+    "servers": [
+      { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video Facebook yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://www.facebook.com/watch/?v=1234567890"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video Facebook berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "title": "Contoh Video FB",
+              "downloadUrl": "https://cdn.example.com/fb/video1234567890.mp4",
+              "thumbnail": "https://cdn.example.com/fb/video1234567890_thumbnail.jpg",
+              "message": "Video berhasil diunduh"
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter url tidak disertakan atau tidak valid" },
+      "404": { "description": "Video tidak ditemukan" },
+      "500": { "description": "Gagal mengunduh video Facebook" }
+    }
+  }
+},
+"/api/upload/v1": {
+  "post": {
+    "tags": ["TOOLS"],
+    "summary": "Upload file ke CDN (v1)",
+    "description": "Mengunggah file ke server CDN versi 1. Gunakan form-data dengan key `file`.",
+    "servers": [
+      { "url": "https://apiku.x-server.my.id", "description": "Server utama" }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "format": "binary",
+                "description": "File yang ingin di-upload"
+              }
+            },
+            "required": ["file"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "File berhasil di-upload",
+        "content": {
+          "application/json": {
+            "example": {
+              "success": true,
+              "url": "https://cdn.example.com/files/abcd1234.jpg",
+              "message": "File berhasil di-upload"
+            }
+          }
+        }
+      },
+      "400": { "description": "File tidak disertakan atau format tidak valid" },
+      "500": { "description": "Gagal meng-upload file ke CDN v1" }
+    }
+  }
+},
+"/api/upload/v2": {
+  "post": {
+    "tags": ["TOOLS"],
+    "summary": "Upload file ke CDN (v2, fallback)",
+    "description": "Mengunggah file ke server CDN versi 2 sebagai fallback jika v1 gagal. Gunakan form-data dengan key `file`.",
+    "servers": [
+      { "url": "https://apiku.x-server.my.id", "description": "Server fallback" }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "format": "binary",
+                "description": "File yang ingin di-upload"
+              }
+            },
+            "required": ["file"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "File berhasil di-upload",
+        "content": {
+          "application/json": {
+            "example": {
+              "success": true,
+              "url": "https://cdn.example.com/files/efgh5678.jpg",
+              "message": "File berhasil di-upload"
+            }
+          }
+        }
+      },
+      "400": { "description": "File tidak disertakan atau format tidak valid" },
+      "500": { "description": "Gagal meng-upload file ke CDN v2" }
+    }
+  }
+},
+"/api/ssweb": {
+  "get": {
+    "tags": ["TOOLS"],
+    "summary": "Web Screenshot",
+    "description": "Mengambil screenshot dari website dan langsung mengembalikan gambar.\nParameter `url` wajib. Opsional: `device` untuk tipe perangkat, `fullpage` untuk screenshot seluruh halaman.",
+    "servers": [
+      { "url": "https://yydz.my.id", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL website yang ingin di-screenshot",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://www.google.com"
+        }
+      },
+      {
+        "name": "device",
+        "in": "query",
+        "required": false,
+        "description": "Tipe perangkat untuk screenshot",
+        "schema": {
+          "type": "string",
+          "enum": ["phone", "mobile", "desktop", "desktophd", "tablet"],
+          "example": "desktop"
+        }
+      },
+      {
+        "name": "fullpage",
+        "in": "query",
+        "required": false,
+        "description": "Screenshot seluruh halaman",
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Screenshot berhasil diambil",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            },
+            "example": "Binary PNG image file"
+          }
+        }
+      },
+      "400": { "description": "Parameter url tidak disertakan atau tidak valid" },
+      "500": { "description": "Gagal mengambil screenshot" }
+    }
+  }
+}
   }
 }
