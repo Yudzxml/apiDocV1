@@ -1,27 +1,27 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "YUDZXML Example API",
-    "version": "1.0.0",
-    "description": "Dokumentasi API untuk pencarian video terbaru dari xnxx"
+    "title": "YUDZXML API'S",
+    "version": "1.0.1",
+    "description": "Dokumentasi resmi API YUDZXML. Gunakan endpoint ini untuk mengambil data video terbaru dari berbagai platform atau melakukan konversi audio ke teks secara cepat dan mudah."
   },
   "servers": [
     {
       "url": "https://api.yudzxyz.x-server.my.id",
-      "description": "Server produksi"
+      "description": "Server 1"
     }
   ],
   "paths": {
     "/api/xnxx": {
       "get": {
-        "summary": "Cari video terbaru",
-        "description": "Mencari video terbaru menggunakan query search",
+        "summary": "Ambil video terbaru",
+        "description": "Endpoint ini digunakan untuk mengambil daftar video terbaru berdasarkan kata kunci pencarian dari berbagai platform.",
         "parameters": [
           {
             "name": "search",
             "in": "query",
             "required": true,
-            "description": "Keyword pencarian, contoh: terbaru",
+            "description": "Kata kunci pencarian video, misal: 'terbaru', 'viral', 'tutorial'.",
             "schema": {
               "type": "string",
               "example": "terbaru"
@@ -30,7 +30,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Berhasil mendapatkan data video",
+            "description": "Data video berhasil diambil",
             "content": {
               "application/json": {
                 "example": {
@@ -39,11 +39,11 @@
                   "data": [
                     {
                       "videoId": "85013417",
-                      "videoUrl": "https://www.xnxx.com/video-1em4rt89/enaknya_ngentot_pacar_disamping_kakaknya",
-                      "title": null,
-                      "thumbnail": "https://cdn77-pic.xnxx-cdn.com/videos/thumbs169xnxx/f4/24/11/f4241121a8424d38adb5b92391c7319b/f4241121a8424d38adb5b92391c7319b.17.jpg",
-                      "uploaderName": "Kopihitamenak",
-                      "uploaderUrl": "https://www.xnxx.com/porn-maker/kopihitamenak",
+                      "videoUrl": "https://example.com/video/85013417",
+                      "title": "Contoh Video 1",
+                      "thumbnail": "https://example.com/thumbs/85013417.jpg",
+                      "uploaderName": "Uploader1",
+                      "uploaderUrl": "https://example.com/uploader/uploader1",
                       "views": "18.6M",
                       "rating": "94%",
                       "duration": "5min",
@@ -51,11 +51,11 @@
                     },
                     {
                       "videoId": "85161255",
-                      "videoUrl": "https://www.xnxx.com/video-1epauf40/bu_guru_montok_viral_terbaru",
-                      "title": null,
-                      "thumbnail": "https://cdn77-pic.xnxx-cdn.com/videos/thumbs169xnxx/8a/21/be/8a21bee40566419b226ebb86ee80b54a/8a21bee40566419b226ebb86ee80b54a.2.jpg",
-                      "uploaderName": null,
-                      "uploaderUrl": "https://www.xnxx.comnull",
+                      "videoUrl": "https://example.com/video/85161255",
+                      "title": "Contoh Video 2",
+                      "thumbnail": "https://example.com/thumbs/85161255.jpg",
+                      "uploaderName": "Uploader2",
+                      "uploaderUrl": "https://example.com/uploader/uploader2",
                       "views": "16.6M",
                       "rating": "100%",
                       "duration": "1min",
@@ -67,10 +67,58 @@
             }
           },
           "404": {
-            "description": "Tidak ada video ditemukan"
+            "description": "Video tidak ditemukan dengan kata kunci yang diberikan"
           }
         }
       }
+    },
+    "/api/tools/speechtotext": {
+  "get": {
+    "summary": "Konversi audio ke teks",
+    "description": "Endpoint ini mengubah file audio (format .opus) menjadi teks. Gunakan parameter `url` untuk menunjuk ke file audio yang ingin dikonversi.",
+    "servers": [
+      {
+        "url": "https://api-yudzxzy.vercel.app",
+        "description": "Server untuk tools speech-to-text"
+      }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL lengkap file audio yang akan dikonversi ke teks",
+        "schema": {
+          "type": "string",
+          "example": "https://cdn.yupra.my.id/yp/5l6ps5pn.opus"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Audio berhasil dikonversi menjadi teks",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "result": {
+                "data": {
+                  "text": "\"Halo, Wa Ing. Apa kabar?\""
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL audio tidak valid atau tidak ditemukan"
+      },
+      "500": {
+        "description": "Terjadi kesalahan server saat memproses audio"
+      }
     }
+  }
+}
   }
 }
