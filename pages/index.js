@@ -14,11 +14,15 @@ export default function Home() {
       justifyContent: "center",
       alignItems: "center",
       minHeight: "100vh",
-      fontSize: "1.5rem",
+      backgroundColor: "#0f172a",
       color: "#3b82f6",
-      fontFamily: "Inter, sans-serif"
+      fontFamily: "Inter, sans-serif",
+      fontSize: "1.5rem",
+      flexDirection: "column",
+      textAlign: "center",
+      padding: "20px"
     }}>
-      Redirecting to Documentasi UI...
+      Redirecting to Documentation UI...
     </div>
   );
 }
