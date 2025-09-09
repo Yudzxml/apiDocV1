@@ -1,21 +1,21 @@
 .swagger-modern-container {
   min-height: 100vh;
-  background-color: #0f172a;
+  background-color: #111827; /* dark gray, lebih lembut dari biru */
   font-family: 'Inter', sans-serif;
   color: #f1f5f9;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
 }
 
 .swagger-ui .topbar {
-  background-color: #1e293b !important;
-  padding: 16px 24px;
-  font-size: 1.5rem;
+  background-color: #1f2937; /* dark gray, tidak terlalu full black */
+  padding: 14px 20px;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #f1f5f9;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,8 +25,8 @@
 }
 
 .swagger-ui .btn {
-  background-color: #3b82f6 !important;
-  color: #fff !important;
+  background-color: #374151 !important; /* ganti biru ke gray dark */
+  color: #f1f5f9 !important;
   border-radius: 8px !important;
   padding: 6px 14px !important;
   font-weight: 500;
@@ -35,22 +35,22 @@
 }
 
 .swagger-ui .btn:hover {
-  background-color: #2563eb !important;
+  background-color: #4b5563 !important; /* hover lebih terang */
   transform: scale(1.05);
 }
 
 .swagger-ui .opblock-summary {
-  background-color: #1e293b;
+  background-color: #1f2937;
   border-radius: 12px;
   margin-bottom: 12px;
-  border-left: 6px solid #3b82f6;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  border-left: 6px solid #111827; /* subtle dark accent */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   transition: all 0.3s ease;
 }
 
 .swagger-ui .opblock-summary:hover {
-  background-color: #2563eb;
-  color: #fff;
+  background-color: #111827; /* dark hover */
+  color: #f1f5f9;
   transform: translateY(-2px);
 }
 
@@ -59,8 +59,8 @@
   border-radius: 6px;
   padding: 2px 10px;
   text-transform: uppercase;
-  color: #fff;
-  background-color: #3b82f6;
+  color: #f1f5f9;
+  background-color: #374151; /* dark gray method */
   margin-right: 8px;
   font-size: 0.85rem;
 }
@@ -74,7 +74,7 @@
 .swagger-ui .model-box,
 .swagger-ui table,
 .swagger-ui pre {
-  background-color: #1e293b;
+  background-color: #1f2937;
   color: #f1f5f9;
   border-radius: 10px;
   padding: 12px 16px;
@@ -83,52 +83,65 @@
 }
 
 .swagger-ui table th {
-  background-color: #334155;
+  background-color: #374151;
   color: #f1f5f9;
   font-weight: 600;
 }
 
 .swagger-ui table td {
-  border-color: #475569;
+  border-color: #4b5563;
 }
 
 .swagger-ui a {
-  color: #3b82f6;
+  color: #9ca3af; /* ganti link ke light gray */
   transition: color 0.2s ease;
 }
 
 .swagger-ui a:hover {
-  color: #60a5fa;
+  color: #f1f5f9;
   text-decoration: underline;
 }
 
 .swagger-ui .search-container input[type="text"] {
-  background-color: #1e293b;
+  background-color: #1f2937;
   color: #f1f5f9;
   border-radius: 6px;
   padding: 6px 10px;
-  border: 1px solid #3b82f6;
+  border: 1px solid #374151;
 }
 
 .swagger-modern-container footer {
   margin-top: auto;
   text-align: center;
   padding: 12px 0;
-  background-color: #0f172a;
+  background-color: #111827;
   color: #94a3b8;
   font-size: 0.9rem;
   font-weight: 500;
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid #1f2937;
 }
 
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .swagger-ui .topbar {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
 
   .swagger-ui .opblock-summary {
     font-size: 0.9rem;
+    border-left-width: 4px;
+  }
+
+  .swagger-ui .opblock-summary-method {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+
+  .swagger-ui .btn {
+    padding: 4px 10px !important;
+    font-size: 0.85rem;
   }
 }
