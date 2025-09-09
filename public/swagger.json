@@ -14,7 +14,7 @@
   "paths": {
     "/api/xnxx": {
       "get": {
-        "summary": "Ambil video terbaru",
+        "summary": "Search Bo**p",
         "description": "Endpoint ini digunakan untuk mengambil daftar video terbaru berdasarkan kata kunci pencarian dari berbagai platform.",
         "parameters": [
           {
@@ -72,6 +72,593 @@
         }
       }
     },
+    "/api/xnxx": {
+  "get": {
+    "summary": "Download video XNXX",
+    "description": "Endpoint ini digunakan untuk mengambil URL video XNXX berdasarkan link video langsung.",
+    "parameters": [
+      {
+        "name": "download",
+        "in": "query",
+        "required": true,
+        "description": "URL video XNXX yang ingin di-download",
+        "schema": {
+          "type": "string",
+          "example": "https://www.xnxx.com/video-1em4rt89/enaknya_ngentot_pacar_disamping_kakaknya"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "thumbnailUrl": "https://cdn77-pic.xnxx-cdn.com/videos/thumbslll/f4/24/11/f4241121a8424d38adb5b92391c7319b/f4241121a8424d38adb5b92391c7319b.17.jpg",
+                "lowQualUrl": "https://cdn77-vid-mp4.xnxx-cdn.com/6uvXO5i9ZetoC0tWLWrAdQ==,1757434415/videos/3gp/f/4/2/xvideos.com_f4241121a8424d38adb5b92391c7319b.mp4?ui=MjMuMjIuMjE5LjExNC0tL3ZpZGVvLTFlbTRydDg5L2VuYWtueWFfbmdlbnRv",
+                "highQualUrl": "https://cdn77-vid-mp4.xnxx-cdn.com/6uvXO5i9ZetoC0tWLWrAdQ==,1757434415/videos/3gp/f/4/2/xvideos.com_f4241121a8424d38adb5b92391c7319b.mp4?ui=MjMuMjIuMjE5LjExNC0tL3ZpZGVvLTFlbTRydDg5L2VuYWtueWFfbmdlbnRv"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL video tidak valid atau tidak disertakan"
+      },
+      "404": {
+        "description": "Video tidak ditemukan atau tidak dapat diakses"
+      }
+    }
+  }
+},
+    "/api/nekopoi": {
+  "get": {
+    "summary": "Search Nekopoi",
+    "description": "Endpoint ini digunakan untuk mencari daftar video atau episode dari Nekopoi berdasarkan kata kunci.",
+    "parameters": [
+      {
+        "name": "search",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian video/episode, misal: 'ero', 'hentai', 'mirko'.",
+        "schema": {
+          "type": "string",
+          "example": "ero"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data video/episode berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": [
+                {
+                  "title": "SONE-312 Bu Guru BerOppai Gede Membuat Perjaka Disekolah Puas Diruang Kelas Seharian!",
+                  "link": "https://nekopoi.care/sone-312-bu-guru-beroppai-gede-membuat-perjaka-disekolah-puas-diruang-kelas-seharian/",
+                  "imageUrl": "https://nekopoi.care/wp-content/uploads/2025/09/sone00312jp-2-300x227.jpg",
+                  "parody": "S1 NO.1 STYLE",
+                  "producers": "Koyoi Konan",
+                  "duration": "Big tits, Cuckold, Female teacher, Older sister, Slut, Solowork",
+                  "size": "2 jam 3 menit"
+                },
+                {
+                  "title": "[NEW Release] Pure Pure Pero Pero Princess Episode 2 Subtitle Indonesia",
+                  "link": "https://nekopoi.care/pure-pure-pero-pero-princess-episode-2-subtitle-indonesia/",
+                  "imageUrl": "https://nekopoi.care/wp-content/uploads/2025/09/vlcsnap-2025-09-04-22h47m49s322-300x169.png",
+                  "parody": "No parody",
+                  "producers": "No producers",
+                  "duration": "Ahegao, Anal, Big Oppai, Blowjob, DILF, Masturbation, MILF, Paizuri, Schoolgirl, Sex Toys, Yuri",
+                  "size": "Juicy Mango"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Tidak ditemukan video/episode dengan kata kunci yang diberikan"
+      },
+      "400": {
+        "description": "Kata kunci tidak disertakan atau invalid"
+      }
+    }
+  }
+},
+    "/api/nekopoi": {
+  "get": {
+    "summary": "Get Nekopoi Video Detail",
+    "description": "Endpoint ini digunakan untuk mengambil detail video atau episode dari Nekopoi berdasarkan URL video.",
+    "parameters": [
+      {
+        "name": "detail",
+        "in": "query",
+        "required": true,
+        "description": "URL video Nekopoi yang ingin diambil detailnya",
+        "schema": {
+          "type": "string",
+          "example": "https://nekopoi.care/sone-312-bu-guru-beroppai-gede-membuat-perjaka-disekolah-puas-diruang-kelas-seharian/"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Detail video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": "{\"title\":\"SONE-312 Bu Guru BerOppai Gede Membuat Perjaka Disekolah Puas Diruang Kelas Seharian!\",\"viewDate\":\"Dilihat  68 kali / Sunday, September 7th, 2025\",\"imageUrl\":\"https://nekopoi.care/wp-content/uploads/2025/09/sone00312jp-2-300x227.jpg\",\"parody\":\"No parody\",\"producers\":\"S1 NO.1 STYLE\",\"duration\":\"2 jam 3 menit\",\"size\":\"360P\",\"iframeLinks\":[{\"iframeSrc\":\"https://d-s.io/e/2g9ikzfz01va\",\"resolution\":\"360P\"},{\"iframeSrc\":\"https://d-s.io/e/ihy6j5fvyp2p\",\"resolution\":\"460P\"},{\"iframeSrc\":\"https://streampoi.com/embed-kthg18d3co8w.html\",\"resolution\":\"720P\"}],\"downloadLinks\":[{\"resolution\":\"SONE-312 Bu Guru BerOppai Gede Membuat Perjaka Disekolah Puas Diruang Kelas Seharian!  [720p]\",\"links\":[\"https://ouo.io/WsUJac\",\"https://ouo.io/61Ufjt\",\"https://ouo.io/Kpw8nGF\"]},{\"resolution\":\"SONE-312 Bu Guru BerOppai Gede Membuat Perjaka Disekolah Puas Diruang Kelas Seharian!  [480p]\",\"links\":[\"https://ouo.io/SsA1gnE\",\"https://ouo.io/8Bjnjfi\",\"https://ouo.io/HjyUp7\"]},{\"resolution\":\"SONE-312 Bu Guru BerOppai Gede Membuat Perjaka Disekolah Puas Diruang Kelas Seharian!  [360p]\",\"links\":[\"https://ouo.io/K0zrPd\",\"https://ouo.io/Zv3Wyl\",\"https://ouo.io/A7liag\",\"https://ouo.io/y3k70d\"]}]}"} 
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL video tidak valid atau tidak disertakan"
+      },
+      "404": {
+        "description": "Video tidak ditemukan atau tidak dapat diakses"
+      }
+    }
+  },
+    "/api/nekopoi": {
+  "get": {
+    "summary": "Get Latest Nekopoi Videos",
+    "description": "Endpoint ini digunakan untuk mengambil daftar video/episode terbaru dari Nekopoi.",
+    "parameters": [
+      {
+        "name": "latest",
+        "in": "query",
+        "required": false,
+        "description": "Gunakan parameter ini untuk mengambil video terbaru",
+        "schema": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Daftar video/episode terbaru berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": [
+                {
+                  "title": "[3D] Ga Tahan Liat Gadis Pingsan Diruang Ganti",
+                  "link": "https://nekopoi.care/?p=51422",
+                  "imgSrc": "https://nekopoi.care/wp-content/uploads/2025/09/vlcsnap-2025-09-09-18h38m25s495-300x169.png",
+                  "date": "Tuesday, September 9th, 2025"
+                },
+                {
+                  "title": "[L2D] Shuna Animation All Version Ginhaha – Tensei shitara Slime Datta Ken",
+                  "link": "https://nekopoi.care/l2d-shuna-animation-all-version-ginhaha-tensei-shitara-slime-datta-ken/",
+                  "imgSrc": "https://nekopoi.care/wp-content/uploads/2025/09/vlcsnap-2025-09-09-18h29m54s178-300x169.png",
+                  "date": "Tuesday, September 9th, 2025"
+                },
+                {
+                  "title": "[3D] Cheating Wife A Night of Immoral Sex",
+                  "link": "https://nekopoi.care/3d-cheating-wife-a-night-of-immoral-sex/",
+                  "imgSrc": "https://nekopoi.care/wp-content/uploads/2025/09/vlcsnap-2025-09-09-16h44m29s306-300x169.png",
+                  "date": "Tuesday, September 9th, 2025"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Tidak ditemukan video terbaru"
+      }
+    }
+  }
+},
+    "/api/xvideo": {
+  "get": {
+    "summary": "Search XVideos",
+    "description": "Endpoint ini digunakan untuk mencari video di XVideos berdasarkan kata kunci.",
+    "parameters": [
+      {
+        "name": "search",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian video, misal: 'indo tobrut', 'hentai', 'amateur'.",
+        "schema": {
+          "type": "string",
+          "example": "indo tobrut"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": [
+                {
+                  "title": "Esto es un buen mañanero, video casero real, dando duro sin parar.",
+                  "url": "https://www.xvideos.com/video.ufbfdfd35e2/esto_es_un_buen_mananero_video_casero_real_dando_duro_sin_parar.",
+                  "thumbnail": "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169/a7/30/77/a7307762a6d88f33c84d7a58a8e6ec14/a7307762a6d88f33c84d7a58a8e6ec14.5.jpg",
+                  "duration": "6 min6 min",
+                  "author": "Naree14 Official"
+                },
+                {
+                  "title": "Ngentot dengan Tante indo sampai crot 2 kali",
+                  "url": "https://www.xvideos.com/video.ufldleb5f60/ngentot_dengan_tante_indo_sampai_crot_2_kali",
+                  "thumbnail": "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169/d9/43/7c/d9437c14a709a85d5ec4f0775008cce3/d9437c14a709a85d5ec4f0775008cce3.9.jpg",
+                  "duration": "7 min7 min",
+                  "author": "Latifa"
+                },
+                {
+                  "title": "TANTE INDO MASTURBASI SAMBIL JOGET",
+                  "url": "https://www.xvideos.com/video.ibdukad4d0f/tante_indo_masturbasi_sambil_joget",
+                  "thumbnail": "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169/bc/3e/fe/bc3efe08e13bc0200973a46bf610183f-3/bc3efe08e13bc0200973a46bf610183f.9.jpg",
+                  "duration": "55 sec55 sec",
+                  "author": "Dewa Cinta Ku"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Tidak ditemukan video dengan kata kunci yang diberikan"
+      },
+      "400": {
+        "description": "Kata kunci tidak disertakan atau invalid"
+      }
+    }
+  }
+},
+    "/api/xvideo": {
+  "get": {
+    "summary": "Get XVideos Video Detail",
+    "description": "Endpoint ini digunakan untuk mengambil detail video dari XVideos berdasarkan URL video.",
+    "parameters": [
+      {
+        "name": "detail",
+        "in": "query",
+        "required": true,
+        "description": "URL video XVideos yang ingin diambil detailnya",
+        "schema": {
+          "type": "string",
+          "example": "https://www.xvideos.com/video.ufbfdfd35e2/esto_es_un_buen_mananero_video_casero_real_dando_duro_sin_parar"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Detail video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                "name": "Esto es un buen ma&ntilde;anero&comma; video casero real&comma; dando duro sin parar&period;",
+                "description": "Esto es un buen ma&ntilde;anero&comma; video casero real&comma; dando duro sin parar&period;",
+                "thumbnailUrl": [
+                  "https://cdn77-pic.xvideos-cdn.com/videos/thumbs169ll/a7/30/77/a7307762a6d88f33c84d7a58a8e6ec14/a7307762a6d88f33c84d7a58a8e6ec14.5.jpg"
+                ],
+                "uploadDate": "2024-12-23T12:59:06+00:00",
+                "duration": "PT00H05M59S",
+                "contentUrl": "https://cdn77-vid-mp4.xvideos-cdn.com/1SX87551j-nCJDZGuZFoxA==,1757434905/videos/mp4/a/7/3/xvideos.com_a7307762a6d88f33c84d7a58a8e6ec14.mp4?ui=OTguODEuMjcuMjQxLS0vdmlkZW8udWZiZmRmZDM1ZTIvZXN0b19lc191bl8=",
+                "interactionStatistic": {
+                  "@type": "InteractionCounter",
+                  "interactionType": {
+                    "@type": "WatchAction"
+                  },
+                  "userInteractionCount": 307957
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL video tidak valid atau tidak disertakan"
+      },
+      "404": {
+        "description": "Video tidak ditemukan atau tidak dapat diakses"
+      }
+    }
+  }
+},
+    "/api/capcut": {
+  "get": {
+    "summary": "Get CapCut Video Detail",
+    "description": "Endpoint ini digunakan untuk mengambil detail video CapCut berdasarkan URL video.",
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video CapCut yang ingin diambil detailnya",
+        "schema": {
+          "type": "string",
+          "example": "https://www.capcut.com/tv2/ZSDJAn57J/"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Detail video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "url": "https://www.capcut.com/tv2/ZSDJAn57J/",
+                "source": "capcut",
+                "id": "7537969480853441809",
+                "unique_id": "uk__.200",
+                "author": "𝗖𝗠𝗡𝗦 [𝖠𝖲] 🌀",
+                "title": "X PUTZ rmx#fyp #jjtipis #trend #kece #kane ",
+                "thumbnail": "https://p16-capcut-sign-sg.ibyteimg.com/tos-alisg-v-643f9f/oUhdTCFanEDDftAF4XAAfeE5R1I8bGsDgAxsZE~tplv-4d650qgzx3-image.image?lk3s=2d54f6b1&x-expires=1788960208&x-signature=pmX9b%2FtIGflPUhh94tjNW0twmMY%3D",
+                "duration": 18571,
+                "medias": [
+                  {
+                    "url": "https://v16-vod.capcutvod.com/e82c0eb4c305474a0ac82e184c75d2f9/68c41ee2/video/tos/alisg/tos-alisg-v-643f9f/ooqoeNcsACAzAtGCgIFitzQDHflJ6gWEBuBFqI/?a=3006&bti=cHJ3bzFmc3dmZEBvY15taF4rcm1gYA%3D%3D&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=12528&bt=6264&cs=0&ds=3&ft=asdJ4qI3mDUPD12MRvmT3wUPdMheMeF~O5&mime_type=video_mp4&qs=13&rc=ajdzbnM5cjRwNTMzOGVkNEBpajdzbnM5cjRwNTMzOGVkNEBsbmpuMmRzYm5hLS1kYi1z",
+                    "quality": "HD No Watermark",
+                    "extension": "mp4",
+                    "type": "video",
+                    "data_size": 0,
+                    "duration": 0
+                  },
+                  {
+                    "url": "https://v16-vod.capcutvod.com/ad419046b390e3b93472e68d7cdbce80/68c41ee2/video/tos/alisg/tos-alisg-ve-8fe9aq-sg/o8aAJO0E1SEBUA2ZwDoyrfiQiXBWGQW5Zxd1DI/?a=3006&bti=cHJ3bzFmc3dmZEBvY15taF4rcm1gYA%3D%3D&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=2764&bt=1382&cs=0&ds=3&ft=asdJ4qI3mDUPD12MRvmT3wUPdMheMeF~O5&mime_type=video_mp4&qs=0&rc=MzRpO2RkNmVlPDU5ZTU0aUBpajdzbnM5cjRwNTMzOGVkNEA1MTMuNjMwX2IxMzI1LS5hYSNsbmpuMmRzYm5hLS1kYi1zcw%3D%3D&vvpl=1&l=2025090921232825BC227DBEB893022BB5&btag=e000b8000",
+                    "quality": "No Watermark",
+                    "extension": "mp4",
+                    "type": "video",
+                    "data_size": 0,
+                    "duration": 0
+                  },
+                  {
+                    "url": "https://v16-vod.capcutvod.com/a5ac76ee096ad0f24af5b4e26b38046b/68c41ee2/video/tos/alisg/tos-alisg-ve-8fe9aq-sg/ocL2Zrt1BESyx15OBdiQobWDEAfp0DAIiHwSXW/?a=3006&bti=cHJ3bzFmc3dmZEBvY15taF4rcm1gYA%3D%3D&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=2794&bt=1397&cs=0&ds=3&ft=asdJ4qI3mDUPD12MRvmT3wUPdMheMeF~O5&mime_type=video_mp4&qs=0&rc=M2k1NTQ5ZmY2ZmZmaDM0OkBpajdzbnM5cjRwNTMzOGVkNEBeYDU0Xi42Xi4xLWI2NjYyYSNsbmpuMmRzYm5hLS1kYi1zcw%3D%3D&vvpl=1&l=2025090921232825BC227DBEB893022BB5&btag=e000b8000",
+                    "quality": "Watermark",
+                    "extension": "mp4",
+                    "type": "video",
+                    "data_size": 0,
+                    "duration": 0
+                  }
+                ],
+                "type": "multiple",
+                "error": false,
+                "time_end": 696,
+                "status": 200
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL video tidak valid atau tidak disertakan"
+      },
+      "404": {
+        "description": "Video CapCut tidak ditemukan atau tidak dapat diakses"
+      }
+    }
+  }
+},
+    "/api/ytdl": {
+  "get": {
+    "summary": "YouTube Video Downloader",
+    "description": "Endpoint ini digunakan untuk mengambil video YouTube berdasarkan URL, kualitas, dan format.",
+    "servers": [
+      {
+        "url": "https://api-yudzxml.koyeb.app",
+        "description": "Server untuk download ytdl"
+      }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video YouTube yang ingin diunduh",
+        "schema": {
+          "type": "string",
+          "example": "https://youtube.com/watch?v=Fp154clV4pk"
+        }
+      },
+      {
+        "name": "quality",
+        "in": "query",
+        "required": false,
+        "description": "Resolusi yang diinginkan video: (360, 480, 720, 1080.),  audio: ( 320, 256, 192, 128 ) ",
+        "schema": {
+          "type": "integer",
+          "example": 360
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Format file yang diinginkan, bisa 'video' atau 'audio'",
+        "schema": {
+          "type": "string",
+          "example": "video"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "title": "DUKA - last chilid (lirik)",
+                "duration": "5:18",
+                "quality": 360,
+                "format": "mp4",
+                "downloadUrl": "https://storage.cdnframe.com/yt-cdn-f1a9553a/Fp154clV4pk/best.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ZBKIvjukBeKLwFy11a4q%2F20250909%2Fnl-east-host02%2Fs3%2Faws4_request&X-Amz-Date=20250909T132546Z&X-Amz-Expires=600&X-Amz-Signature=d6cf7e6c6f826f27287d6c8f08a1cb8bf9b17eab43d8772c03084e8e4c1bf996&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22DUKA%20-%20last%20chilid%20%28lirik%29.mp4%22&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "URL tidak valid atau parameter kurang"
+      },
+      "404": {
+        "description": "Video YouTube tidak ditemukan atau tidak dapat diakses"
+      }
+    }
+  }
+},
+    "/api/download/apk": {
+  "get": {
+    "summary": "Search APK by Name",
+    "description": "Endpoint ini digunakan untuk mencari aplikasi Android berdasarkan kata kunci nama APK.",
+        "servers": [
+      {
+        "url": "https://api-yudzxzy.vercel.app",
+        "description": "Server untuk search apk"
+      }
+    ],
+    "parameters": [
+      {
+        "name": "search",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian aplikasi, misal: 'Pou', 'Facebook', 'WhatsApp'.",
+        "schema": {
+          "type": "string",
+          "example": "Pou"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data APK berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": [
+                {
+                  "name": "Pou",
+                  "id": "me.pou.app"
+                },
+                {
+                  "name": "Chicken Pou",
+                  "id": "de.chickenpou"
+                },
+                {
+                  "name": "Pou Egg",
+                  "id": "com.Egg.Pou_Egg"
+                },
+                {
+                  "name": "Follow the Line 2D Deluxe",
+                  "id": "com.nenoff.followthelinefree"
+                },
+                {
+                  "name": "Pou Profiler",
+                  "id": "com.exadl.movie.art.poucoinhack"
+                },
+                {
+                  "name": "Pou Egg",
+                  "id": "com.Magical_Egg.Spider_Egg"
+                },
+                {
+                  "name": "Cute Tamago Egg Pou 2",
+                  "id": "com.Shaking_Eggs.Cute_Tamago_Egg_Pou"
+                },
+                {
+                  "name": "Tiny Auto Shop: Car Wash and Garage Game",
+                  "id": "br.com.tapps.tinyautoshop"
+                },
+                {
+                  "name": "Purchase Order Generator -Zoho",
+                  "id": "com.zoho.purchaseordergenerator"
+                },
+                {
+                  "name": "Pop Owl 2",
+                  "id": "com.popowl2.popowl2"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Tidak ditemukan aplikasi dengan kata kunci tersebut"
+      },
+      "400": {
+        "description": "Parameter 'search' tidak boleh kosong"
+      }
+    }
+  }
+},
+    "/api/download/apk": {
+  "get": {
+    "summary": "Download APK by Package ID",
+    "description": "Endpoint ini digunakan untuk mengambil informasi dan link download APK berdasarkan package ID.",
+            "servers": [
+      {
+        "url": "https://api-yudzxzy.vercel.app",
+        "description": "Server untuk download apk"
+      }
+    ],
+    "parameters": [
+      {
+        "name": "download",
+        "in": "query",
+        "required": true,
+        "description": "Package ID aplikasi, misal: 'me.pou.app', 'com.whatsapp', 'com.facebook.katana'.",
+        "schema": {
+          "type": "string",
+          "example": "me.pou.app"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data APK berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "img": "https://pool.img.aptoide.com/engamerstoreapp/adbf4f560fc704d0b0f7067773920d47_icon.png",
+                "developer": "engamerstoreapp",
+                "appname": "Pou",
+                "link": "https://pool.apk.aptoide.com/engamerstoreapp/me-pou-app-273-70674234-f174ef3b043748a77ab372249f4a2999.apk"
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "APK dengan package ID tersebut tidak ditemukan"
+      },
+      "400": {
+        "description": "Parameter 'download' tidak boleh kosong"
+      }
+    }
+  }
+},
     "/api/tools/speechtotext": {
   "get": {
     "summary": "Konversi audio ke teks",
