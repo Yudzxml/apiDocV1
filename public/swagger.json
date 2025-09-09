@@ -1088,7 +1088,7 @@
     }
   }
 },
-"/api/upload/v1": {
+"/api/v1/upload": {
   "post": {
     "tags": ["TOOLS"],
     "summary": "Upload file ke CDN (v1)",
@@ -1132,7 +1132,7 @@
     }
   }
 },
-"/api/upload/v2": {
+"/api/v2/upload": {
   "post": {
     "tags": ["TOOLS"],
     "summary": "Upload file ke CDN (v2, fallback)",
