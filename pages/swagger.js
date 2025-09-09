@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import "swagger-ui-react/swagger-ui.css";
-import SwaggerUIStandalonePreset from "swagger-ui-react/swagger-ui-standalone-preset";
 
 const SwaggerUI = dynamic(() => import("swagger-ui-react"), { ssr: false });
 
@@ -22,7 +21,6 @@ export default function SwaggerPage() {
           displayOperationId={true}
           showExtensions={true}
           showCommonExtensions={true}
-          presets={[SwaggerUIStandalonePreset]}
           layout="BaseLayout"
         />
       </div>
