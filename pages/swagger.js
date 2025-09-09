@@ -1,11 +1,13 @@
 import dynamic from "next/dynamic";
+import "swagger-ui-react/swagger-ui.css";
+import SwaggerUIStandalonePreset from "swagger-ui-react/swagger-ui-standalone-preset";
 
 const SwaggerUI = dynamic(() => import("swagger-ui-react"), { ssr: false });
 
 export default function SwaggerPage() {
   return (
-    <div className="swagger-modern-wrapper" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <div className="swagger-modern-container" style={{ flex: 1 }}>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", backgroundColor: "#0f172a", color: "#f1f5f9" }}>
+      <div style={{ flex: 1, padding: "20px" }}>
         <SwaggerUI
           url="/swagger.json"
           docExpansion="list"
@@ -13,7 +15,7 @@ export default function SwaggerPage() {
           displayOperationId={true}
           showExtensions={true}
           showCommonExtensions={true}
-          layout="StandaloneLayout"
+          presets={[SwaggerUIStandalonePreset]}
         />
       </div>
       <footer style={{
