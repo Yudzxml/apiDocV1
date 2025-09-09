@@ -60,22 +60,44 @@
         }
       }
     },
-    "/api/nekopoi": {
-      "get": {
-        "tags": ["SEARCH"],
-        "summary": "Nekopoi API (Search, Detail, Latest)",
-                "servers": [
-          { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
-        ],
-        "description": "Gunakan `search` untuk mencari, `detail` untuk detail, atau `latest=true` untuk daftar terbaru.",
-        "parameters": [
-          { "name": "search", "in": "query", "required": false, "description": "Kata kunci pencarian", "schema": { "type": "string", "example": "ero" } },
-          { "name": "detail", "in": "query", "required": false, "description": "URL untuk detail video", "schema": { "type": "string", "example": "https://nekopoi.care/some-video" } },
-          { "name": "latest", "in": "query", "required": false, "description": "Gunakan `latest=true` untuk daftar terbaru", "schema": { "type": "boolean", "example": true } }
-        ],
-        "responses": { "200": { "description": "Data berhasil diambil" }, "400": { "description": "Query parameter tidak valid" }, "404": { "description": "Video/episode tidak ditemukan" } }
+"/api/nekopoi": {
+  "get": {
+    "tags": ["SEARCH"],
+    "summary": "Nekopoi API (Search, Detail, Latest)",
+    "servers": [
+      { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+    ],
+    "description": "Gunakan `search` untuk mencari, `detail` untuk detail, atau cukup sertakan `latest` untuk daftar terbaru.",
+    "parameters": [
+      {
+        "name": "search",
+        "in": "query",
+        "required": false,
+        "description": "Kata kunci pencarian",
+        "schema": { "type": "string", "example": "ero" }
+      },
+      {
+        "name": "detail",
+        "in": "query",
+        "required": false,
+        "description": "URL untuk detail video",
+        "schema": { "type": "string", "example": "https://nekopoi.care/some-video" }
+      },
+      {
+        "name": "latest",
+        "in": "query",
+        "required": false,
+        "description": "Jika ada, menampilkan daftar terbaru tanpa perlu value",
+        "schema": { "type": "boolean", "nullable": true }
       }
-    },
+    ],
+    "responses": {
+      "200": { "description": "Data berhasil diambil" },
+      "400": { "description": "Query parameter tidak valid" },
+      "404": { "description": "Video/episode tidak ditemukan" }
+    }
+  }
+},
     "/api/xvideo": {
       "get": {
         "tags": ["SEARCH"],
