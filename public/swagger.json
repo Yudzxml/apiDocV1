@@ -9,17 +9,18 @@
     { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
   ],
   "tags": [
-    { "name": "Video", "description": "Semua API video dari berbagai platform" },
-    { "name": "YouTube", "description": "API khusus download YouTube" },
-    { "name": "CapCut", "description": "API CapCut video detail" },
-    { "name": "Tools", "description": "API tools tambahan seperti speech-to-text" },
-    { "name": "APK", "description": "API untuk APK download & detail" }
+    { "name": "SEARCH", "description": "Semua API Search dari berbagai platform" },
+    { "name": "DOWNLOAD", "description": "API khusus download berbagai platform" },
+    { "name": "TOOLS", "description": "API tools berbagai platform" }
   ],
   "paths": {
     "/api/xnxx": {
       "get": {
-        "tags": ["Video"],
+        "tags": ["SEARCH"],
         "summary": "XNXX API (Search or Download)",
+        "servers": [
+          { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+        ],
         "description": "Gunakan query parameter `search` untuk mencari video atau `download` untuk mengambil link download video.",
         "parameters": [
           {
@@ -59,8 +60,11 @@
     },
     "/api/nekopoi": {
       "get": {
-        "tags": ["Video"],
+        "tags": ["SEARCH"],
         "summary": "Nekopoi API (Search, Detail, Latest)",
+                "servers": [
+          { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+        ],
         "description": "Gunakan `search` untuk mencari, `detail` untuk detail, atau `latest=true` untuk daftar terbaru.",
         "parameters": [
           { "name": "search", "in": "query", "required": false, "description": "Kata kunci pencarian", "schema": { "type": "string", "example": "ero" } },
@@ -72,8 +76,11 @@
     },
     "/api/xvideo": {
       "get": {
-        "tags": ["Video"],
+        "tags": ["SEARCH"],
         "summary": "XVideos API (Search & Detail)",
+                "servers": [
+          { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+        ],
         "description": "Gunakan `search` untuk mencari, `detail` untuk detail video. Salah satu wajib dikosongkan agar fetch tidak tabrakan.",
         "parameters": [
           { "name": "search", "in": "query", "required": false, "description": "Kata kunci pencarian video", "schema": { "type": "string", "example": "indo tobrut" } },
@@ -84,40 +91,103 @@
     },
     "/api/capcut": {
       "get": {
-        "tags": ["CapCut"],
+        "tags": ["DOWNLOAD"],
         "summary": "Get CapCut Video Detail",
+        "servers": [
+          { "url": "https://api.yudzxyz.x-server.my.id", "description": "Server utama" }
+        ],        
         "description": "Ambil detail video CapCut berdasarkan URL.",
         "parameters": [{ "name": "url", "in": "query", "required": true, "description": "URL video CapCut", "schema": { "type": "string", "example": "https://www.capcut.com/tv2/ZSDJAn57J/" } }],
         "responses": { "200": { "description": "Berhasil diambil" }, "400": { "description": "URL tidak valid" }, "404": { "description": "Video tidak ditemukan" } }
       }
     },
     "/api/ytdl": {
-      "get": {
-        "tags": ["YouTube"],
-        "summary": "YouTube Video Downloader",
-        "description": "Ambil video YouTube berdasarkan URL, kualitas, dan format.",
-        "parameters": [
-          { "name": "url", "in": "query", "required": true, "description": "URL video YouTube", "schema": { "type": "string", "example": "https://youtube.com/watch?v=Fp154clV4pk" } },
-          { "name": "quality", "in": "query", "required": false, "description": "Resolusi video (360,480,720,1080) atau audio (320,256,192,128)", "schema": { "type": "integer", "example": 360 } },
-          { "name": "format", "in": "query", "required": false, "description": "Format file 'video' atau 'audio'", "schema": { "type": "string", "example": "video" } }
-        ],
-        "responses": { "200": { "description": "Video berhasil diambil" }, "400": { "description": "Parameter kurang" }, "404": { "description": "Video tidak ditemukan" } }
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "YouTube Video Downloader",
+    "description": "Ambil video YouTube berdasarkan URL. Parameter `url` wajib diisi. `quality` dan `format` bersifat opsional.\n\nContoh request: `https://api-yudzxml.koyeb.app/api/ytdl?url=https://youtube.com/watch?v=Fp154clV4pk&quality=360&format=video`",
+    "servers": [
+      { "url": "https://api-yudzxml.koyeb.app", "description": "Server utama" }
+    ],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video YouTube yang ingin diunduh (WAJIB diisi)",
+        "schema": {
+          "type": "string",
+          "format": "uri",
+          "example": "https://youtube.com/watch?v=Fp154clV4pk"
+        }
+      },
+      {
+        "name": "quality",
+        "in": "query",
+        "required": false,
+        "description": "Resolusi video (360,480,720,1080) atau kualitas audio (320,256,192,128)",
+        "schema": {
+          "type": "integer",
+          "example": 360,
+          "enum": [360, 480, 720, 1080, 320, 256, 192, 128]
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Format file yang diinginkan, 'video' atau 'audio'",
+        "schema": {
+          "type": "string",
+          "example": "video",
+          "enum": ["video", "audio"]
+        }
       }
-    },
+    ],
+    "responses": {
+      "200": {
+        "description": "Video berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "title": "DUKA - last chilid (lirik)",
+                "duration": "5:18",
+                "quality": 360,
+                "format": "mp4",
+                "downloadUrl": "https://storage.cdnframe.com/yt-cdn-f1a9553a/Fp154clV4pk/best.mp4"
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Parameter kurang atau URL tidak valid" },
+      "404": { "description": "Video tidak ditemukan" }
+    }
+  }
+},
     "/api/tools/speechtotext": {
       "get": {
-        "tags": ["Tools"],
+        "tags": ["TOOLS"],
         "summary": "Konversi audio ke teks",
         "description": "Ubah file audio (.opus) menjadi teks menggunakan parameter `url`.",
+      "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+       ],        
         "parameters": [{ "name": "url", "in": "query", "required": true, "description": "URL file audio", "schema": { "type": "string", "example": "https://cdn.yupra.my.id/yp/5l6ps5pn.opus" } }],
         "responses": { "200": { "description": "Berhasil dikonversi" }, "400": { "description": "URL tidak valid" }, "500": { "description": "Error server" } }
       }
     },
     "/api/download/apk": {
       "get": {
-        "tags": ["APK"],
+        "tags": ["SEARCH"],
         "summary": "APK API (Search & Detail)",
         "description": "Gunakan `search` untuk mencari, `download` untuk detail APK. Satu wajib dikosongkan.",
+              "servers": [
+      { "url": "https://api-yudzxzy.vercel.app", "description": "Server utama" }
+       ],    
         "parameters": [
           { "name": "search", "in": "query", "required": false, "description": "Kata kunci APK", "schema": { "type": "string", "example": "Pou" } },
           { "name": "download", "in": "query", "required": false, "description": "Package ID APK", "schema": { "type": "string", "example": "me.pou.app" } }
