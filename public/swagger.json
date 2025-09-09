@@ -422,7 +422,7 @@
           "schema": { "type": "string", "example": "Pou" }
         },
         {
-          "name": "id",
+          "name": "download",
           "in": "query",
           "required": false,
           "description": "Package ID aplikasi untuk mengambil detail/download APK, misal: 'me.pou.app'.",
