@@ -21,17 +21,17 @@
           "name": "search",
           "in": "query",
           "required": false,
-          "description": "Kata kunci pencarian video, misal: 'terbaru', 'viral', 'tutorial'.",
+          "description": "Kata kunci pencarian video, misal: 'terbaru', 'viral', 'tutorial'. ( kosongin jika mau fecth download )",
           "schema": {
             "type": "string",
             "example": "terbaru"
           }
         },
         {
-          "name": "url",
+          "name": "download",
           "in": "query",
           "required": false,
-          "description": "URL video XNXX untuk download/detail video",
+          "description": "URL video XNXX untuk download/detail video ( kosongin jika fecth search )",
           "schema": {
             "type": "string",
             "example": "https://www.xnxx.com/video-1em4rt89/enaknya_ngentot_pacar_disamping_kakaknya"
@@ -94,21 +94,21 @@
           "name": "search",
           "in": "query",
           "required": false,
-          "description": "Kata kunci pencarian video/episode, misal: 'ero', 'hentai', 'mirko'.",
+          "description": "Kata kunci pencarian video/episode, misal: 'ero', 'hentai', 'mirko'.  ( KOSONGIN JIKA FECTH Detail )",
           "schema": { "type": "string", "example": "ero" }
         },
         {
-          "name": "url",
+          "name": "detail",
           "in": "query",
           "required": false,
-          "description": "URL video Nekopoi untuk mengambil detail",
+          "description": "URL video Nekopoi untuk mengambil detail ( KOSONGIN JIKA FECTH SEARCH )",
           "schema": { "type": "string", "example": "https://nekopoi.care/sone-312-bu-guru-beroppai-gede-membuat-perjaka-disekolah-puas-diruang-kelas-seharian/" }
         },
         {
           "name": "latest",
           "in": "query",
           "required": false,
-          "description": "Gunakan `latest=true` untuk mengambil daftar video/episode terbaru",
+          "description": "Gunakan `latest=true` untuk mengambil daftar video/episode terbaru ( kosongin biar ga nabrak pas try api )",
           "schema": { "type": "boolean", "example": true }
         }
       ],
@@ -151,7 +151,7 @@
   "/api/xvideo": {
     "get": {
       "summary": "XVideos API (Search & Detail)",
-      "description": "Gunakan query parameter `search` untuk mencari video, atau `url` untuk mengambil detail video.",
+      "description": "Gunakan query parameter `search` untuk mencari video, atau `url` untuk mengambil detail video. ( WAJIB KOSONGIN SALAH SATU BIAR GA NABRAK FETCH )",
       "parameters": [
         {
           "name": "search",
@@ -161,7 +161,7 @@
           "schema": { "type": "string", "example": "indo tobrut" }
         },
         {
-          "name": "url",
+          "name": "detail",
           "in": "query",
           "required": false,
           "description": "URL video XVideos untuk mengambil detail video.",
@@ -406,7 +406,7 @@
   "/api/download/apk": {
     "get": {
       "summary": "APK API (Search & Detail)",
-      "description": "Gunakan query parameter `search` untuk mencari APK, atau `id` untuk mengambil detail/download APK.",
+      "description": "Gunakan query parameter `search` untuk mencari APK, atau `id` untuk mengambil detail/download APK. ( WAJIB KOSONGIN SATU BIAR GA NABRAK )",
       "servers": [
         {
           "url": "https://api-yudzxzy.vercel.app",
