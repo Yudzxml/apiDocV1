@@ -1,6 +1,4 @@
 import dynamic from "next/dynamic";
-import "swagger-ui-react/swagger-ui.css";
-import "../styles/swagger-modern.css";
 
 const SwaggerUI = dynamic(() => import("swagger-ui-react"), { ssr: false });
 
@@ -20,10 +18,11 @@ export default function SwaggerPage() {
       </div>
       <footer style={{
         textAlign: "center",
-        padding: "10px 0",
-        background: "#f3f4f6",
+        padding: "12px 0",
+        backgroundColor: "#0f172a",
+        color: "#f1f5f9",
         fontSize: "0.9rem",
-        color: "#6b7280"
+        fontWeight: 500
       }}>
         © 2025 YUDZXML Allright Reserved
       </footer>
