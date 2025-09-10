@@ -11,15 +11,12 @@ export default function Home() {
   // Typing Effect
   useEffect(() => {
     if (!loading) return;
-
     const typeWriter = () => {
       if (indexRef.current < text.length) {
         setTypedText(prev => prev + text.charAt(indexRef.current));
         indexRef.current += 1;
         setTimeout(typeWriter, 100);
-      } else {
-        setTimeout(() => setLoading(false), 600);
-      }
+      } else setTimeout(() => setLoading(false), 600);
     };
     typeWriter();
   }, [loading]);
@@ -33,13 +30,11 @@ export default function Home() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-
     window.addEventListener("resize", resize);
     resize();
 
     const colors = ["#ec4899", "#06b6d4", "#a855f7"];
     const particles = [];
-
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -75,36 +70,48 @@ export default function Home() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
+  // Global Styles Reset
+  useEffect(() => {
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.body.style.overflow = "hidden"; // Hide scroll
+  }, []);
+
   return (
     <div style={{
       fontFamily: "'Poppins', sans-serif",
+      width: "100%",
+      height: "100%",
+      position: "relative",
       background: "#0d0d0d",
       color: "#fff",
-      width: "100vw",
-      height: "100vh",
-      overflow: "hidden",
-      margin: 0,
-      padding: 0,
-      position: "relative"
+      overflow: "hidden"
     }}>
       {/* Canvas Background */}
       <canvas ref={canvasRef} style={{
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         zIndex: 0
       }} />
 
       {/* Loading Screen */}
       {loading && (
         <div style={{
-          position: "fixed", top: 0, left: 0,
-          width: "100vw", height: "100vh",
-          display: "flex", justifyContent: "center", alignItems: "center",
-          flexDirection: "column", background: "#0d0d0d", zIndex: 9999,
-          textAlign: "center", padding: 0, margin: 0
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          background: "#0d0d0d",
+          zIndex: 9999,
+          textAlign: "center"
         }}>
           <div style={{
             fontFamily: "'Orbitron', sans-serif",
@@ -132,20 +139,21 @@ export default function Home() {
       {/* Main Content */}
       {!loading && (
         <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "column",
-          width: "100vw",
-          height: "100vh",
-          overflowY: "auto",
           padding: "20px",
           boxSizing: "border-box",
-          position: "relative",
           zIndex: 1
         }}>
           <div style={{
-            width: "100%", maxWidth: "420px",
+            width: "100%",
+            maxWidth: "420px",
             background: "linear-gradient(180deg, rgba(25,25,25,0.95), rgba(15,15,15,0.95))",
             borderRadius: "20px",
             padding: "25px",
@@ -166,8 +174,11 @@ export default function Home() {
                 transition: "transform .4s ease"
               }} />
               <span style={{
-                position: "absolute", top: "90px", right: "calc(50% - 55px)",
-                width: "18px", height: "18px",
+                position: "absolute",
+                top: "90px",
+                right: "calc(50% - 55px)",
+                width: "18px",
+                height: "18px",
                 background: "#22c55e",
                 border: "2px solid #111",
                 borderRadius: "50%"
@@ -217,10 +228,18 @@ export default function Home() {
               {href:"mailto:yudaaryaardhana1122@email.com", icon:"https://cdn-icons-png.flaticon.com/512/5968/5968534.png", label:"Email"}
             ].map(link => (
               <a key={link.label} href={link.href} target="_blank" style={{
-                display: "flex", justifyContent: "space-between", alignItems: "center",
-                background: "rgba(55,65,81,0.7)", padding: "14px 18px", borderRadius: "14px",
-                textDecoration: "none", color: "#fff", transition: "0.3s", fontSize: "clamp(13px,3.5vw,15px)",
-                marginBottom: "16px", backdropFilter: "blur(4px)"
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                background: "rgba(55,65,81,0.7)",
+                padding: "14px 18px",
+                borderRadius: "14px",
+                textDecoration: "none",
+                color: "#fff",
+                transition: "0.3s",
+                fontSize: "clamp(13px,3.5vw,15px)",
+                marginBottom: "16px",
+                backdropFilter: "blur(4px)"
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <img src={link.icon} alt={link.label} style={{ width: "22px", height: "22px", borderRadius: "6px", filter: "brightness(0.7) drop-shadow(0 0 2px rgba(0,0,0,0.5))", transition: "transform 0.3s, filter 0.3s" }} />
@@ -229,7 +248,6 @@ export default function Home() {
                 <span style={{ fontWeight: "bold", fontSize: "16px" }}>→</span>
               </a>
             ))}
-
           </div>
         </div>
       )}
