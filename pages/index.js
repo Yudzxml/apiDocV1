@@ -80,28 +80,10 @@ export default function Home() {
 }, []);
 
   // Global Styles Reset
-  useEffect(() => {
-  // Reset style body & html
-  document.body.style.margin = "0";
-  document.body.style.padding = "0";
-  document.body.style.boxSizing = "border-box";
-  document.body.style.minHeight = "100vh";
-  document.body.style.background = "#0d0d0d";
-  
-  // Flexbox untuk center horizontal & top spacing
-  document.body.style.display = "flex";
-  document.body.style.flexDirection = "column";
-  document.body.style.alignItems = "center";
-  document.body.style.justifyContent = "flex-start"; // tetap di atas tapi tidak menempel ke layar
-  document.body.style.overflowX = "hidden";
-  document.body.style.overflowY = "auto";
-
-  // HTML element
-  document.documentElement.style.height = "100%";
-  document.documentElement.style.overflowY = "auto";
-}, []);
+  useEffect(() => { document.body.style.margin = "0"; document.body.style.padding = "0"; document.body.style.display = "flex"; document.body.style.flexDirection = "column"; document.body.style.alignItems = "center"; document.body.style.justifyContent = "center"; document.body.style.minHeight = "100vh"; document.body.style.background = "#0d0d0d"; document.body.style.overflow = "hidden"; }, []);
 
 return (
+
   <div style={{
     fontFamily: "'Poppins', sans-serif",
     width: "100%",
@@ -109,9 +91,8 @@ return (
     position: "relative",
     background: "#0d0d0d",
     color: "#fff",
-    overflow: "visible", // biar konten scroll
+    overflow: "hidden"
   }}>
-    {/* Canvas Background */}
     <canvas ref={canvasRef} style={{
       position: "fixed",
       top: 0,
@@ -120,8 +101,6 @@ return (
       height: "100%",
       zIndex: 0
     }} />
-
-    {/* Loading Screen */}
     {loading && (
       <div style={{
         position: "fixed",
@@ -137,17 +116,33 @@ return (
         zIndex: 9999,
         textAlign: "center"
       }}>
-        {/* typing text + progress bar */}
+        <div style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: "clamp(22px,5vw,36px)",
+          background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          letterSpacing: "2px",
+          marginBottom: "30px",
+          minHeight: "50px",
+          textShadow: "0 0 8px rgba(236,72,153,0.7), 0 0 12px rgba(168,85,247,0.5)"
+        }}>{typedText}</div>
+        <div style={{ width: "80%", height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "3px", overflow: "hidden" }}>
+          <div style={{
+            height: "100%",
+            width: `${(indexRef.current / text.length) * 100}%`,
+            background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
+            borderRadius: "3px",
+            transition: "width 0.3s linear"
+          }} />
+        </div>
       </div>
     )}
-
-    {/* Main Content */}
     {!loading && (
       <div style={{
-        position: "relative", // cukup relative, jangan fixed/absolute
+        position: "relative",
         width: "100%",
         maxWidth: "420px",
-        margin: "60px 0", // margin atas/bawah untuk jarak aman dari viewport
         padding: "25px",
         borderRadius: "20px",
         textAlign: "center",
@@ -157,7 +152,84 @@ return (
         border: "1px solid rgba(255,255,255,0.05)",
         zIndex: 1
       }}>
-        {/* Avatar, Name, Skills, Links */}
+        <div style={{ position: "relative" }}>
+          <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e53304b6.jpg" alt="avatar" style={{
+            width: "110px",
+            height: "110px",
+            borderRadius: "50%",
+            border: "4px solid #ec4899",
+            boxShadow: "0 0 20px rgba(236,72,153,0.5)",
+            objectFit: "cover",
+            transition: "transform .4s ease"
+          }} />
+          <span style={{
+            position: "absolute",
+            top: "90px",
+            right: "calc(50% - 55px)",
+            width: "18px",
+            height: "18px",
+            background: "#22c55e",
+            border: "2px solid #111",
+            borderRadius: "50%"
+          }} />
+        </div>
+        <h1 style={{
+          marginTop: "15px",
+          fontSize: "clamp(22px,5vw,28px)",
+          fontWeight: 700,
+          background: "linear-gradient(90deg,#ec4899,#a855f7,#06b6d4)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        }}>Yudzxml</h1>
+        <p style={{ color: "#9ca3af", fontSize: "clamp(12px,3.5vw,14px)" }}>@Yudzxml.ofc</p>
+        <div style={{ marginTop: "20px", display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center" }}>
+          {["React","NextJS","Vite","TailwindCSS","Django","Laravel","TypeScript","JavaScript","PHP","Java","Kotlin","Go-Lang","Python","C/C++","Rust"].map(skill => (
+            <span key={skill} style={{
+              padding: "6px 12px",
+              borderRadius: "8px",
+              fontSize: "clamp(11px,3vw,13px)",
+              background: "linear-gradient(90deg, rgba(34,211,238,0.25), rgba(236,72,153,0.25))",
+              transition: "transform 0.3s"
+            }}>{skill}</span>
+          ))}
+        </div>
+        <p style={{ marginTop: "20px", fontSize: "clamp(12px,3.5vw,14px)", color: "#d1d5db", fontStyle: "italic" }}>“Full-Stack Developer” <br /> “Learn Hard, Build, And Sharing ✨”</p>
+        <h2 style={{
+          marginTop: "25px",
+          marginBottom: "12px",
+          fontSize: "clamp(14px,4vw,16px)",
+          fontWeight: 600,
+          background: "linear-gradient(90deg,#22d3ee,#ec4899)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        }}>Connect With Me</h2>
+        {[
+          {href:"https://github.com/Yudzxml", icon:"https://cdn-icons-png.flaticon.com/512/25/25231.png", label:"GitHub"},
+          {href:"https://chat.whatsapp.com/GX4hALwfNXjIMG7V3OGPFI", icon:"https://cdn-icons-png.flaticon.com/512/733/733585.png", label:"WhatsApp Group"},
+          {href:"https://www.tiktok.com/@yudzxml.store?_t=ZS-8zYLchCRH9Q&_r=1", icon:"https://cdn-icons-png.flaticon.com/512/3116/3116491.png", label:"TikTok"},
+          {href:"mailto:yudaaryaardhana1122@email.com", icon:"https://cdn-icons-png.flaticon.com/512/5968/5968534.png", label:"Email"}
+        ].map(link => (
+          <a key={link.label} href={link.href} target="_blank" style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            background: "rgba(55,65,81,0.7)",
+            padding: "14px 18px",
+            borderRadius: "14px",
+            textDecoration: "none",
+            color: "#fff",
+            transition: "0.3s",
+            fontSize: "clamp(13px,3.5vw,15px)",
+            marginBottom: "16px",
+            backdropFilter: "blur(4px)"
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <img src={link.icon} alt={link.label} style={{ width: "22px", height: "22px", borderRadius: "6px", filter: "brightness(0.7) drop-shadow(0 0 2px rgba(0,0,0,0.5))", transition: "transform 0.3s, filter 0.3s" }} />
+              <span>{link.label}</span>
+            </div>
+            <span style={{ fontWeight: "bold", fontSize: "16px" }}>→</span>
+          </a>
+        ))}
       </div>
     )}
   </div>
