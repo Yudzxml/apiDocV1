@@ -5,9 +5,10 @@ export default function Home() {
 const [typedText, setTypedText] = useState("");
 const text = "Welcome to my Personal Account";
 const indexRef = useRef(0);
+const canvasRef = useRef(null);
 const typingInterval = useRef(null);
 
-useEffect(() => {
+   useEffect(() => {
   typingInterval.current = setInterval(() => {
     if (indexRef.current < text.length) {
       setTypedText((prev) => prev + text.charAt(indexRef.current));
