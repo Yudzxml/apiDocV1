@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.0.0",
   "info": {
     "title": "YUDZXML API'S",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "description": "Dokumentasi resmi API YUDZXML. Gunakan endpoint ini untuk mengambil data video terbaru dari berbagai platform, mengunduh APK, atau melakukan konversi audio ke teks secara cepat dan mudah."
   },
   "servers": [
@@ -16,7 +16,7 @@
   "description": "API Islami: Al-Qur'an, surah, ayat, doa, dzikir, dan konten keagamaan lainnya" }
 ],
   "paths": {
-    "/api/xnxx": {
+"/api/xnxx": {
       "get": {
         "tags": ["SEARCH"],
         "summary": "XNXX API (Search or Download)",
@@ -98,7 +98,7 @@
     }
   }
 },
-    "/api/xvideo": {
+"/api/xvideo": {
       "get": {
         "tags": ["SEARCH"],
         "summary": "XVideos API (Search & Detail)",
@@ -113,7 +113,7 @@
         "responses": { "200": { "description": "Data berhasil diambil" }, "400": { "description": "Query parameter tidak valid" }, "404": { "description": "Video tidak ditemukan" } }
       }
     },
-    "/api/capcut": {
+"/api/capcut": {
       "get": {
         "tags": ["DOWNLOAD"],
         "summary": "Get CapCut Video Detail",
@@ -125,7 +125,7 @@
         "responses": { "200": { "description": "Berhasil diambil" }, "400": { "description": "URL tidak valid" }, "404": { "description": "Video tidak ditemukan" } }
       }
     },
-    "/api/ytdl": {
+"/api/ytdl": {
   "get": {
     "tags": ["DOWNLOAD"],
     "summary": "YouTube Video Downloader",
@@ -192,7 +192,7 @@
     }
   }
 },
-    "/api/download/ytdl": {
+"/api/download/ytdl": {
   "get": {
     "tags": ["DOWNLOAD"],
     "summary": "YouTube Video Downloader",
@@ -253,7 +253,7 @@
     }
   }
 },
-    "/api/tools/speechtotext": {
+"/api/tools/speechtotext": {
       "get": {
         "tags": ["TOOLS"],
         "summary": "Konversi audio ke teks",
@@ -265,7 +265,7 @@
         "responses": { "200": { "description": "Berhasil dikonversi" }, "400": { "description": "URL tidak valid" }, "500": { "description": "Error server" } }
       }
     },
-    "/api/download/apk": {
+"/api/download/apk": {
       "get": {
         "tags": ["SEARCH"],
         "summary": "APK API (Search & Detail)",
@@ -280,7 +280,7 @@
         "responses": { "200": { "description": "Berhasil diambil" }, "400": { "description": "Parameter tidak valid" }, "404": { "description": "APK tidak ditemukan" } }
       }
     },
-    "/api/surah": {
+"/api/surah": {
   "get": {
     "tags": ["ISLAMIC"],
     "summary": "Ambil Surah Al-Qur'an",
@@ -365,7 +365,7 @@
     }
   }
 },
-    "/api/tools/check-host": {
+"/api/tools/check-host": {
   "get": {
     "tags": ["TOOLS"],
     "summary": "Cek status host/domain",
@@ -1255,6 +1255,50 @@
       },
       "400": { "description": "Parameter url tidak disertakan atau tidak valid" },
       "500": { "description": "Gagal mengambil screenshot" }
+    }
+  }
+},
+"/api/telesticker": {
+  "get": {
+    "tags": ["DOWNLOAD"],
+    "summary": "Get Telegram Sticker Pack Detail",
+    "servers": [
+      { "url": "https://api.yydz.my.id", "description": "Server utama" }
+    ],
+    "description": "Ambil detail sticker pack Telegram berdasarkan URL.",
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL sticker pack Telegram, contoh: https://t.me/addstickers/dinokuwu",
+        "schema": { "type": "string", "example": "https://t.me/addstickers/dinokuwu" }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": 200,
+              "author": "Yudzxml",
+              "data": {
+                "pack_name": "dinokuwu",
+                "title": "dino kuning @ngeuwu",
+                "count": 110,
+                "stickers": [
+                  "https://api.telegram.org/file/bot7980044117:AAHX7k0gBH9HC4455p3D5PMV4e8B1u6kl70/stickers/file_122.webp",
+                  "https://api.telegram.org/file/bot7980044117:AAHX7k0gBH9HC4455p3D5PMV4e8B1u6kl70/stickers/file_123.webp"
+                  // dst...
+                ]
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "URL tidak valid" },
+      "404": { "description": "Sticker pack tidak ditemukan" }
     }
   }
 }
