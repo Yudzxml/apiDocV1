@@ -88,8 +88,7 @@ export default function Home() {
 
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
-
-  return (
+return (
   <div style={{ fontFamily: "'Poppins', sans-serif", minHeight: "100vh", position: "relative" }}>
     <canvas
       ref={canvasRef}
@@ -112,13 +111,14 @@ export default function Home() {
         width: "100%",
         height: "100%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-start", // geser ke kiri
         alignItems: "center",
         flexDirection: "column",
         background: "#0d0d0d",
         zIndex: 9999,
-        padding: "20px",
-        textAlign: "center",
+        paddingTop: "20px",
+        paddingLeft: "60px", // geser horizontal
+        textAlign: "left", // teks rata kiri
         overflow: "hidden"
       }}>
         {/* Typing Text dengan Neon Cursor */}
@@ -165,7 +165,6 @@ export default function Home() {
           }} />
         </div>
 
-        {/* Cursor Blink Keyframes */}
         <style>{`
           @keyframes blink {
             0%, 50%, 100% { opacity: 1; }
@@ -177,10 +176,11 @@ export default function Home() {
       /* Main Content */
       <main style={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-start", // geser ke kiri
         alignItems: "center",
         minHeight: "100vh",
-        padding: "20px",
+        paddingTop: "20px",
+        paddingLeft: "60px", // geser horizontal
         zIndex: 1,
         position: "relative"
       }}>
