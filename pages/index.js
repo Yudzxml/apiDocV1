@@ -104,7 +104,7 @@ export default function Home() {
     />
 
 {/* Loading Screen */}
-{loading && (
+{loading ? (
   <div style={{
     position: "fixed",
     top: 0,
@@ -112,8 +112,8 @@ export default function Home() {
     width: "100%",
     height: "100%",
     display: "flex",
-    justifyContent: "center",  // horizontal center
-    alignItems: "center",      // vertical center
+    justifyContent: "center",
+    alignItems: "center",
     flexDirection: "column",
     background: "#0d0d0d",
     zIndex: 9999,
@@ -121,7 +121,6 @@ export default function Home() {
     textAlign: "center",
     overflow: "hidden"
   }}>
-    {/* Typing Text dengan Neon Cursor */}
     <div style={{
       fontFamily: "'Orbitron', sans-serif",
       fontSize: "clamp(22px, 5vw, 36px)",
@@ -145,7 +144,6 @@ export default function Home() {
       }} />
     </div>
 
-    {/* Progress Bar Neon */}
     <div style={{
       width: "80%",
       maxWidth: "420px",
@@ -166,7 +164,7 @@ export default function Home() {
     </div>
 
     {/* Cursor Blink Keyframes */}
-    <style>{`
+    <style jsx>{`
       @keyframes blink {
         0%, 50%, 100% { opacity: 1; }
         25%, 75% { opacity: 0; }
