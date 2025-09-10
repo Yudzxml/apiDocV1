@@ -87,7 +87,16 @@ export default function Home() {
   document.body.style.boxSizing = "border-box";
   document.body.style.minHeight = "100vh";
   document.body.style.background = "#0d0d0d";
-  document.body.style.overflowY = "auto"; // biar scroll vertikal muncul jika panjang
+  
+  // Flexbox untuk center horizontal & top spacing
+  document.body.style.display = "flex";
+  document.body.style.flexDirection = "column";
+  document.body.style.alignItems = "center";
+  document.body.style.justifyContent = "flex-start"; // tetap di atas tapi tidak menempel ke layar
+  document.body.style.overflowX = "hidden";
+  document.body.style.overflowY = "auto";
+
+  // HTML element
   document.documentElement.style.height = "100%";
   document.documentElement.style.overflowY = "auto";
 }, []);
@@ -100,7 +109,7 @@ return (
     position: "relative",
     background: "#0d0d0d",
     color: "#fff",
-    overflow: "visible", // tetap biar konten scroll
+    overflow: "visible", // biar konten scroll
   }}>
     {/* Canvas Background */}
     <canvas ref={canvasRef} style={{
@@ -135,10 +144,10 @@ return (
     {/* Main Content */}
     {!loading && (
       <div style={{
-        position: "relative",
+        position: "relative", // cukup relative, jangan fixed/absolute
         width: "100%",
         maxWidth: "420px",
-        margin: "40px auto", // beri jarak top/bottom
+        margin: "60px 0", // margin atas/bawah untuk jarak aman dari viewport
         padding: "25px",
         borderRadius: "20px",
         textAlign: "center",
