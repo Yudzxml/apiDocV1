@@ -88,7 +88,8 @@ export default function Home() {
 
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
-return (
+
+  return (
   <div style={{ fontFamily: "'Poppins', sans-serif", minHeight: "100vh", position: "relative" }}>
     <canvas
       ref={canvasRef}
@@ -102,85 +103,85 @@ return (
       }}
     />
 
-    {/* Loading Screen */}
-    {loading ? (
+{/* Loading Screen */}
+{loading ? (
+  <div style={{
+    position: "fixed",
+    top: 0,
+    left: "50%",          // mulai dari tengah horizontal
+    transform: "translateX(-10%)", // geser sedikit ke kiri
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    background: "#0d0d0d",
+    zIndex: 9999,
+    padding: "20px",
+    textAlign: "center",
+    overflow: "hidden"
+  }}>
+    {/* Typing Text dengan Neon Cursor */}
+    <div style={{
+      fontFamily: "'Orbitron', sans-serif",
+      fontSize: "clamp(22px, 5vw, 36px)",
+      background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      letterSpacing: "2px",
+      marginBottom: "30px",
+      minHeight: "50px",
+      textShadow: "0 0 8px rgba(236,72,153,0.7), 0 0 12px rgba(168,85,247,0.5)",
+      position: "relative"
+    }}>
+      {typedText}
+      <span style={{
+        display: "inline-block",
+        width: "4px",
+        height: "1em",
+        background: "#fff",
+        marginLeft: "3px",
+        animation: "blink 1s infinite"
+      }} />
+    </div>
+
+    {/* Progress Bar Neon */}
+    <div style={{
+      width: "80%",
+      maxWidth: "420px",
+      height: "6px",
+      background: "rgba(255,255,255,0.05)",
+      borderRadius: "3px",
+      overflow: "hidden",
+      boxShadow: "0 0 8px rgba(236,72,153,0.3)"
+    }}>
       <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
         height: "100%",
-        display: "flex",
-        justifyContent: "flex-start", // geser ke kiri
-        alignItems: "center",
-        flexDirection: "column",
-        background: "#0d0d0d",
-        zIndex: 9999,
-        paddingTop: "20px",
-        paddingLeft: "60px", // geser horizontal
-        textAlign: "left", // teks rata kiri
-        overflow: "hidden"
-      }}>
-        {/* Typing Text dengan Neon Cursor */}
-        <div style={{
-          fontFamily: "'Orbitron', sans-serif",
-          fontSize: "clamp(22px, 5vw, 36px)",
-          background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          letterSpacing: "2px",
-          marginBottom: "30px",
-          minHeight: "50px",
-          textShadow: "0 0 8px rgba(236,72,153,0.7), 0 0 12px rgba(168,85,247,0.5)",
-          position: "relative"
-        }}>
-          {typedText}
-          <span style={{
-            display: "inline-block",
-            width: "4px",
-            height: "1em",
-            background: "#fff",
-            marginLeft: "3px",
-            animation: "blink 1s infinite"
-          }} />
-        </div>
+        width: `${(indexRef.current / text.length) * 100}%`,
+        background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
+        borderRadius: "3px",
+        transition: "width 0.1s linear",
+        boxShadow: "0 0 10px rgba(236,72,153,0.5), 0 0 20px rgba(168,85,247,0.3)"
+      }} />
+    </div>
 
-        {/* Progress Bar Neon */}
-        <div style={{
-          width: "80%",
-          maxWidth: "420px",
-          height: "6px",
-          background: "rgba(255,255,255,0.05)",
-          borderRadius: "3px",
-          overflow: "hidden",
-          boxShadow: "0 0 8px rgba(236,72,153,0.3)"
-        }}>
-          <div style={{
-            height: "100%",
-            width: `${(indexRef.current / text.length) * 100}%`,
-            background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
-            borderRadius: "3px",
-            transition: "width 0.1s linear",
-            boxShadow: "0 0 10px rgba(236,72,153,0.5), 0 0 20px rgba(168,85,247,0.3)"
-          }} />
-        </div>
-
-        <style>{`
-          @keyframes blink {
-            0%, 50%, 100% { opacity: 1; }
-            25%, 75% { opacity: 0; }
-          }
-        `}</style>
-      </div>
+    {/* Cursor Blink Keyframes */}
+    <style>{`
+      @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0; }
+      }
+    `}</style>
+  </div>
     ) : (
       /* Main Content */
       <main style={{
         display: "flex",
-        justifyContent: "flex-start", // geser ke kiri
+        justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        paddingTop: "20px",
-        paddingLeft: "60px", // geser horizontal
+        padding: "20px",
         zIndex: 1,
         position: "relative"
       }}>
