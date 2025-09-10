@@ -104,17 +104,16 @@ export default function Home() {
     />
 
 {/* Loading Screen */}
-{loading ? (
+{loading && (
   <div style={{
     position: "fixed",
     top: 0,
-    left: "50%",          // mulai dari tengah horizontal
-    transform: "translateX(-10%)", // geser sedikit ke kiri
+    left: 0,
     width: "100%",
     height: "100%",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "center",  // horizontal center
+    alignItems: "center",      // vertical center
     flexDirection: "column",
     background: "#0d0d0d",
     zIndex: 9999,
@@ -174,7 +173,7 @@ export default function Home() {
       }
     `}</style>
   </div>
-    ) : (
+) : (
       /* Main Content */
       <main style={{
         display: "flex",
