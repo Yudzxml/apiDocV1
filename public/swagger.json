@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
     "title": "YUDZXML API'S",
     "version": "1.0.0",
@@ -1290,7 +1290,6 @@
                 "stickers": [
                   "https://api.telegram.org/file/bot7980044117:AAHX7k0gBH9HC4455p3D5PMV4e8B1u6kl70/stickers/file_122.webp",
                   "https://api.telegram.org/file/bot7980044117:AAHX7k0gBH9HC4455p3D5PMV4e8B1u6kl70/stickers/file_123.webp"
-                  // dst...
                 ]
               }
             }
