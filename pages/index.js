@@ -81,11 +81,18 @@ export default function Home() {
 
   // Global Styles Reset
   useEffect(() => {
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-  }, []);
+  // Reset style body & html
+  document.body.style.margin = "0";
+  document.body.style.padding = "0";
+  document.body.style.boxSizing = "border-box";
+  document.body.style.minHeight = "100vh";
+  document.body.style.background = "#0d0d0d";
+  document.body.style.overflowY = "auto"; // biar scroll vertikal muncul jika panjang
+  document.documentElement.style.height = "100%";
+  document.documentElement.style.overflowY = "auto";
+}, []);
 
-  return (
+return (
   <div style={{
     fontFamily: "'Poppins', sans-serif",
     width: "100%",
@@ -93,9 +100,7 @@ export default function Home() {
     position: "relative",
     background: "#0d0d0d",
     color: "#fff",
-    overflow: "visible", // biar bisa scroll
-    margin: 0,
-    padding: 0
+    overflow: "visible", // tetap biar konten scroll
   }}>
     {/* Canvas Background */}
     <canvas ref={canvasRef} style={{
@@ -130,10 +135,10 @@ export default function Home() {
     {/* Main Content */}
     {!loading && (
       <div style={{
-        position: "relative", // ganti fixed ke relative
+        position: "relative",
         width: "100%",
         maxWidth: "420px",
-        margin: "20px auto", // biar ada jarak top/bottom & center
+        margin: "40px auto", // beri jarak top/bottom
         padding: "25px",
         borderRadius: "20px",
         textAlign: "center",
