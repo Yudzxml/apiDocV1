@@ -91,7 +91,12 @@ return (
     position: "relative",
     background: "#0d0d0d",
     color: "#fff",
-    overflow: "hidden"
+    overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+    boxSizing: "border-box"
   }}>
     <canvas ref={canvasRef} style={{
       position: "fixed",
@@ -118,16 +123,16 @@ return (
       }}>
         <div style={{
           fontFamily: "'Orbitron', sans-serif",
-          fontSize: "clamp(22px,5vw,36px)",
+          fontSize: "clamp(20px,4vw,30px)",
           background: "linear-gradient(90deg, #ec4899, #a855f7, #06b6d4)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
-          letterSpacing: "2px",
-          marginBottom: "30px",
-          minHeight: "50px",
-          textShadow: "0 0 8px rgba(236,72,153,0.7), 0 0 12px rgba(168,85,247,0.5)"
+          letterSpacing: "1.5px",
+          marginBottom: "20px",
+          minHeight: "40px",
+          textShadow: "0 0 6px rgba(236,72,153,0.6), 0 0 10px rgba(168,85,247,0.4)"
         }}>{typedText}</div>
-        <div style={{ width: "80%", height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "3px", overflow: "hidden" }}>
+        <div style={{ width: "80%", height: "5px", background: "rgba(255,255,255,0.1)", borderRadius: "3px", overflow: "hidden" }}>
           <div style={{
             height: "100%",
             width: `${(indexRef.current / text.length) * 100}%`,
@@ -140,64 +145,63 @@ return (
     )}
     {!loading && (
       <div style={{
-        position: "relative",
         width: "100%",
-        maxWidth: "420px",
-        padding: "25px",
-        borderRadius: "20px",
+        maxWidth: "380px",
+        padding: "20px",
+        borderRadius: "16px",
         textAlign: "center",
-        background: "linear-gradient(180deg, rgba(25,25,25,0.95), rgba(15,15,15,0.95))",
-        boxShadow: "0 0 40px rgba(236,72,153,0.2)",
-        backdropFilter: "blur(10px)",
+        background: "linear-gradient(180deg, rgba(25,25,25,0.9), rgba(15,15,15,0.9))",
+        boxShadow: "0 0 30px rgba(236,72,153,0.2)",
+        backdropFilter: "blur(8px)",
         border: "1px solid rgba(255,255,255,0.05)",
-        zIndex: 1
+        zIndex: 1"
       }}>
         <div style={{ position: "relative" }}>
           <img src="https://raw.githubusercontent.com/Yudzxml/UploaderV2/main/tmp/e53304b6.jpg" alt="avatar" style={{
-            width: "110px",
-            height: "110px",
+            width: "90px",
+            height: "90px",
             borderRadius: "50%",
-            border: "4px solid #ec4899",
-            boxShadow: "0 0 20px rgba(236,72,153,0.5)",
+            border: "3px solid #ec4899",
+            boxShadow: "0 0 15px rgba(236,72,153,0.5)",
             objectFit: "cover",
             transition: "transform .4s ease"
           }} />
           <span style={{
             position: "absolute",
-            top: "90px",
-            right: "calc(50% - 55px)",
-            width: "18px",
-            height: "18px",
+            top: "70px",
+            right: "calc(50% - 45px)",
+            width: "14px",
+            height: "14px",
             background: "#22c55e",
             border: "2px solid #111",
             borderRadius: "50%"
           }} />
         </div>
         <h1 style={{
-          marginTop: "15px",
-          fontSize: "clamp(22px,5vw,28px)",
+          marginTop: "12px",
+          fontSize: "clamp(20px,4vw,24px)",
           fontWeight: 700,
           background: "linear-gradient(90deg,#ec4899,#a855f7,#06b6d4)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent"
         }}>Yudzxml</h1>
-        <p style={{ color: "#9ca3af", fontSize: "clamp(12px,3.5vw,14px)" }}>@Yudzxml.ofc</p>
-        <div style={{ marginTop: "20px", display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center" }}>
+        <p style={{ color: "#9ca3af", fontSize: "clamp(11px,3vw,13px)" }}>@Yudzxml.ofc</p>
+        <div style={{ marginTop: "15px", display: "flex", flexWrap: "wrap", gap: "6px", justifyContent: "center" }}>
           {["React","NextJS","Vite","TailwindCSS","Django","Laravel","TypeScript","JavaScript","PHP","Java","Kotlin","Go-Lang","Python","C/C++","Rust"].map(skill => (
             <span key={skill} style={{
-              padding: "6px 12px",
-              borderRadius: "8px",
-              fontSize: "clamp(11px,3vw,13px)",
-              background: "linear-gradient(90deg, rgba(34,211,238,0.25), rgba(236,72,153,0.25))",
+              padding: "4px 10px",
+              borderRadius: "6px",
+              fontSize: "clamp(10px,2.5vw,12px)",
+              background: "linear-gradient(90deg, rgba(34,211,238,0.2), rgba(236,72,153,0.2))",
               transition: "transform 0.3s"
             }}>{skill}</span>
           ))}
         </div>
-        <p style={{ marginTop: "20px", fontSize: "clamp(12px,3.5vw,14px)", color: "#d1d5db", fontStyle: "italic" }}>“Full-Stack Developer” <br /> “Learn Hard, Build, And Sharing ✨”</p>
+        <p style={{ marginTop: "15px", fontSize: "clamp(11px,3vw,13px)", color: "#d1d5db", fontStyle: "italic" }}>“Full-Stack Developer” <br /> “Learn Hard, Build, And Sharing ✨”</p>
         <h2 style={{
-          marginTop: "25px",
-          marginBottom: "12px",
-          fontSize: "clamp(14px,4vw,16px)",
+          marginTop: "20px",
+          marginBottom: "10px",
+          fontSize: "clamp(13px,3.5vw,15px)",
           fontWeight: 600,
           background: "linear-gradient(90deg,#22d3ee,#ec4899)",
           WebkitBackgroundClip: "text",
@@ -213,21 +217,21 @@ return (
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            background: "rgba(55,65,81,0.7)",
-            padding: "14px 18px",
-            borderRadius: "14px",
+            background: "rgba(55,65,81,0.65)",
+            padding: "12px 16px",
+            borderRadius: "12px",
             textDecoration: "none",
             color: "#fff",
             transition: "0.3s",
-            fontSize: "clamp(13px,3.5vw,15px)",
-            marginBottom: "16px",
+            fontSize: "clamp(12px,3vw,14px)",
+            marginBottom: "12px",
             backdropFilter: "blur(4px)"
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <img src={link.icon} alt={link.label} style={{ width: "22px", height: "22px", borderRadius: "6px", filter: "brightness(0.7) drop-shadow(0 0 2px rgba(0,0,0,0.5))", transition: "transform 0.3s, filter 0.3s" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <img src={link.icon} alt={link.label} style={{ width: "20px", height: "20px", borderRadius: "5px", filter: "brightness(0.7) drop-shadow(0 0 2px rgba(0,0,0,0.5))", transition: "transform 0.3s, filter 0.3s" }} />
               <span>{link.label}</span>
             </div>
-            <span style={{ fontWeight: "bold", fontSize: "16px" }}>→</span>
+            <span style={{ fontWeight: "bold", fontSize: "14px" }}>→</span>
           </a>
         ))}
       </div>
