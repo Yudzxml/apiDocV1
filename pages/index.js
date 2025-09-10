@@ -2,91 +2,92 @@ import { useEffect, useState, useRef } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-const [typedText, setTypedText] = useState("");
-const text = "Welcome to my Personal Account";
-const indexRef = useRef(0);
-const canvasRef = useRef(null);
-const typingInterval = useRef(null);
+  const [typedText, setTypedText] = useState("");
+  const text = "Welcome to my Personal Account";
+  const indexRef = useRef(0);
+  const typingInterval = useRef(null);
 
-   useEffect(() => {
-  typingInterval.current = setInterval(() => {
-    if (indexRef.current < text.length) {
-      setTypedText((prev) => prev + text.charAt(indexRef.current));
-      indexRef.current++;
-    } else {
-      clearInterval(typingInterval.current);
-      setTimeout(() => setLoading(false), 600);
-    }
-  }, 100);
+  const canvasRef = useRef(null);
+  const particles = useRef([]); // 🔥 wajib
 
-  return () => clearInterval(typingInterval.current); // cleanup saat unmount
-}, []);
+  // Typing effect
+  useEffect(() => {
+    typingInterval.current = setInterval(() => {
+      if (indexRef.current < text.length) {
+        setTypedText((prev) => prev + text.charAt(indexRef.current));
+        indexRef.current++;
+      } else {
+        clearInterval(typingInterval.current);
+        setTimeout(() => setLoading(false), 600);
+      }
+    }, 100);
+
+    return () => clearInterval(typingInterval.current);
+  }, []);
 
   // Particle background
   useEffect(() => {
-  const canvas = canvasRef.current;
-  const ctx = canvas.getContext("2d");
+    const canvas = canvasRef.current;
+    if (!canvas) return; // safety check
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return; // safety check
 
-  // Background canvas jadi hitam pekat
-  ctx.fillStyle = "#000"; 
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const colors = ["#ff2d95", "#06b6d4", "#a855f7"];
 
-  // Warna particle neon agar kontras di background hitam
-  const colors = ["#ff2d95", "#06b6d4", "#a855f7"]; // neon pink, cyan, purple
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 3 + 1;
-      this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.speedX = (Math.random() - 0.5) * 1.5;
-      this.speedY = (Math.random() - 0.5) * 1.5;
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speedX = (Math.random() - 0.5) * 1.5;
+        this.speedY = (Math.random() - 0.5) * 1.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
     }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    }
-  }
 
-  const initParticles = () => {
-    particles.current = [];
-    for (let i = 0; i < 100; i++) {
-      particles.current.push(new Particle());
-    }
-  };
+    const initParticles = () => {
+      particles.current = [];
+      for (let i = 0; i < 100; i++) {
+        particles.current.push(new Particle());
+      }
+    };
 
-  const animate = () => {
-    ctx.fillStyle = "#000"; // biar background tetap hitam saat animasi
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const animate = () => {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    particles.current.forEach((p) => {
-      p.update();
-      p.draw();
-    });
-    requestAnimationFrame(animate);
-  };
+      particles.current.forEach((p) => {
+        p.update();
+        p.draw();
+      });
 
-  const resizeCanvas = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initParticles();
-  };
+      requestAnimationFrame(animate);
+    };
 
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-  animate();
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
 
-  return () => window.removeEventListener("resize", resizeCanvas);
-}, []);
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    animate();
+
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, []);
 
   return (
     <div style={{ fontFamily: "'Poppins', sans-serif", minHeight: "100vh", position: "relative" }}>
