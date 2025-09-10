@@ -1204,7 +1204,7 @@
     "summary": "Web Screenshot",
     "description": "Mengambil screenshot dari website dan langsung mengembalikan gambar.\nParameter `url` wajib. Opsional: `device` untuk tipe perangkat, `fullpage` untuk screenshot seluruh halaman.",
     "servers": [
-      { "url": "https://yydz.my.id", "description": "Server utama" }
+      { "url": "https://api.yydz.my.id", "description": "Server utama" }
     ],
     "parameters": [
       {
