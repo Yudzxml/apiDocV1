@@ -1139,7 +1139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     DOM.modal.submitBtn.innerHTML =
       '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...'
 
-    const apiUrlWithParams = `http://api.yydz.my.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`
+    const apiUrlWithParams = `https://api.yydz.my.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`
     DOM.modal.endpoint.textContent = apiUrlWithParams
 
     await handleApiRequest(apiUrlWithParams, currentApiData.name)
