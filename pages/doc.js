@@ -6,62 +6,91 @@ const SwaggerUI = dynamic(() => import("swagger-ui-react"), { ssr: false });
 
 export default function ApiDocs() {
   useEffect(() => {
-    // Dark theme custom untuk Swagger UI
     const style = document.createElement("style");
     style.innerHTML = `
+      /* GENERAL BODY & FONTS */
       body, .swagger-ui, .swagger-container {
         background-color: #121212 !important;
         color: #e0e0e0 !important;
         font-family: 'Inter', sans-serif !important;
       }
 
+      /* TOPBAR */
       .swagger-ui .topbar {
         background-color: #1f1f1f !important;
         border-bottom: 1px solid #333 !important;
+        padding: 10px 20px;
       }
 
+      .swagger-ui .topbar a {
+        color: #fff !important;
+      }
+
+      /* OPBLOCKS */
       .swagger-ui .opblock {
         background-color: #1e1e1e !important;
         border: 1px solid #333 !important;
-        border-radius: 8px;
-        margin-bottom: 10px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .swagger-ui .opblock:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.7);
       }
 
       .swagger-ui .opblock-summary {
         color: #fff !important;
+        font-weight: 600;
+        font-size: 15px;
       }
 
       .swagger-ui .opblock-summary-method {
         background-color: #3a3a3a !important;
         color: #fff !important;
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 13px;
       }
 
       .swagger-ui .opblock-description-wrapper, 
       .swagger-ui .opblock-body pre {
         background-color: #1a1a1a !important;
         color: #ddd !important;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 14px;
       }
 
       .swagger-ui .responses-wrapper {
         background-color: #1a1a1a !important;
         color: #ccc !important;
+        border-radius: 8px;
       }
 
       .swagger-ui .model-box {
         background-color: #1a1a1a !important;
         color: #ccc !important;
+        border-radius: 8px;
+        padding: 8px;
       }
 
       .swagger-ui .response-col_status {
         color: #ff9800 !important;
+        font-weight: bold;
       }
 
       .swagger-ui .scheme-container {
         background-color: #1a1a1a !important;
         border-radius: 8px;
+        padding: 8px;
       }
 
-      /* scrollbar dark */
+      /* SCROLLBAR DARK */
       ::-webkit-scrollbar {
         width: 8px;
       }
@@ -73,7 +102,7 @@ export default function ApiDocs() {
         background: #222;
       }
 
-      /* Footer custom */
+      /* FOOTER */
       .swagger-footer {
         text-align: center;
         padding: 12px 0;
@@ -84,6 +113,22 @@ export default function ApiDocs() {
         position: sticky;
         bottom: 0;
         width: 100%;
+      }
+
+      /* RESPONSIVE MOBILE */
+      @media (max-width: 768px) {
+        .swagger-ui .opblock-summary {
+          font-size: 14px;
+        }
+        .swagger-ui .opblock-summary-method {
+          font-size: 12px;
+          padding: 3px 6px;
+        }
+        .swagger-ui .opblock-description-wrapper, 
+        .swagger-ui .opblock-body pre {
+          font-size: 13px;
+          padding: 8px;
+        }
       }
     `;
     document.head.appendChild(style);
