@@ -29,12 +29,92 @@
       "name": "DOWNLOADER",
       "items": [
         {
+          "name": "Facebook Downloader",
+          "desc": "Download any video facebook via API",
+          "path": "/api/download/facebook?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from facebook",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Capcut Downloader",
+          "desc": "Download any video Capcut via API",
+          "path": "/api/download/capcut?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from capcut",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Tiktok Downloader",
+          "desc": "Download any video/image/audio tiktok via API",
+          "path": "/api/download/tiktok?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from tiktok search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Soundcloud Downloader",
+          "desc": "Download any audio soundcloud via API",
+          "path": "/api/download/soundcloud?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from soundcloud search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Pinterest Downloader",
+          "desc": "Download any image/video pin via API",
+          "path": "/api/download/pinterest?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from pinterest search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Aptoide Downloader",
+          "desc": "Download any Apk via API",
+          "path": "/api/download/aptoide?id=&apikey=",
+          "status": "ready",
+          "params": {
+            "id": "input parameter id from  aptoide search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Xnxx Downloader",
+          "desc": "Download any Xnxx video via API",
+          "path": "/api/download/xnxx?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter link from  xnxx search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
           "name": "Spotify Downloader",
           "desc": "Download any Spotify track via API",
           "path": "/api/download/spotify?url=&apikey=",
           "status": "ready",
           "params": {
             "url": "input parameter from spotify link",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Telegram Sticker",
+          "desc": "Download any Sticker tele via API",
+          "path": "/api/download/telesticker?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter from link Sticker",
             "apikey": "input your apikey"
           }
         },
@@ -54,6 +134,387 @@
     {
       "name": "SEARCH",
       "items": [
+  {
+    "name": "XVideos Search",
+    "desc": "Search videos on XVideos by keyword",
+    "path": "/api/search/xvideos?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "kata kunci untuk search",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "XVideos Detail",
+    "desc": "Get video details from XVideos by URL",
+    "path": "/api/search/xvideos?url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "url video XVideos",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Chord Search",
+    "desc": "Search chord by keyword",
+    "path": "/api/search/chord?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "kata kunci untuk chord",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Google Search",
+    "desc": "Search Google by keyword",
+    "path": "/api/search/google?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "kata kunci untuk search Google",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Nekopoi Search",
+    "desc": "Search videos on Nekopoi by keyword",
+    "path": "/api/search/nekopoi?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "kata kunci untuk search",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Nekopoi Detail",
+    "desc": "Get video details from Nekopoi by URL",
+    "path": "/api/search/nekopoi?url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "url video Nekopoi",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Search",
+    "desc": "Search anime or manga on Samehadaku by keyword",
+    "path": "/api/search/samehadaku?action=&q=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "search",
+      "q": "kata kunci untuk search",
+      "page": "nomor halaman, default 1",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Latest",
+    "desc": "Get latest anime/manga releases from Samehadaku",
+    "path": "/api/search/samehadaku?action=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "latest",
+      "page": "nomor halaman, default 1",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Jadwal Update",
+    "desc": "Get anime update schedule from Samehadaku",
+    "path": "/api/search/samehadaku?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "jadwalupdate",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Detail",
+    "desc": "Get anime/manga detail by URL",
+    "path": "/api/search/samehadaku?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "detail",
+      "url": "url untuk detail anime/manga",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Genre",
+    "desc": "Get anime/manga by genre",
+    "path": "/api/search/samehadaku?action=&genre=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "genre",
+      "genre": "nama genre anime/manga",
+      "page": "nomor halaman, default 1",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Top Anime",
+    "desc": "Get top ranked anime from Samehadaku",
+    "path": "/api/search/samehadaku?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "topanime",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Samehadaku Get Stream",
+    "desc": "Get streaming links for anime/manga by URL",
+    "path": "/api/search/samehadaku?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "getstream",
+      "url": "url untuk streaming",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Search",
+    "desc": "Search anime on Anichin by keyword",
+    "path": "/api/search/anichin?action=&q=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "search",
+      "q": "kata kunci untuk search anime",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Latest",
+    "desc": "Get latest anime releases from Anichin",
+    "path": "/api/search/anichin?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "latest",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Popular",
+    "desc": "Get popular anime today from Anichin",
+    "path": "/api/search/anichin?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "popular",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Recommendations",
+    "desc": "Get recommended anime from Anichin",
+    "path": "/api/search/anichin?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "rekomendasi",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Detail",
+    "desc": "Get anime detail by URL",
+    "path": "/api/search/anichin?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "detail",
+      "url": "url anime untuk detail",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Genres",
+    "desc": "Get anime by genre",
+    "path": "/api/search/anichin?action=&genre=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "genres",
+      "genre": "nama genre anime",
+      "page": "nomor halaman untuk pagination",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Populer Donghua",
+    "desc": "Get popular Donghua anime",
+    "path": "/api/search/anichin?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "populerdonghua",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Anichin Info",
+    "desc": "Get anime info by URL",
+    "path": "/api/search/anichin?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "info",
+      "url": "url anime untuk info",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Search",
+    "desc": "Search manga on Komiku by keyword",
+    "path": "/api/search/komiku?action=&q=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "search",
+      "q": "kata kunci untuk search manga",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Latest",
+    "desc": "Get latest manga updates from Komiku",
+    "path": "/api/search/komiku?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "latest",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Popular",
+    "desc": "Get popular manga from Komiku by page number",
+    "path": "/api/search/komiku?action=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "populer",
+      "page": "nomor halaman untuk pagination",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Detail",
+    "desc": "Get manga detail by URL",
+    "path": "/api/search/komiku?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "detail",
+      "url": "url komik untuk detail",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Chapter",
+    "desc": "Get chapter pages of a manga by URL",
+    "path": "/api/search/komiku?action=&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "chapter",
+      "url": "url chapter komik",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Genre",
+    "desc": "Search manga by genre",
+    "path": "/api/search/komiku?action=&genre=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "genre",
+      "genre": "nama genre komik",
+      "page": "nomor halaman untuk pagination",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku List",
+    "desc": "Get list of manga by type",
+    "path": "/api/search/komiku?action=&tipe=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "listkomik",
+      "tipe": "tipe komik, default 'manga'",
+      "page": "nomor halaman untuk pagination",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Daftar List",
+    "desc": "Get daftar list of manga by type",
+    "path": "/api/search/komiku?action=&tipe=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "daftarList",
+      "tipe": "tipe komik, default 'manga'",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Top Rank",
+    "desc": "Get top ranked manga",
+    "path": "/api/search/komiku?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "topkomik",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Komiku Recommendations",
+    "desc": "Get recommended manga",
+    "path": "/api/search/komiku?action=&apikey=",
+    "status": "ready",
+    "params": {
+      "action": "rekomendasi",
+      "apikey": "input your apikey"
+    }
+  },
+{
+  "name": "TikTok Search",
+  "desc": "Search any video on TikTok via API",
+  "path": "/api/search/tiktok?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "cari judul video atau username",
+    "apikey": "input your apikey"
+  }
+},
+{
+  "name": "SoundCloud Search",
+  "desc": "Search any track or artist on SoundCloud via API",
+  "path": "/api/search/soundcloud?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "cari judul lagu atau nama artist",
+    "apikey": "input your apikey"
+  }
+},
+{
+  "name": "Pinterest Search",
+  "desc": "Search any pin or image on Pinterest via API",
+  "path": "/api/search/pinterest?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "cari kata kunci pin/gambar",
+    "apikey": "input your apikey"
+  }
+},
+        {
+  "name": "XNXX Search",
+  "desc": "Search any video on XNXX via API",
+  "path": "/api/search/xnxx?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "cari judul video",
+    "apikey": "input your apikey"
+  }
+},
+        {
+          "name": "Aptoide Search",
+          "desc": "Search any apk id via API",
+          "path": "/api/search/aptoide?q=&apikey=",
+          "status": "ready",
+          "params": {
+            "q": "cari nama apk",
+            "apikey": "input your apikey"
+          }
+        },
         {
           "name": "Spotify Search",
           "desc": "Search any Spotify track via API",
@@ -75,6 +536,158 @@
           }
         }
       ]
+    },
+    {
+      "name": "ISLAMI",
+      "items": [
+        {
+          "name": "Jadwal Shalat",
+          "desc": "Search any Jadwal shalat via API",
+          "path": "/api/islami/jadwalshalat?kota=&apikey=",
+          "status": "ready",
+          "params": {
+            "kota": "lokasi kota kamu",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Surah",
+          "desc": "Search any surah via API",
+          "path": "/api/islami/surah?q=&apikey=",
+          "status": "ready",
+          "params": {
+            "q": "input parameter from contoh 1",
+            "apikey": "input your apikey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "STALK",
+      "items": [
+  {
+    "name": "Genshin Stalk",
+    "desc": "Get Genshin Impact player info by UID",
+    "path": "/api/stalk/genshin?id=&apikey=",
+    "status": "ready",
+    "params": {
+      "id": "UID pemain Genshin Impact",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Instagram Stalk",
+    "desc": "Get Instagram profile info by username",
+    "path": "/api/stalk/instagram?username=&apikey=",
+    "status": "ready",
+    "params": {
+      "username": "username Instagram",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "TikTok Stalk",
+    "desc": "Get TikTok profile info by username",
+    "path": "/api/stalk/tiktok?username=&apikey=",
+    "status": "ready",
+    "params": {
+      "username": "username TikTok",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Twitter Stalk",
+    "desc": "Get Twitter profile info by username",
+    "path": "/api/stalk/twitter?username=&apikey=",
+    "status": "ready",
+    "params": {
+      "username": "username Twitter",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Pinterest Stalk",
+    "desc": "Get Pinterest profile info by username",
+    "path": "/api/stalk/pinterest?username=&apikey=",
+    "status": "ready",
+    "params": {
+      "username": "username Pinterest",
+      "apikey": "input your apikey"
+    }
+  }
+]
+    },
+    {
+      "name": "TOOLS",
+      "items": [
+  {
+    "name": "Image Edit",
+    "desc": "Edit an image via AI by providing URL and prompt",
+    "path": "/api/tools/imgedit?url=&prompt=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "URL gambar yang akan diedit",
+      "prompt": "instruksi atau deskripsi edit",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Screenshot Website",
+    "desc": "Take a screenshot of a website",
+    "path": "/api/tools/screenshot?url=&device=&fullpage=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "URL website",
+      "device": "desktop / mobile (default desktop)",
+      "fullpage": "true / false (ambil full page)",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Generate Quote",
+    "desc": "Generate a quote image with text, name, avatar, and color",
+    "path": "/api/tools/quote?q=&name=&avatar=&color=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "teks quote",
+      "name": "nama pengarang",
+      "avatar": "URL avatar",
+      "color": "warna background (optional)",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "2FA Token",
+    "desc": "Generate a 2FA token for a given key",
+    "path": "/api/tools/2fa?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "key untuk 2FA",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Speech to Text",
+    "desc": "Convert audio from URL to text",
+    "path": "/api/tools/spechtotext?url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "URL file audio",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "Check Host",
+    "desc": "Check a host/domain via ping, http, or other methods",
+    "path": "/api/tools/checkhost?host=&type=&apikey=",
+    "status": "ready",
+    "params": {
+      "host": "host/domain yang akan dicek",
+      "type": "tipe check: ping, http, dll (default ping)",
+      "apikey": "input your apikey"
+    }
+  }
+]
     }
   ]
 }
