@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Key Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>API Key Manager</h1>
+  <div class="container">
+    <label>Admin API Key</label>
+    <input type="text" id="adminKey" placeholder="Masukkan API key admin">
+
+    <label>Action</label>
+    <select id="action">
+      <option value="add">Add</option>
+      <option value="delete">Delete</option>
+      <option value="edit">Edit</option>
+      <option value="check">Check</option>
+    </select>
+
+    <div id="targetKeyWrapper">
+      <label>Target API Key</label>
+      <input type="text" id="targetKey" placeholder="Hanya untuk Delete/Edit/Check">
+    </div>
+
+    <div id="limitWrapper">
+      <label>Limit (opsional)</label>
+      <input type="number" id="limit" placeholder="Limit API key baru / edit">
+    </div>
+
+    <div id="expireWrapper">
+      <label>Expire Days (opsional)</label>
+      <input type="number" id="expireDays" placeholder="Expire dalam hari">
+    </div>
+
+    <button id="submitBtn">Submit</button>
+
+    <h3>Response:</h3>
+    <pre id="response">Menunggu aksi...</pre>
+  </div>
+
+  <script>
+    const actionSelect = document.getElementById("action");
+    const targetWrapper = document.getElementById("targetKeyWrapper");
+    const limitWrapper = document.getElementById("limitWrapper");
+    const expireWrapper = document.getElementById("expireWrapper");
+    const submitBtn = document.getElementById("submitBtn");
+    const responseEl = document.getElementById("response");
+
+    const updateFormVisibility = () => {
+      const action = actionSelect.value;
+
+      targetWrapper.style.display = (action === "edit" || action === "delete" || action === "check") ? "block" : "none";
+      limitWrapper.style.display = (action === "add" || action === "edit") ? "block" : "none";
+      expireWrapper.style.display = (action === "add" || action === "edit") ? "block" : "none";
+
+      if (action === "add") {
+        document.getElementById("targetKey").value = "";
+      }
+      if (action === "delete" || action === "check") {
+        document.getElementById("limit").value = "";
+        document.getElementById("expireDays").value = "";
+      }
+    };
+
+    actionSelect.addEventListener("change", updateFormVisibility);
+    updateFormVisibility();
+
+    submitBtn.addEventListener("click", async () => {
+      const adminKey = document.getElementById("adminKey").value.trim();
+      const action = actionSelect.value;
+      const targetKey = document.getElementById("targetKey").value.trim();
+      const limit = document.getElementById("limit").value;
+      const expireDays = document.getElementById("expireDays").value;
+
+      let url = `https://api.yydz.my.id/api/user/apikey?action=${action}`;
+      if (targetKey) url += `&key=${targetKey}`;
+      if (limit) url += `&limit=${limit}`;
+      if (expireDays) url += `&expireDays=${expireDays}`;
+
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: { "x-apikey": adminKey }
+        });
+        const data = await res.json();
+        responseEl.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        responseEl.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>
