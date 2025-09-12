@@ -1,12 +1,12 @@
 {
-  "name": "Raol Api'S",
+  "name": "Yudz Api'S",
   "version": "v5.1.1",
   "description": "Simple and easy to use API documentation.",
   "maintenance": {
     "enabled": false
   },
-  "bannerImage": "/src/images/banner.jpg",
-  "previewImage": "/src/images/preview.png",
+  "bannerImage": "/banner.jpg",
+  "previewImage": "/preview.png",
   "header": {
     "status": "Online"
   },
