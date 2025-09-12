@@ -700,12 +700,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         DOM.dynamicImage.alt = settings.name ? `${settings.name} Banner` : "API Banner"
         DOM.dynamicImage.style.display = ""
       } else {
-        DOM.dynamicImage.src = "../banner.jpg"
+        DOM.dynamicImage.src = "https://api-doc-v1.vercel.app/banner.jpg"
         DOM.dynamicImage.alt = "API Banner Default"
         DOM.dynamicImage.style.display = ""
       }
       DOM.dynamicImage.onerror = () => {
-        DOM.dynamicImage.src = "https://api.yydz.my.id/banner.jpg"
+        DOM.dynamicImage.src = "https://api-doc-v1.vercel.app/banner.jpg"
         DOM.dynamicImage.alt = "API Banner Fallback"
         DOM.dynamicImage.style.display = ""
         showToast("Failed to load banner image, using default image.", "warning")
