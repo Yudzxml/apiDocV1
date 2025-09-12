@@ -1,6 +1,6 @@
 {
   "name": "Yudz Api'S",
-  "version": "v5.1.1",
+  "version": "v1.0",
   "description": "Simple and easy to use API documentation.",
   "maintenance": {
     "enabled": false
@@ -26,49 +26,52 @@
   },
   "categories": [
     {
-      "name": "Artificial Intelligence",
+      "name": "DOWNLOADER",
       "items": [
         {
-          "name": "LuminAI",
-          "desc": "Advanced AI assistant powered by LuminAI for intelligent conversations",
-          "path": "/ai/luminai?text=",
-          "status": "error",
-          "params": {
-            "text": "Text message for the AI to respond to"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Random Images",
-      "items": [
-        {
-          "name": "Blue Archive",
-          "desc": "Get random high-quality Blue Archive character images",
-          "path": "/random/ba",
-          "status": "ready"
-        }
-      ]
-    },
-    {
-      "name": "Image Makers",
-      "items": [
-        {
-          "name": "BRAT Generator",
-          "desc": "Generate BRAT-style text images with customizable colors and backgrounds",
-          "path": "/maker/brat?text=Hello World",
+          "name": "Spotify Downloader",
+          "desc": "Download any Spotify track via API",
+          "path": "/api/download/spotify?url=&apikey=",
           "status": "ready",
           "params": {
-            "text": "Text to be inserted into the BRAT image (required)"
+            "url": "input parameter from spotify link",
+            "apikey": "input your apikey"
           }
         },
         {
-          "name": "BRAT Video Generator",
-          "desc": "Generate animated BRAT-style text videos with customizable colors and backgrounds",
-          "path": "/maker/bratvid?text=Hello World",
+          "name": "YouTube Downloader",
+          "desc": "Download any YouTube video via API",
+          "path": "/api/download/youtube?url=&format=&apikey=",
           "status": "ready",
           "params": {
-            "text": "Text to be inserted into the BRAT video (required)"
+            "url": "input parameter from YouTube link",
+            "format": "input parameter format 144, 240, 360, 480, 720, 1080, mp3",
+            "apikey": "input your apikey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "SEARCH",
+      "items": [
+        {
+          "name": "Spotify Search",
+          "desc": "Search any Spotify track via API",
+          "path": "/api/search/spotify?q=&apikey=",
+          "status": "ready",
+          "params": {
+            "q": "input parameter from spotify link",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "YouTube Search",
+          "desc": "Search any YouTube video via API",
+          "path": "/api/search/youtube?q=&apikey=",
+          "status": "ready",
+          "params": {
+            "q": "input parameter from YouTube link",
+            "apikey": "input your apikey"
           }
         }
       ]
