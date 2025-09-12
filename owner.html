@@ -62,15 +62,15 @@
 
     <label>Action</label>
     <select id="action">
-      <option value="add">Add</option>
-      <option value="delete">Delete</option>
-      <option value="edit">Edit</option>
-      <option value="check">Check</option>
+      <option value="addapikey">Add</option>
+      <option value="delapikey">Delete</option>
+      <option value="editapikey">Edit</option>
+      <option value="checkapikey">Check</option>
     </select>
 
     <div id="targetKeyWrapper">
       <label>Target API Key</label>
-      <input type="text" id="targetKey" placeholder="Hanya untuk Delete/Edit/Check">
+      <input type="text" id="targetKey" placeholder="Masukkan target API key">
     </div>
 
     <div id="limitWrapper">
@@ -91,23 +91,18 @@
 
   <script>
     const actionSelect = document.getElementById("action");
-    const targetWrapper = document.getElementById("targetKeyWrapper");
     const limitWrapper = document.getElementById("limitWrapper");
     const expireWrapper = document.getElementById("expireWrapper");
     const submitBtn = document.getElementById("submitBtn");
     const responseEl = document.getElementById("response");
 
+    // tampilkan / sembunyikan input limit & expire tergantung action
     const updateFormVisibility = () => {
       const action = actionSelect.value;
+      limitWrapper.style.display = (action === "addapikey" || action === "editapikey") ? "block" : "none";
+      expireWrapper.style.display = (action === "addapikey" || action === "editapikey") ? "block" : "none";
 
-      targetWrapper.style.display = (action === "edit" || action === "delete" || action === "check") ? "block" : "none";
-      limitWrapper.style.display = (action === "add" || action === "edit") ? "block" : "none";
-      expireWrapper.style.display = (action === "add" || action === "edit") ? "block" : "none";
-
-      if (action === "add") {
-        document.getElementById("targetKey").value = "";
-      }
-      if (action === "delete" || action === "check") {
+      if (action === "delapikey" || action === "checkapikey") {
         document.getElementById("limit").value = "";
         document.getElementById("expireDays").value = "";
       }
@@ -123,11 +118,16 @@
       const limit = document.getElementById("limit").value;
       const expireDays = document.getElementById("expireDays").value;
 
-      let url = `https://api.yydz.my.id/api/user/apikey?action=${action}`;
-      if (targetKey) url += `&key=${targetKey}`;
+      if (!targetKey) {
+        responseEl.textContent = "Error: Target API Key wajib diisi";
+        return;
+      }
+
+      // URL disesuaikan ke backend terbaru (slug[1])
+      let url = `https://api.yydz.my.id/api/user/apikey/${action}?key=${encodeURIComponent(targetKey)}`;
       if (limit) url += `&limit=${limit}`;
       if (expireDays) url += `&expireDays=${expireDays}`;
-
+      console.log(url)
       try {
         const res = await fetch(url, {
           method: "GET",
