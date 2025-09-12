@@ -1,5 +1,5 @@
 {
-  "name": "swagger-ui-frontend",
+  "name": "stoplight-ui-frontend",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,6 @@
     "next": "13.5.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "prismjs": "^1.30.0",
-    "swagger-ui-react": "^5.1.0",
-    "swagger-ui-dist": "^4.19.0"
+    "@stoplight/elements": "^9.0.6"
   }
 }
