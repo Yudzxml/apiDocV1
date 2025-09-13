@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const loadNotifications = async () => {
     try {
-      const response = await fetch("https://www.yydz.my.id/notifications.json")
+      const response = await fetch("./notifications.json")
       if (!response.ok) throw new Error(`Failed to load notifications: ${response.status}`)
       allNotifications = await response.json()
       updateNotificationBadge()
@@ -417,66 +417,92 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const getSessionReadNotificationIds = () => {
-    const ids = sessionStorage.getItem("sessionReadNotificationIds")
-    return ids ? JSON.parse(ids) : []
-  }
+  const ids = sessionStorage.getItem("sessionReadNotificationIds")
+  return ids ? JSON.parse(ids) : []
+}
 
   const addSessionReadNotificationId = (id) => {
-    const ids = getSessionReadNotificationIds()
-    if (!ids.includes(id)) {
-      ids.push(id)
-      sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids))
-    }
+  const ids = getSessionReadNotificationIds()
+  if (!ids.includes(id)) {
+    ids.push(id)
+    sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids))
   }
+}
+
+  const parseNotifDate = (dateStr) => {
+  if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+    return new Date(dateStr.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"))
+  }
+  return new Date(dateStr)
+}
 
   const updateNotificationBadge = () => {
-    if (!DOM.notificationBadge || !allNotifications.length) {
-      if (DOM.notificationBadge) DOM.notificationBadge.classList.remove("active")
-      return
-    }
-
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-
-    const sessionReadIds = getSessionReadNotificationIds()
-
-    const unreadNotifications = allNotifications.filter((notif) => {
-      const notificationDate = new Date(notif.date)
-      notificationDate.setHours(0, 0, 0, 0)
-      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-    })
-
-    if (unreadNotifications.length > 0) {
-      DOM.notificationBadge.classList.add("active")
-      DOM.notificationBell.setAttribute("aria-label", `Notifications (${unreadNotifications.length} unread)`)
-    } else {
-      DOM.notificationBadge.classList.remove("active")
-      DOM.notificationBell.setAttribute("aria-label", "No new notifications")
-    }
+  if (!DOM.notificationBadge || !allNotifications?.length) {
+    DOM.notificationBadge?.classList.remove("active")
+    return
   }
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const sessionReadIds = getSessionReadNotificationIds()
+  const unreadNotifications = allNotifications.filter((notif) => {
+    const notificationDate = parseNotifDate(notif.date)
+    notificationDate.setHours(0, 0, 0, 0)
+    return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
+  })
+  if (unreadNotifications.length > 0) {
+    DOM.notificationBadge?.classList.add("active")
+    DOM.notificationBell?.setAttribute("aria-label", `Notifications (${unreadNotifications.length} unread)`)
+  } else {
+    DOM.notificationBadge?.classList.remove("active")
+    DOM.notificationBell?.setAttribute("aria-label", "No new notifications")
+  }
+}
+  
+  const renderNotificationList = (notifications) => {
+  const modal = document.createElement("div")
+  modal.className = "notif-modal"
+  modal.innerHTML = `
+    <div class="notif-backdrop"></div>
+    <div class="notif-content">
+      <h2>Notifications</h2>
+      <ul>
+        ${notifications
+          .map(
+            (n) => `
+          <li>
+            <strong>${n.title}</strong><br/>
+            <small>${parseNotifDate(n.date).toLocaleDateString("en-US")}</small>
+            <p>${n.message}</p>
+          </li>`
+          )
+          .join("")}
+      </ul>
+      <button id="closeNotifModal">Close</button>
+    </div>
+  `
+  document.body.appendChild(modal)
+  document.getElementById("closeNotifModal").onclick = () => modal.remove()
+}
 
   const handleNotificationBellClick = () => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const sessionReadIds = getSessionReadNotificationIds()
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const sessionReadIds = getSessionReadNotificationIds()
+  const notificationsToShow = allNotifications.filter((notif) => {
+    const notificationDate = parseNotifDate(notif.date)
+    notificationDate.setHours(0, 0, 0, 0)
+    return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
+  })
 
-    const notificationsToShow = allNotifications.filter((notif) => {
-      const notificationDate = new Date(notif.date)
-      notificationDate.setHours(0, 0, 0, 0)
-      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-    })
-
-    if (notificationsToShow.length > 0) {
-      notificationsToShow.forEach((notif) => {
-        showToast(notif.message, "notification", `Notification (${new Date(notif.date).toLocaleDateString("en-US")})`)
-        addSessionReadNotificationId(notif.id)
-      })
-    } else {
-      showToast("No new notifications at this time.", "info")
-    }
-
-    updateNotificationBadge()
+  if (notificationsToShow.length > 0) {
+    renderNotificationList(notificationsToShow)
+    notificationsToShow.forEach((notif) => addSessionReadNotificationId(notif.id))
+  } else {
+    showToast("No new notifications at this time.", "info")
   }
+
+  updateNotificationBadge()
+}
 
   const init = async () => {
     setupEventListeners()

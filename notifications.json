@@ -4,5 +4,11 @@
     "date": "01-07-2025",
     "title": "UI Interface Update",
     "message": "The interface has been updated to be more modern, responsive, and attractive to enhance user experience."
+  },
+  {
+    "id": "#02",
+    "date": "13-09-2025",
+    "title": "API Samehadaku Stability",
+    "message": "Added fallback information for Samehadaku API. Sometimes the API may return errors depending on request limits or server response. Recommended solutions:\n- Run the request on a VPS or other hosting service for better uptime.\n- Test the API response directly in the browser before implementation.\n- Implement retry/fallback handling when the main endpoint fails.\n- Note: In some cases, integration works on websites even if local testing fails."
   }
 ]

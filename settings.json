@@ -15,7 +15,7 @@
     "requireApikey": false,
     "apikey": {
       "demo": {
-        "rateLimit": "5000/day",
+        "rateLimit": "100/day",
         "enabled": true
       },
       "admin": {
@@ -211,10 +211,9 @@
   {
     "name": "Samehadaku Search",
     "desc": "Search anime or manga on Samehadaku by keyword",
-    "path": "/api/search/samehadaku?action=&q=&page=&apikey=",
+    "path": "/api/search/samehadaku?action=search&q=&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "search",
       "q": "kata kunci untuk search",
       "page": "nomor halaman, default 1",
       "apikey": "input your apikey"
@@ -223,10 +222,9 @@
   {
     "name": "Samehadaku Latest",
     "desc": "Get latest anime/manga releases from Samehadaku",
-    "path": "/api/search/samehadaku?action=&page=&apikey=",
+    "path": "/api/search/samehadaku?action=latest&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "latest",
       "page": "nomor halaman, default 1",
       "apikey": "input your apikey"
     }
@@ -234,20 +232,18 @@
   {
     "name": "Samehadaku Jadwal Update",
     "desc": "Get anime update schedule from Samehadaku",
-    "path": "/api/search/samehadaku?action=&apikey=",
+    "path": "/api/search/samehadaku?action=jadwalupdate&apikey=",
     "status": "ready",
     "params": {
-      "action": "jadwalupdate",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Samehadaku Detail",
     "desc": "Get anime/manga detail by URL",
-    "path": "/api/search/samehadaku?action=&url=&apikey=",
+    "path": "/api/search/samehadaku?action=detail&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "detail",
       "url": "url untuk detail anime/manga",
       "apikey": "input your apikey"
     }
@@ -255,10 +251,9 @@
   {
     "name": "Samehadaku Genre",
     "desc": "Get anime/manga by genre",
-    "path": "/api/search/samehadaku?action=&genre=&page=&apikey=",
+    "path": "/api/search/samehadaku?action=genre&genre=&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "genre",
       "genre": "nama genre anime/manga",
       "page": "nomor halaman, default 1",
       "apikey": "input your apikey"
@@ -267,20 +262,18 @@
   {
     "name": "Samehadaku Top Anime",
     "desc": "Get top ranked anime from Samehadaku",
-    "path": "/api/search/samehadaku?action=&apikey=",
+    "path": "/api/search/samehadaku?action=topanime&apikey=",
     "status": "ready",
     "params": {
-      "action": "topanime",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Samehadaku Get Stream",
     "desc": "Get streaming links for anime/manga by URL",
-    "path": "/api/search/samehadaku?action=&url=&apikey=",
+    "path": "/api/search/samehadaku?action=getstream&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "getstream",
       "url": "url untuk streaming",
       "apikey": "input your apikey"
     }
@@ -288,10 +281,9 @@
   {
     "name": "Anichin Search",
     "desc": "Search anime on Anichin by keyword",
-    "path": "/api/search/anichin?action=&q=&apikey=",
+    "path": "/api/search/anichin?action=search&q=&apikey=",
     "status": "ready",
     "params": {
-      "action": "search",
       "q": "kata kunci untuk search anime",
       "apikey": "input your apikey"
     }
@@ -299,40 +291,36 @@
   {
     "name": "Anichin Latest",
     "desc": "Get latest anime releases from Anichin",
-    "path": "/api/search/anichin?action=&apikey=",
+    "path": "/api/search/anichin?action=latest&apikey=",
     "status": "ready",
     "params": {
-      "action": "latest",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Anichin Popular",
     "desc": "Get popular anime today from Anichin",
-    "path": "/api/search/anichin?action=&apikey=",
+    "path": "/api/search/anichin?action=popular&apikey=",
     "status": "ready",
     "params": {
-      "action": "popular",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Anichin Recommendations",
     "desc": "Get recommended anime from Anichin",
-    "path": "/api/search/anichin?action=&apikey=",
+    "path": "/api/search/anichin?action=rekomendasi&apikey=",
     "status": "ready",
     "params": {
-      "action": "rekomendasi",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Anichin Detail",
     "desc": "Get anime detail by URL",
-    "path": "/api/search/anichin?action=&url=&apikey=",
+    "path": "/api/search/anichin?action=detail&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "detail",
       "url": "url anime untuk detail",
       "apikey": "input your apikey"
     }
@@ -340,10 +328,9 @@
   {
     "name": "Anichin Genres",
     "desc": "Get anime by genre",
-    "path": "/api/search/anichin?action=&genre=&page=&apikey=",
+    "path": "/api/search/anichin?action=genres&genre=&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "genres",
       "genre": "nama genre anime",
       "page": "nomor halaman untuk pagination",
       "apikey": "input your apikey"
@@ -352,20 +339,18 @@
   {
     "name": "Anichin Populer Donghua",
     "desc": "Get popular Donghua anime",
-    "path": "/api/search/anichin?action=&apikey=",
+    "path": "/api/search/anichin?action=populerdonghua&apikey=",
     "status": "ready",
     "params": {
-      "action": "populerdonghua",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Anichin Info",
     "desc": "Get anime info by URL",
-    "path": "/api/search/anichin?action=&url=&apikey=",
+    "path": "/api/search/anichin?action=info&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "info",
       "url": "url anime untuk info",
       "apikey": "input your apikey"
     }
@@ -373,10 +358,9 @@
   {
     "name": "Komiku Search",
     "desc": "Search manga on Komiku by keyword",
-    "path": "/api/search/komiku?action=&q=&apikey=",
+    "path": "/api/search/komiku?action=search&q=&apikey=",
     "status": "ready",
     "params": {
-      "action": "search",
       "q": "kata kunci untuk search manga",
       "apikey": "input your apikey"
     }
@@ -384,20 +368,18 @@
   {
     "name": "Komiku Latest",
     "desc": "Get latest manga updates from Komiku",
-    "path": "/api/search/komiku?action=&apikey=",
+    "path": "/api/search/komiku?action=latest&apikey=",
     "status": "ready",
     "params": {
-      "action": "latest",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Komiku Popular",
     "desc": "Get popular manga from Komiku by page number",
-    "path": "/api/search/komiku?action=&page=&apikey=",
+    "path": "/api/search/komiku?action=populer&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "populer",
       "page": "nomor halaman untuk pagination",
       "apikey": "input your apikey"
     }
@@ -405,10 +387,9 @@
   {
     "name": "Komiku Detail",
     "desc": "Get manga detail by URL",
-    "path": "/api/search/komiku?action=&url=&apikey=",
+    "path": "/api/search/komiku?action=detail&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "detail",
       "url": "url komik untuk detail",
       "apikey": "input your apikey"
     }
@@ -416,10 +397,9 @@
   {
     "name": "Komiku Chapter",
     "desc": "Get chapter pages of a manga by URL",
-    "path": "/api/search/komiku?action=&url=&apikey=",
+    "path": "/api/search/komiku?action=chapter&url=&apikey=",
     "status": "ready",
     "params": {
-      "action": "chapter",
       "url": "url chapter komik",
       "apikey": "input your apikey"
     }
@@ -427,10 +407,9 @@
   {
     "name": "Komiku Genre",
     "desc": "Search manga by genre",
-    "path": "/api/search/komiku?action=&genre=&page=&apikey=",
+    "path": "/api/search/komiku?action=genre&genre=&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "genre",
       "genre": "nama genre komik",
       "page": "nomor halaman untuk pagination",
       "apikey": "input your apikey"
@@ -439,10 +418,9 @@
   {
     "name": "Komiku List",
     "desc": "Get list of manga by type",
-    "path": "/api/search/komiku?action=&tipe=&page=&apikey=",
+    "path": "/api/search/komiku?action=listkomik&tipe=&page=&apikey=",
     "status": "ready",
     "params": {
-      "action": "listkomik",
       "tipe": "tipe komik, default 'manga'",
       "page": "nomor halaman untuk pagination",
       "apikey": "input your apikey"
@@ -451,10 +429,9 @@
   {
     "name": "Komiku Daftar List",
     "desc": "Get daftar list of manga by type",
-    "path": "/api/search/komiku?action=&tipe=&apikey=",
+    "path": "/api/search/komiku?action=daftarList&tipe=&apikey=",
     "status": "ready",
     "params": {
-      "action": "daftarList",
       "tipe": "tipe komik, default 'manga'",
       "apikey": "input your apikey"
     }
@@ -462,20 +439,18 @@
   {
     "name": "Komiku Top Rank",
     "desc": "Get top ranked manga",
-    "path": "/api/search/komiku?action=&apikey=",
+    "path": "/api/search/komiku?action=topkomik&apikey=",
     "status": "ready",
     "params": {
-      "action": "topkomik",
       "apikey": "input your apikey"
     }
   },
   {
     "name": "Komiku Recommendations",
     "desc": "Get recommended manga",
-    "path": "/api/search/komiku?action=&apikey=",
+    "path": "/api/search/komiku?action=rekomendasi&apikey=",
     "status": "ready",
     "params": {
-      "action": "rekomendasi",
       "apikey": "input your apikey"
     }
   },
