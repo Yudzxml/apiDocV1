@@ -26,6 +26,20 @@
   },
   "categories": [
     {
+  "name": "USER",
+  "items": [
+    {
+      "name": "Check Apikey",
+      "desc": "cek masa aktif api dan limit",
+      "path": "/api/user/checkapikey?key=",
+      "status": "ready",
+      "params": {
+        "key": "Masukkan API key kamu"
+      }
+    }
+  ]
+},
+    {
       "name": "DOWNLOADER",
       "items": [
         {
@@ -563,9 +577,195 @@
       ]
     },
     {
+  "name": "GAME",
+  "items": [
+    {
+      "name": "Cek Kodam",
+      "desc": "Cek kodam berdasarkan nama",
+      "path": "/api/game/cekkodam?nama=&apikey=",
+      "status": "ready",
+      "params": {
+        "nama": "input nama kamu",
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Hero ML",
+      "desc": "Tebak hero Mobile Legends random",
+      "path": "/api/game/tebakheroml?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Epep",
+      "desc": "Tebak karakter Free Fire random",
+      "path": "/api/game/tebakepep?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Math Quiz",
+      "desc": "Soal matematika random",
+      "path": "/api/game/math?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Makanan",
+      "desc": "Tebak makanan random",
+      "path": "/api/game/tebakmakanan?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Emoji",
+      "desc": "Tebak emoji random",
+      "path": "/api/game/tebakemoji?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Kode",
+      "desc": "Tebak kode random",
+      "path": "/api/game/tebakkode?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Tempat",
+      "desc": "Tebak tempat random",
+      "path": "/api/game/tebaktempat?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Gambar",
+      "desc": "Tebak gambar random",
+      "path": "/api/game/tebakgambar?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Lirik",
+      "desc": "Tebak lirik lagu",
+      "path": "/api/game/tebaklirik?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Bendera",
+      "desc": "Tebak bendera negara",
+      "path": "/api/game/tebakbendera?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Tebakan",
+      "desc": "Soal tebak-tebakan lucu random",
+      "path": "/api/game/tebaktebakan?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Teka-teki",
+      "desc": "Teka-teki random",
+      "path": "/api/game/tekateki?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Asah Otak",
+      "desc": "Pertanyaan asah otak random",
+      "path": "/api/game/asahotak?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Cak Lontong",
+      "desc": "Soal ala Cak Lontong",
+      "path": "/api/game/caklontong?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Susun Kata",
+      "desc": "Permainan susun kata",
+      "path": "/api/game/susunkata?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Siapakah Aku",
+      "desc": "Tebak identitas rahasia",
+      "path": "/api/game/siapakahaku?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Kalimat",
+      "desc": "Tebak kalimat random",
+      "path": "/api/game/tebakkalimat?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Family 100",
+      "desc": "Main Family 100 kayak di TV",
+      "path": "/api/game/family100?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    },
+    {
+      "name": "Tebak Hewan",
+      "desc": "Tebak hewan nyeleneh random",
+      "path": "/api/game/tebakhewan?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "input your apikey"
+      }
+    }
+  ]
+},
+    {
       "name": "STALK",
       "items": [
-  {
+  { 
     "name": "Genshin Stalk",
     "desc": "Get Genshin Impact player info by UID",
     "path": "/api/stalk/genshin?id=&apikey=",
