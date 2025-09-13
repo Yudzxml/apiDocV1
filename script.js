@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const loadNotifications = async () => {
     try {
-      const response = await fetch("./notifications.json")
+      const response = await fetch("/notifications.json")
       if (!response.ok) throw new Error(`Failed to load notifications: ${response.status}`)
       allNotifications = await response.json()
       updateNotificationBadge()
@@ -417,92 +417,66 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const getSessionReadNotificationIds = () => {
-  const ids = sessionStorage.getItem("sessionReadNotificationIds")
-  return ids ? JSON.parse(ids) : []
-}
+    const ids = sessionStorage.getItem("sessionReadNotificationIds")
+    return ids ? JSON.parse(ids) : []
+  }
 
   const addSessionReadNotificationId = (id) => {
-  const ids = getSessionReadNotificationIds()
-  if (!ids.includes(id)) {
-    ids.push(id)
-    sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids))
+    const ids = getSessionReadNotificationIds()
+    if (!ids.includes(id)) {
+      ids.push(id)
+      sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids))
+    }
   }
-}
-
-  const parseNotifDate = (dateStr) => {
-  if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
-    return new Date(dateStr.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"))
-  }
-  return new Date(dateStr)
-}
 
   const updateNotificationBadge = () => {
-  if (!DOM.notificationBadge || !allNotifications?.length) {
-    DOM.notificationBadge?.classList.remove("active")
-    return
+    if (!DOM.notificationBadge || !allNotifications.length) {
+      if (DOM.notificationBadge) DOM.notificationBadge.classList.remove("active")
+      return
+    }
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    const sessionReadIds = getSessionReadNotificationIds()
+
+    const unreadNotifications = allNotifications.filter((notif) => {
+      const notificationDate = new Date(notif.date)
+      notificationDate.setHours(0, 0, 0, 0)
+      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
+    })
+
+    if (unreadNotifications.length > 0) {
+      DOM.notificationBadge.classList.add("active")
+      DOM.notificationBell.setAttribute("aria-label", `Notifications (${unreadNotifications.length} unread)`)
+    } else {
+      DOM.notificationBadge.classList.remove("active")
+      DOM.notificationBell.setAttribute("aria-label", "No new notifications")
+    }
   }
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const sessionReadIds = getSessionReadNotificationIds()
-  const unreadNotifications = allNotifications.filter((notif) => {
-    const notificationDate = parseNotifDate(notif.date)
-    notificationDate.setHours(0, 0, 0, 0)
-    return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-  })
-  if (unreadNotifications.length > 0) {
-    DOM.notificationBadge?.classList.add("active")
-    DOM.notificationBell?.setAttribute("aria-label", `Notifications (${unreadNotifications.length} unread)`)
-  } else {
-    DOM.notificationBadge?.classList.remove("active")
-    DOM.notificationBell?.setAttribute("aria-label", "No new notifications")
-  }
-}
-  
-  const renderNotificationList = (notifications) => {
-  const modal = document.createElement("div")
-  modal.className = "notif-modal"
-  modal.innerHTML = `
-    <div class="notif-backdrop"></div>
-    <div class="notif-content">
-      <h2>Notifications</h2>
-      <ul>
-        ${notifications
-          .map(
-            (n) => `
-          <li>
-            <strong>${n.title}</strong><br/>
-            <small>${parseNotifDate(n.date).toLocaleDateString("en-US")}</small>
-            <p>${n.message}</p>
-          </li>`
-          )
-          .join("")}
-      </ul>
-      <button id="closeNotifModal">Close</button>
-    </div>
-  `
-  document.body.appendChild(modal)
-  document.getElementById("closeNotifModal").onclick = () => modal.remove()
-}
 
   const handleNotificationBellClick = () => {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const sessionReadIds = getSessionReadNotificationIds()
-  const notificationsToShow = allNotifications.filter((notif) => {
-    const notificationDate = parseNotifDate(notif.date)
-    notificationDate.setHours(0, 0, 0, 0)
-    return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-  })
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    const sessionReadIds = getSessionReadNotificationIds()
 
-  if (notificationsToShow.length > 0) {
-    renderNotificationList(notificationsToShow)
-    notificationsToShow.forEach((notif) => addSessionReadNotificationId(notif.id))
-  } else {
-    showToast("No new notifications at this time.", "info")
+    const notificationsToShow = allNotifications.filter((notif) => {
+      const notificationDate = new Date(notif.date)
+      notificationDate.setHours(0, 0, 0, 0)
+      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
+    })
+
+    if (notificationsToShow.length > 0) {
+      notificationsToShow.forEach((notif) => {
+        showToast(notif.message, "notification", `Notification (${new Date(notif.date).toLocaleDateString("en-US")})`)
+        addSessionReadNotificationId(notif.id)
+      })
+    } else {
+      showToast("No new notifications at this time.", "info")
+    }
+
+    updateNotificationBadge()
   }
-
-  updateNotificationBadge()
-}
 
   const init = async () => {
     setupEventListeners()
@@ -983,7 +957,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const setupModalForApi = (apiData) => {
-  // Reset modal
   DOM.modal.label.textContent = apiData.name;
   DOM.modal.desc.textContent = apiData.desc;
   DOM.modal.content.innerHTML = "";
@@ -999,19 +972,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   DOM.modal.submitBtn.disabled = true;
   DOM.modal.submitBtn.innerHTML = '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>';
 
-  // Hide default modal buttons if exist
   ["download-image-btn", "download-video-btn", "share-api-btn"].forEach(cls => {
     const btn = DOM.modal.element.querySelector(`.${cls}`);
     if (btn) btn.style.display = "none";
   });
 
-  // Add share API button if missing
   if (!DOM.modal.element.querySelector(".share-api-btn")) {
     const newShareBtn = document.createElement("button");
     newShareBtn.className = "btn btn-info me-2 share-api-btn";
     newShareBtn.innerHTML = '<i class="fas fa-share-alt me-2"></i> Share API';
     newShareBtn.onclick = handleShareApi;
-
     const modalFooter = DOM.modal.element.querySelector(".modal-footer");
     modalFooter.insertBefore(newShareBtn, DOM.modal.submitBtn);
   }
@@ -1019,9 +989,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shareBtn = DOM.modal.element.querySelector(".share-api-btn");
   if (shareBtn) shareBtn.style.display = "inline-block";
 
-  // Extract parameters from URL
-  const paramsFromPath = new URLSearchParams(apiData.path.split("?")[1]);
-  const paramKeys = Array.from(paramsFromPath.keys());
+  const [basePath, queryString = ""] = apiData.path.split("?");
+  const paramsFromUrl = new URLSearchParams(queryString);
+
+  console.log("Base path:", basePath);
+  console.log("Query string:", queryString);
+  console.log("All params:", Object.fromEntries(paramsFromUrl.entries()));
 
   const buildParamInput = (paramKey, desc) => {
     const group = document.createElement("div");
@@ -1054,6 +1027,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const inputContainer = document.createElement("div");
     inputContainer.className = "input-container";
+
     const inputField = document.createElement("input");
     inputField.type = "text";
     inputField.className = "form-control custom-input";
@@ -1063,33 +1037,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputField.required = true;
     inputField.autocomplete = "off";
     inputField.addEventListener("input", validateModalInputs);
+
     inputContainer.appendChild(inputField);
     group.appendChild(inputContainer);
-
     return group;
   };
 
   const paramContainer = document.createElement("div");
   paramContainer.className = "param-container";
 
-  // If API key is required
-  if (settings.apiSettings?.requireApikey) {
-    const apikeyGroup = buildParamInput("apikey", "API key required for this endpoint");
-    const title = document.createElement("h6");
-    title.className = "param-form-title";
-    title.innerHTML = '<i class="fas fa-key me-2"></i> API Key Required';
-    paramContainer.appendChild(title);
-    paramContainer.appendChild(apikeyGroup);
-  }
+  const requiredParams = [];
+  paramsFromUrl.forEach((val, key) => {
+    if (!val || val.trim() === "") requiredParams.push(key);
+  });
 
-  // Build other parameters
-  paramKeys.forEach(key => {
-    const desc = apiData.params ? apiData.params[key] : null;
-    const group = buildParamInput(key, desc);
+  console.log("Params that need input:", requiredParams);
+
+  requiredParams.forEach(key => {
+    const group = buildParamInput(key, apiData.params?.[key]);
     paramContainer.appendChild(group);
   });
 
-  // Inner description if exists
   if (apiData.innerDesc) {
     const innerDescDiv = document.createElement("div");
     innerDescDiv.className = "inner-desc mt-3";
@@ -1097,79 +1065,84 @@ document.addEventListener("DOMContentLoaded", async () => {
     paramContainer.appendChild(innerDescDiv);
   }
 
-  // Append parameters if any
   if (paramContainer.children.length > 0) {
     DOM.modal.queryInputContainer.appendChild(paramContainer);
     DOM.modal.submitBtn.classList.remove("d-none");
     DOM.modal.submitBtn.disabled = true;
     initializeTooltips(DOM.modal.queryInputContainer);
   } else {
-    // Jika tidak ada parameter sama sekali, langsung request
-    handleApiRequest(`https://api.yydz.my.id${apiData.path}`, apiData.name);
+    const fullUrl = new URL(`https://api.yydz.my.id${basePath}`);
+    paramsFromUrl.forEach((val, key) => {
+      if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
+    });
+    console.log("All parameters filled, sending request to:", fullUrl.toString());
+    handleApiRequest(fullUrl.toString(), apiData.name);
   }
 };
 
-  const validateModalInputs = () => {
-    const inputs = DOM.modal.queryInputContainer.querySelectorAll("input[required]")
-    const allFilled = Array.from(inputs).every((input) => input.value.trim() !== "")
-    DOM.modal.submitBtn.disabled = !allFilled
-    DOM.modal.submitBtn.classList.toggle("btn-active", allFilled)
+const validateModalInputs = () => {
+  const inputs = DOM.modal.queryInputContainer.querySelectorAll("input[required]");
+  const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
+  DOM.modal.submitBtn.disabled = !allFilled;
+  DOM.modal.submitBtn.classList.toggle("btn-active", allFilled);
 
-    inputs.forEach((input) => {
-      if (input.value.trim()) input.classList.remove("is-invalid")
-    })
-    const errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger.fade-in")
-    if (errorMsg && allFilled) {
-      errorMsg.classList.replace("fade-in", "fade-out")
-      setTimeout(() => errorMsg.remove(), 300)
-    }
+  inputs.forEach(input => {
+    if (input.value.trim()) input.classList.remove("is-invalid");
+  });
+
+  const errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger.fade-in");
+  if (errorMsg && allFilled) {
+    errorMsg.classList.replace("fade-in", "fade-out");
+    setTimeout(() => errorMsg.remove(), 300);
   }
+};
 
   const handleSubmitQuery = async () => {
-    if (!currentApiData) return
+  if (!currentApiData) return;
 
-    const inputs = DOM.modal.queryInputContainer.querySelectorAll("input")
-    const newParams = new URLSearchParams()
-    let isValid = true
+  const inputs = DOM.modal.queryInputContainer.querySelectorAll("input");
+  const newParams = new URLSearchParams(currentApiData.path.split("?")[1] || "");
+  let isValid = true;
 
-    inputs.forEach((input) => {
-      if (input.required && !input.value.trim()) {
-        isValid = false
-        input.classList.add("is-invalid")
-        input.parentElement.classList.add("shake-animation")
-        setTimeout(() => input.parentElement.classList.remove("shake-animation"), 500)
-      } else {
-        input.classList.remove("is-invalid")
-        if (input.value.trim()) newParams.append(input.dataset.param, input.value.trim())
-      }
-    })
-
-    if (!isValid) {
-      let errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger")
-      if (!errorMsg) {
-        errorMsg = document.createElement("div")
-        errorMsg.className = "alert alert-danger mt-3"
-        errorMsg.setAttribute("role", "alert")
-        DOM.modal.queryInputContainer.appendChild(errorMsg)
-      }
-      errorMsg.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Please fill in all required fields.'
-      errorMsg.classList.remove("fade-out")
-      errorMsg.classList.add("fade-in")
-
-      DOM.modal.submitBtn.classList.add("shake-animation")
-      setTimeout(() => DOM.modal.submitBtn.classList.remove("shake-animation"), 500)
-      return
+  inputs.forEach(input => {
+    if (input.required && !input.value.trim()) {
+      isValid = false;
+      input.classList.add("is-invalid");
+      input.parentElement.classList.add("shake-animation");
+      setTimeout(() => input.parentElement.classList.remove("shake-animation"), 500);
+    } else {
+      input.classList.remove("is-invalid");
+      if (input.value.trim()) newParams.set(input.dataset.param, input.value.trim());
     }
+  });
 
-    DOM.modal.submitBtn.disabled = true
-    DOM.modal.submitBtn.innerHTML =
-      '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...'
+  if (!isValid) {
+    let errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger");
+    if (!errorMsg) {
+      errorMsg = document.createElement("div");
+      errorMsg.className = "alert alert-danger mt-3";
+      errorMsg.setAttribute("role", "alert");
+      DOM.modal.queryInputContainer.appendChild(errorMsg);
+    }
+    errorMsg.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Please fill in all required fields.';
+    errorMsg.classList.remove("fade-out");
+    errorMsg.classList.add("fade-in");
 
-    const apiUrlWithParams = `https://api.yydz.my.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`
-    DOM.modal.endpoint.textContent = apiUrlWithParams
-
-    await handleApiRequest(apiUrlWithParams, currentApiData.name)
+    DOM.modal.submitBtn.classList.add("shake-animation");
+    setTimeout(() => DOM.modal.submitBtn.classList.remove("shake-animation"), 500);
+    return;
   }
+
+  DOM.modal.submitBtn.disabled = true;
+  DOM.modal.submitBtn.innerHTML =
+    '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
+
+  const fullUrl = `https://api.yydz.my.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`;
+  console.log("Submitting API request with all params:", fullUrl);
+  DOM.modal.endpoint.textContent = fullUrl;
+
+  await handleApiRequest(fullUrl, currentApiData.name);
+};
 
   const handleApiRequest = async (apiUrl, apiName) => {
     DOM.modal.spinner.classList.remove("d-none")

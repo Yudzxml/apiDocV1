@@ -421,7 +421,7 @@
     "path": "/api/search/komiku?action=listkomik&tipe=&page=&apikey=",
     "status": "ready",
     "params": {
-      "tipe": "tipe komik, default 'manga'",
+      "tipe": "tipe komik: manga, manhwa, manhua, all",
       "page": "nomor halaman untuk pagination",
       "apikey": "input your apikey"
     }
