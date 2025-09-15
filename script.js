@@ -485,7 +485,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     initModal()
 
     const [settingsResult, notificationsResult, sponsorResult] = await Promise.allSettled([
-      fetch("https://www.yydz.my.id/settings.json").then((res) =>
+      fetch("/settings.json").then((res) =>
         res.ok ? res.json() : Promise.reject(new Error(`Failed to load settings: ${res.status}`)),
       ),
       loadNotifications(),
@@ -960,7 +960,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   DOM.modal.label.textContent = apiData.name;
   DOM.modal.desc.textContent = apiData.desc;
   DOM.modal.content.innerHTML = "";
-  DOM.modal.endpoint.textContent = `https://api.yydz.my.id${apiData.path.split("?")[0]}`;
+  DOM.modal.endpoint.textContent = `https://api.yydz.biz.id${apiData.path.split("?")[0]}`;
 
   DOM.modal.spinner.classList.add("d-none");
   DOM.modal.content.classList.add("d-none");
@@ -1071,7 +1071,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     DOM.modal.submitBtn.disabled = true;
     initializeTooltips(DOM.modal.queryInputContainer);
   } else {
-    const fullUrl = new URL(`https://api.yydz.my.id${basePath}`);
+    const fullUrl = new URL(`https://api.yydz.biz.id${basePath}`);
     paramsFromUrl.forEach((val, key) => {
       if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
     });
@@ -1137,7 +1137,7 @@ const validateModalInputs = () => {
   DOM.modal.submitBtn.innerHTML =
     '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
 
-  const fullUrl = `https://api.yydz.my.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`;
+  const fullUrl = `https://api.yydz.biz.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`;
   console.log("Submitting API request with all params:", fullUrl);
   DOM.modal.endpoint.textContent = fullUrl;
 

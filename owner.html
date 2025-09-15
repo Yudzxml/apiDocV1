@@ -245,7 +245,7 @@ submitBtn.addEventListener("click", async ()=>{
     return;
   }
 
-  let url = `https://api.yydz.my.id/api/user/${action}?key=${encodeURIComponent(targetKey)}`;
+  let url = `https://api.yydz.biz.id/api/user/${action}?key=${encodeURIComponent(targetKey)}`;
   if(action==="changeapikey") url += `&newkey=${encodeURIComponent(newKey)}`;
   if(limit) url += `&limit=${limit}`;
   if(expireDays) url += `&expireDays=${expireDays}`;
