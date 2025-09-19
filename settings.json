@@ -24,11 +24,11 @@
       }
     }
   },
-  "categories": [
-    {
-  "name": "USER",
-  "items": [
-    {
+"categories": [
+  {
+    "name": "USER",
+    "items": [
+      {
       "name": "Check Apikey",
       "desc": "cek masa aktif api dan limit",
       "path": "/api/user/checkapikey?key=",
@@ -37,12 +37,12 @@
         "key": "Masukkan API key kamu"
       }
     }
-  ]
-},
-    {
-      "name": "DOWNLOADER",
-      "items": [
-        {
+    ]
+  },
+  {
+    "name": "DOWNLOADER",
+    "items": [
+      {
   "name": "AN1 Download",
   "desc": "Download any APK mod via API",
   "path": "/api/download/an1?url=&apikey=",
@@ -52,7 +52,7 @@
     "apikey": "Masukkan API key Anda"
   }
 },
-        {
+      {
   "name": "Videy Downloader",
   "desc": "Download any video from Videy via API",
   "path": "/api/download/videy?url=&apikey=",
@@ -62,7 +62,7 @@
     "apikey": "input your apikey"
   }
 },
-        {
+      {
           "name": "Facebook Downloader",
           "desc": "Download any video facebook via API",
           "path": "/api/download/facebook?url=&apikey=",
@@ -72,7 +72,7 @@
             "apikey": "input your apikey"
           }
         },
-        {
+      {
           "name": "Capcut Downloader",
           "desc": "Download any video Capcut via API",
           "path": "/api/download/capcut?url=&apikey=",
@@ -82,7 +82,7 @@
             "apikey": "input your apikey"
           }
         },
-        {
+      {
           "name": "Tiktok Downloader",
           "desc": "Download any video/image/audio tiktok via API",
           "path": "/api/download/tiktok?url=&apikey=",
@@ -185,7 +185,7 @@
           }
         }
       ]
-    },
+      },
     {
       "name": "SEARCH",
       "items": [
@@ -515,7 +515,7 @@
       "apikey": "input your apikey"
     }
   },
-{
+  {
   "name": "TikTok Search",
   "desc": "Search any video on TikTok via API",
   "path": "/api/search/tiktok?q=&apikey=",
@@ -525,7 +525,7 @@
     "apikey": "input your apikey"
   }
 },
-{
+  {
   "name": "SoundCloud Search",
   "desc": "Search any track or artist on SoundCloud via API",
   "path": "/api/search/soundcloud?q=&apikey=",
@@ -535,7 +535,7 @@
     "apikey": "input your apikey"
   }
 },
-{
+  {
   "name": "Pinterest Search",
   "desc": "Search any pin or image on Pinterest via API",
   "path": "/api/search/pinterest?q=&apikey=",
@@ -545,7 +545,7 @@
     "apikey": "input your apikey"
   }
 },
-        {
+  {
   "name": "XNXX Search",
   "desc": "Search any video on XNXX via API",
   "path": "/api/search/xnxx?q=&apikey=",
@@ -555,7 +555,7 @@
     "apikey": "input your apikey"
   }
 },
-        {
+  {
           "name": "Aptoide Search",
           "desc": "Search any apk id via API",
           "path": "/api/search/aptoide?q=&apikey=",
@@ -565,7 +565,7 @@
             "apikey": "input your apikey"
           }
         },
-        {
+  {
           "name": "Spotify Search",
           "desc": "Search any Spotify track via API",
           "path": "/api/search/spotify?q=&apikey=",
@@ -575,7 +575,7 @@
             "apikey": "input your apikey"
           }
         },
-        {
+  {
           "name": "YouTube Search",
           "desc": "Search any YouTube video via API",
           "path": "/api/search/youtube?q=&apikey=",
@@ -585,12 +585,12 @@
             "apikey": "input your apikey"
           }
         }
-      ]
-    },
-    {
-      "name": "ISLAMI",
-      "items": [
-        {
+  ]
+},
+ {
+   "name": "ISLAMI",
+   "items": [
+   {
           "name": "Jadwal Shalat",
           "desc": "Search any Jadwal shalat via API",
           "path": "/api/islami/jadwalshalat?kota=&apikey=",
@@ -600,7 +600,7 @@
             "apikey": "input your apikey"
           }
         },
-        {
+   {
           "name": "Surah",
           "desc": "Search any surah via API",
           "path": "/api/islami/surah?q=&apikey=",
@@ -610,9 +610,9 @@
             "apikey": "input your apikey"
           }
         }
-      ]
-    },
-    {
+  ]
+},
+{
   "name": "GAME",
   "items": [
     {
@@ -912,7 +912,7 @@
       "apikey": "input your apikey"
     }
   },
-{
+  {
   "name": "Text To Speech",
   "desc": "Convert text into speech audio",
   "path": "/api/tools/texttospech?q=&apikey=",
@@ -921,7 +921,7 @@
     "q": "Your text here",
     "apikey": "Enter your API key"
   }
-}
+},
   {
     "name": "Check Host",
     "desc": "Check a host/domain via ping, http, or other methods",
