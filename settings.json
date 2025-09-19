@@ -1,6 +1,6 @@
 {
   "name": "Yudz Api'S",
-  "version": "v1.0",
+  "version": "v1.2",
   "description": "Simple and easy to use API documentation.",
   "maintenance": {
     "enabled": false
@@ -42,6 +42,26 @@
     {
       "name": "DOWNLOADER",
       "items": [
+        {
+  "name": "AN1 Download",
+  "desc": "Download any APK mod via API",
+  "path": "/api/download/an1?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL APK mod dari android1 detail yang ingin di-download",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+        {
+  "name": "Videy Downloader",
+  "desc": "Download any video from Videy via API",
+  "path": "/api/download/videy?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "input parameter url from Videy",
+    "apikey": "input your apikey"
+  }
+},
         {
           "name": "Facebook Downloader",
           "desc": "Download any video facebook via API",
@@ -86,6 +106,16 @@
           "name": "Pinterest Downloader",
           "desc": "Download any image/video pin via API",
           "path": "/api/download/pinterest?url=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter url from pinterest search",
+            "apikey": "input your apikey"
+          }
+        },
+        {
+          "name": "Pinterest Downloader V2",
+          "desc": "Download any image/video pin via API",
+          "path": "/api/download/pinterestv2?url=&apikey=",
           "status": "ready",
           "params": {
             "url": "input parameter url from pinterest search",
@@ -142,12 +172,43 @@
             "format": "input parameter format 144, 240, 360, 480, 720, 1080, mp3",
             "apikey": "input your apikey"
           }
+        },
+        {
+          "name": "YouTube Downloader V2",
+          "desc": "Download any YouTube video via API",
+          "path": "/api/download/youtubev2?url=&format=&apikey=",
+          "status": "ready",
+          "params": {
+            "url": "input parameter from YouTube link",
+            "format": "input parameter format audio: ( 'mp3', 'm4a', 'webm', 'aac', 'flac', 'opus', 'ogg', 'wav' ) Video: ('360', '480', '720', '1080', '1440', '4k' )",
+            "apikey": "input your apikey"
+          }
         }
       ]
     },
     {
       "name": "SEARCH",
       "items": [
+  {
+  "name": "AN1 Search",
+  "desc": "Search apk by keyword",
+  "path": "/api/search/an1?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "kata kunci untuk search",
+    "apikey": "input your apikey"
+  }
+},
+  {
+  "name": "AN1 Detail",
+  "desc": "Get video details by URL",
+  "path": "/api/search/an1?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "URL Android1 from search",
+    "apikey": "input your apikey"
+  }
+},
   {
     "name": "XVideos Search",
     "desc": "Search videos on XVideos by keyword",
@@ -851,6 +912,16 @@
       "apikey": "input your apikey"
     }
   },
+{
+  "name": "Text To Speech",
+  "desc": "Convert text into speech audio",
+  "path": "/api/tools/texttospech?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Your text here",
+    "apikey": "Enter your API key"
+  }
+}
   {
     "name": "Check Host",
     "desc": "Check a host/domain via ping, http, or other methods",
@@ -863,6 +934,159 @@
     }
   }
 ]
+    },
+    {
+  "name": "CANVAS",
+  "items": [
+    {
+      "name": "Smeme",
+      "desc": "Generate a smeme image by providing profile picture and text(s). You must provide at least one of 'text' or 'text2'.",
+      "path": "/api/canvas/smeme?pp=&text=&text2=&apikey=",
+      "status": "ready",
+      "params": {
+        "pp": "URL profile picture yang akan digunakan",
+        "text": "Teks pertama untuk smeme (opsional, bisa dikosongkan jika 'text2' diisi)",
+        "text2": "Teks kedua untuk smeme (opsional, bisa dikosongkan jika 'text' diisi)",
+        "apikey": "Masukkan API key Anda"
+      }
     }
+  ]
+},
+    {
+  "name": "BERITA",
+  "items": [
+    {
+      "name": "CNN",
+      "desc": "Ambil berita terbaru dari CNN.",
+      "path": "/api/berita/cnn?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "CNBC",
+      "desc": "Ambil berita terbaru dari CNBC.",
+      "path": "/api/berita/cnbc?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Kompas",
+      "desc": "Ambil berita terbaru dari Kompas.",
+      "path": "/api/berita/kompas?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Tribun",
+      "desc": "Ambil berita terbaru dari Tribun.",
+      "path": "/api/berita/tribun?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Detik",
+      "desc": "Ambil berita terbaru dari Detik.",
+      "path": "/api/berita/detik?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Kontan",
+      "desc": "Ambil berita terbaru dari Kontan.",
+      "path": "/api/berita/kontan?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "iNews",
+      "desc": "Ambil berita terbaru dari iNews.",
+      "path": "/api/berita/inews?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "DailyNews",
+      "desc": "Ambil berita terbaru dari DailyNews.",
+      "path": "/api/berita/dailynews?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    }
+  ]
+},
+    {
+  "name": "RANDOM",
+  "items": [
+    {
+      "name": "Cerpen",
+      "desc": "Ambil cerpen secara acak.",
+      "path": "/api/random/cerpen?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Quotes",
+      "desc": "Ambil quotes secara acak.",
+      "path": "/api/random/quotes?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Couples",
+      "desc": "Ambil gambar couples secara acak.",
+      "path": "/api/random/ppcp?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Meme",
+      "desc": "Ambil meme secara acak.",
+      "path": "/api/random/meme?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Dark Jokes",
+      "desc": "Ambil dark jokes secara acak.",
+      "path": "/api/random/darkjokes?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    },
+    {
+      "name": "Quotes Anime",
+      "desc": "Ambil quotes anime secara acak.",
+      "path": "/api/random/quotesanime?apikey=",
+      "status": "ready",
+      "params": {
+        "apikey": "Masukkan API key Anda"
+      }
+    }
+  ]
+}
   ]
 }
