@@ -212,7 +212,7 @@
   {
   "name": "Otakudesu Ongoing",
   "desc": "Get list of ongoing anime from Otakudesu",
-  "path": "/api/otakudesu?ongoing=true&apikey=",
+  "path": "/api/search/otakudesu?ongoing=true&apikey=",
   "status": "ready",
   "params": {
     "ongoing": "Set true untuk mendapatkan daftar anime ongoing",
@@ -222,7 +222,7 @@
 {
   "name": "Otakudesu Search",
   "desc": "Search anime on Otakudesu by title",
-  "path": "/api/otakudesu?q=&apikey=",
+  "path": "/api/search/otakudesu?q=&apikey=",
   "status": "ready",
   "params": {
     "q": "Judul anime yang dicari (misal: One Piece, Naruto, Bleach)",
@@ -232,7 +232,7 @@
 {
   "name": "Otakudesu Detail",
   "desc": "Get detail info of an anime from Otakudesu",
-  "path": "/api/otakudesu?url=&apikey=",
+  "path": "/api/search/otakudesu?url=&apikey=",
   "status": "ready",
   "params": {
     "url": "URL penuh atau path anime di Otakudesu (misal: /anime/one-piece-sub-indo/)",
@@ -242,7 +242,7 @@
 {
   "name": "Otakudesu Download",
   "desc": "Get download links of an anime episode from Otakudesu",
-  "path": "/api/otakudesu?url=&download=true&apikey=",
+  "path": "/api/search/otakudesu?url=&download=true&apikey=",
   "status": "ready",
   "params": {
     "url": "URL penuh atau path episode di Otakudesu (misal: /episode/one-piece-ep-1000-sub-indo/)",
