@@ -36,6 +36,15 @@
       "params": {
         "key": "Masukkan API key kamu"
       }
+    },
+      {
+      "name": "Status Server",
+      "desc": "Informasi Detail Server",
+      "path": "/api/user/status?key=API_YUDZ",
+      "status": "ready",
+      "params": {
+        "key": "Masukkan API key kamu"
+      }
     }
     ]
   },
