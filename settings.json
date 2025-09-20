@@ -43,6 +43,26 @@
     "name": "DOWNLOADER",
     "items": [
       {
+  "name": "Spotifyv2 Download",
+  "desc": "Download lagu dari Spotify via API",
+  "path": "/api/download/spotifyv2?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL Spotify track (contoh: https://open.spotify.com/track/xxxx)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+      {
+  "name": "GDRIVE Download",
+  "desc": "Download google drive from api",
+  "path": "/api/download/gdrive?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL google drive wajib file jngn folder",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+      {
   "name": "AN1 Download",
   "desc": "Download any APK mod via API",
   "path": "/api/download/an1?url=&apikey=",
@@ -186,9 +206,202 @@
         }
       ]
       },
-    {
+  {
       "name": "SEARCH",
       "items": [
+  {
+  "name": "Otakudesu Ongoing",
+  "desc": "Get list of ongoing anime from Otakudesu",
+  "path": "/api/otakudesu?ongoing=true&apikey=",
+  "status": "ready",
+  "params": {
+    "ongoing": "Set true untuk mendapatkan daftar anime ongoing",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+{
+  "name": "Otakudesu Search",
+  "desc": "Search anime on Otakudesu by title",
+  "path": "/api/otakudesu?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Judul anime yang dicari (misal: One Piece, Naruto, Bleach)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+{
+  "name": "Otakudesu Detail",
+  "desc": "Get detail info of an anime from Otakudesu",
+  "path": "/api/otakudesu?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "URL penuh atau path anime di Otakudesu (misal: /anime/one-piece-sub-indo/)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+{
+  "name": "Otakudesu Download",
+  "desc": "Get download links of an anime episode from Otakudesu",
+  "path": "/api/otakudesu?url=&download=true&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "URL penuh atau path episode di Otakudesu (misal: /episode/one-piece-ep-1000-sub-indo/)",
+    "download": "Set true untuk mengambil link download",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+  {
+  "name": "Ringtone Search",
+  "desc": "Search ringtones on Meloboom by title",
+  "path": "/api/search/ringtone?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Judul ringtone yang dicari (misal: iphone, anime, pop)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+ {
+  "name": "Wikimedia Search",
+  "desc": "Search articles or media from Wikimedia",
+  "path": "/api/search/wikimedia?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Judul artikel atau kata kunci yang dicari (misal: Albert Einstein, Indonesia, Anime)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+  {
+  "name": "Wallpaper Search",
+  "desc": "Search wallpapers on BestHDWallpaper by title",
+  "path": "/api/search/wallpaper?q=&page=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Judul wallpaper yang dicari (misal: Naruto, landscape, anime)",
+    "page": "Nomor halaman hasil pencarian (opsional, default 1)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+  {
+  "name": "Wattpad Search",
+  "desc": "Search stories on Wattpad by query",
+  "path": "/api/search/wattpad?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Query search (e.g., Naruto, romance, fantasy)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Wattpad Detail / List",
+  "desc": "Get list of chapters or story details from Wattpad by URL",
+  "path": "/api/search/wattpad?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Full URL or path of the story (e.g., /story/123456)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Wattpad Read Chapter",
+  "desc": "Read full content of a Wattpad story chapter by URL",
+  "path": "/api/search/wattpad?url=&chapter=true&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Full URL or path of the story (e.g., /story/123456)",
+    "chapter": "Set to true to read chapter content",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Livechart Search",
+  "desc": "Search anime on Livechart by query",
+  "path": "/api/search/livechart?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Query search (e.g., Naruto)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Livechart Detail",
+  "desc": "Get detailed info of an anime from Livechart",
+  "path": "/api/search/livechart?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Full URL or path of the anime (e.g., /anime/naruto)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Komikindo Populer",
+  "desc": "Get list of popular comics from Komikindo",
+  "path": "/api/search/komikindo?popular=true&apikey=",
+  "status": "ready",
+  "params": {
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Komikindo Detail",
+  "desc": "Get detailed info of a comic from Komikindo",
+  "path": "/api/search/komikindo?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Full URL or path of the comic (e.g. /nama-komik/)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "Komikindo Search",
+  "desc": "Search comics on Komikindo by keyword",
+  "path": "/api/search/komikindo?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Keyword to search comics",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "LK21 Detail",
+  "desc": "Get detailed info of a movie/episode from LK21",
+  "path": "/api/search/lk21?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Full URL or path of the movie/episode (e.g. /film/spiderman-no-way-home-2021/)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "LK21 Search",
+  "desc": "Search movies/series on LK21 by keyword",
+  "path": "/api/search/lk21?q=&page=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Keyword for search",
+    "page": "Optional, page number (default 1)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "LK21 Latest",
+  "desc": "Get latest movies/series from LK21",
+  "path": "/api/search/lk21?page=&apikey=",
+  "status": "ready",
+  "params": {
+    "page": "Optional, page number (default 1)",
+    "apikey": "Input your apikey"
+  }
+},
+  {
+  "name": "AN1 Search",
+  "desc": "Search apk by keyword",
+  "path": "/api/search/an1?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "kata kunci untuk search",
+    "apikey": "input your apikey"
+  }
+},
   {
   "name": "AN1 Search",
   "desc": "Search apk by keyword",
@@ -587,9 +800,19 @@
         }
   ]
 },
- {
+  {
    "name": "ISLAMI",
    "items": [
+   {
+          "name": "Cari Doa",
+          "desc": "Search any Doa via API",
+          "path": "/api/islami/doa?q=&apikey=",
+          "status": "ready",
+          "params": {
+            "kota": "cari doa misal doa mandi / mandi ",
+            "apikey": "input your apikey"
+          }
+        },
    {
           "name": "Jadwal Shalat",
           "desc": "Search any Jadwal shalat via API",
@@ -612,7 +835,7 @@
         }
   ]
 },
-{
+  {
   "name": "GAME",
   "items": [
     {
@@ -798,9 +1021,19 @@
     }
   ]
 },
-    {
+  {
       "name": "STALK",
       "items": [
+  {
+  "name": "GitHub Stalk",
+  "desc": "Get GitHub user profile info by username",
+  "path": "/api/stalk/github?username=&apikey=",
+  "status": "ready",
+  "params": {
+    "username": "Username GitHub (contoh: torvalds)",
+    "apikey": "input your apikey"
+  }
+},
   { 
     "name": "Genshin Stalk",
     "desc": "Get Genshin Impact player info by UID",
@@ -853,9 +1086,30 @@
   }
 ]
     },
-    {
+  {
       "name": "TOOLS",
       "items": [
+  {
+  "name": "Pxpic Editor",
+  "desc": "Gunakan AI PxPic untuk mengedit gambar (removebg, enhance, upscale, restore, colorize)",
+  "path": "/api/tools/pxpic?url=&tools=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "URL gambar yang ingin diproses (contoh: https://i.imgur.com/abcd.jpg)",
+    "tools": "Pilih tools: removebg, enhance, upscale, restore, colorize",
+    "apikey": "Input API key kamu"
+  }
+},
+  {
+  "name": "Style Text",
+  "desc": "Convert teks menjadi berbagai gaya unik",
+  "path": "/api/tools/styletext?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Teks yang ingin diubah gayanya (contoh: Yudzxml)",
+    "apikey": "Input API key kamu"
+  }
+},
   {
     "name": "Image Edit",
     "desc": "Edit an image via AI by providing URL and prompt",
@@ -935,9 +1189,19 @@
   }
 ]
     },
-    {
+  {
   "name": "CANVAS",
   "items": [
+    {
+  "name": "TTP",
+  "desc": "Generate a transparent text image by providing text. You must provide 'text'.",
+  "path": "/api/canvas/ttp?text=&apikey=",
+  "status": "ready",
+  "params": {
+    "text": "Teks yang akan dijadikan gambar transparan (wajib diisi)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
     {
       "name": "Smeme",
       "desc": "Generate a smeme image by providing profile picture and text(s). You must provide at least one of 'text' or 'text2'.",
@@ -952,7 +1216,7 @@
     }
   ]
 },
-    {
+  {
   "name": "BERITA",
   "items": [
     {
@@ -1029,7 +1293,7 @@
     }
   ]
 },
-    {
+  {
   "name": "RANDOM",
   "items": [
     {
