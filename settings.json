@@ -218,6 +218,16 @@
   {
       "name": "SEARCH",
       "items": [
+{
+  "name": "GSM Arena Search",
+  "desc": "Get phone specifications from GSM Arena",
+  "path": "/api/search/gsmarena?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan nama HP yang ingin dicari",
+    "apikey": "Masukkan API key Anda"
+  }
+},
   {
   "name": "Otakudesu Ongoing",
   "desc": "Get list of ongoing anime from Otakudesu",
