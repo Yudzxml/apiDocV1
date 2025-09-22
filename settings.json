@@ -52,6 +52,36 @@
     "name": "DOWNLOADER",
     "items": [
       {
+  "name": "Twitter Downloader",
+  "desc": "Download media dari postingan Twitter/X (video, gambar, atau GIF) hanya dengan URL postingan",
+  "path": "/api/download/twitter?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL Twitter/X (contoh: https://x.com/username/status/1234567890 atau https://twitter.com/username/status/1234567890)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+      {
+  "name": "Threads Downloader",
+  "desc": "Download postingan Threads (teks, gambar, atau video) hanya dengan URL postingan",
+  "path": "/api/download/threads?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL Threads (contoh: https://www.threads.net/t/Cujx6ryoYx6 atau https://www.threads.com/@username/post/DO2kQ9gjuUk)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+{
+  "name": "GitHub Downloader",
+  "desc": "Download file atau folder tertentu dari GitHub, berdasarkan username dan nama repo",
+  "path": "/api/download/github?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL GitHub (contoh: https://github.com/username/repo, atau https://github.com/username/repo/blob/main/file.js, atau https://github.com/username/repo/tree/main/folder)",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+      {
   "name": "Spotifyv2 Download",
   "desc": "Download lagu dari Spotify via API",
   "path": "/api/download/spotifyv2?url=&apikey=",
@@ -218,6 +248,76 @@
   {
       "name": "SEARCH",
       "items": [
+        {
+  "name": "Lirik Lagu",
+  "desc": "Search for song lyrics by text query",
+  "path": "/api/search/lirik?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan judul atau potongan lirik lagu",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+        {
+  "name": "Brave Search",
+  "desc": "Search results from Brave by text query",
+  "path": "/api/search/brave?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan kata kunci pencarian",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+        {
+  "name": "Resep Masakan",
+  "desc": "Search for Indonesian recipes by text query",
+  "path": "/api/search/resep?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan nama resep yang ingin dicari",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+{
+  "name": "Genshin Character",
+  "desc": "Search for Genshin character by text query",
+  "path": "/api/search/genshinchart?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan karakter Genshin yang ingin dicari",
+    "apikey": "Masukkan API key Anda"
+  }
+},
+  {
+    "name": "Noveltoon Search",
+    "desc": "Search for novels on Noveltoon by text query",
+    "path": "/api/search/noveltoon?q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "Masukkan judul novel yang ingin dicari",
+    "apikey": "Masukkan API key Anda"
+    }
+  },
+  {
+    "name": "Noveltoon Detail",
+    "desc": "Fetch detailed info for a novel from Noveltoon using URL",
+    "path": "/api/search/noveltoon?url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "Masukkan URL noveltoon untuk fetch detail",
+     "apikey": "Masukkan API key Anda"
+    }
+  },
+{
+  "name": "NPM Package Search",
+  "desc": "Search for NPM packages and get details like downloads, description, and latest version",
+  "path": "/api/search/npm?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Masukkan nama paket NPM yang ingin dicari",
+    "apikey": "Masukkan API key Anda"
+  }
+},
 {
   "name": "GSM Arena Search",
   "desc": "Get phone specifications from GSM Arena",
@@ -1043,6 +1143,37 @@
   {
       "name": "STALK",
       "items": [
+        {
+  "name": "MLBB Stalk",
+  "desc": "Get Mobile Legends profile info by ID and Server.",
+  "path": "/api/stalk/mlbb?id=&server=&apikey=",
+  "status": "ready",
+  "params": {
+    "id": "User ID MLBB (contoh: 123456789)",
+    "server": "Server MLBB (contoh: 1234)",
+    "apikey": "Input your API key"
+  }
+},
+        {
+  "name": "Minecraft Stalk",
+  "desc": "Get Minecraft user profile info by username from crafty.gg (renders, bio, skins, stats).",
+  "path": "/api/stalk/minecraft?username=&apikey=",
+  "status": "ready",
+  "params": {
+    "username": "Username Minecraft (contoh: Notch)",
+    "apikey": "Input your API key"
+  }
+},
+        {
+  "name": "Roblox Stalk",
+  "desc": "Get Roblox user profile info by username",
+  "path": "/api/stalk/roblox?username=&apikey=",
+  "status": "ready",
+  "params": {
+    "username": "Username Roblox (contoh: Builderman)",
+    "apikey": "Input your API key"
+  }
+},
   {
   "name": "GitHub Stalk",
   "desc": "Get GitHub user profile info by username",
