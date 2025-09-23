@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Not Found</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #6c5ce7, #00cec9);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .glow {
+        text-shadow: 0 0 6px rgba(108, 92, 231, 0.8),
+          0 0 12px rgba(108, 92, 231, 0.6),
+          0 0 20px rgba(0, 206, 201, 0.7);
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased text-white">
+    <div class="text-center px-4">
+      <h1 class="text-6xl font-extrabold glow float">
+        <i class="fa-solid fa-alien-8bit"></i> 404
+      </h1>
+      <h2 class="mt-3 text-xl font-semibold">
+        <i class="fa-solid fa-compass"></i> Oops! Page Not Found
+      </h2>
+      <p class="mt-2 text-base text-gray-200">
+        Halaman yang kamu cari sepertinya hilang di multiverse ✨
+      </p>
+      <a
+        href="/"
+        class="mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-white bg-gradient-to-r from-purple-500 to-indigo-600 shadow-md transform transition hover:scale-105 hover:shadow-xl"
+      >
+        <i class="fa-solid fa-house"></i> Balik ke Beranda
+      </a>
+    </div>
+  </body>
+</html>
