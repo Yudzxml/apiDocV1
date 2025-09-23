@@ -11,7 +11,7 @@
     "status": "Online"
   },
   "apiSettings": {
-    "creator": "VGX Team",
+    "creator": "Yudzxml",
     "requireApikey": false,
     "apikey": {
       "demo": {
@@ -248,6 +248,57 @@
   {
       "name": "SEARCH",
       "items": [
+  {
+    "name": "AnimeIndo Search",
+    "desc": "Search anime on AnimeIndo by keyword",
+    "path": "/api/search/animeindo?action=search&q=&apikey=",
+    "status": "ready",
+    "params": {
+      "q": "kata kunci untuk search",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "AnimeIndo Home",
+    "desc": "Get anime list from AnimeIndo home (with pagination)",
+    "path": "/api/search/animeindo?action=home&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "nomor halaman, default 1",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "AnimeIndo Detail",
+    "desc": "Get detail info of an anime from AnimeIndo",
+    "path": "/api/search/animeindo?action=detail&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "URL detail anime",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "AnimeIndo Genre",
+    "desc": "Get anime list by genre from AnimeIndo",
+    "path": "/api/search/animeindo?action=genre&type=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "type": "nama genre anime (misalnya: action, comedy, romance)",
+      "page": "nomor halaman, default 1",
+      "apikey": "input your apikey"
+    }
+  },
+  {
+    "name": "AnimeIndo Stream",
+    "desc": "Get video streaming link from AnimeIndo",
+    "path": "/api/search/animeindo?action=stream&url=&apikey=",
+    "status": "ready",
+    "params": {
+      "url": "URL episode anime",
+      "apikey": "input your apikey"
+    }
+  },
         {
   "name": "Lirik Lagu",
   "desc": "Search for song lyrics by text query",
