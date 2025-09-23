@@ -2,10 +2,15 @@
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/:path/", "destination": "/:path/index.html" },
-    { "source": "/:path", "destination": "/:path.html" }
+    { "source": "/:path", "destination": "/:path.html" },
+
+    { "source": "/doc/get", "destination": "/doc.html" },
+    { "source": "/doc/post", "destination": "/post.html" }
   ],
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/:path.html", "destination": "/:path", "permanent": true }
+    { "source": "/:path.html", "destination": "/:path", "permanent": true },
+    { "source": "/doc.html", "destination": "/doc/get", "permanent": true },
+    { "source": "/post.html", "destination": "/doc/post", "permanent": true }
   ]
 }
