@@ -992,11 +992,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const [basePath, queryString = ""] = apiData.path.split("?");
   const paramsFromUrl = new URLSearchParams(queryString);
 
-  console.log("Base path:", basePath);
-  console.log("Query string:", queryString);
-  console.log("All params:", Object.fromEntries(paramsFromUrl.entries()));
-
-  // 🔑 ambil apikey dari localStorage
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -1067,7 +1062,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const requiredParams = [];
   paramsFromUrl.forEach((val, key) => {
     if (!val || val.trim() === "") {
-      // kalau param apikey kosong tapi userApikey ada → langsung inject
       if (key.toLowerCase() === "apikey" && userApikey) {
         paramsFromUrl.set("apikey", userApikey);
       } else {
@@ -1076,12 +1070,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  console.log("Params that need input:", requiredParams);
-
   requiredParams.forEach(key => {
-    const group = buildParamInput(key, apiData.params?.[key]);
-    paramContainer.appendChild(group);
-  });
+  if (key.toLowerCase() === "apikey" && userApikey) return;
+
+  const group = buildParamInput(key, apiData.params?.[key]);
+  paramContainer.appendChild(group);
+});
 
   if (apiData.innerDesc) {
     const innerDescDiv = document.createElement("div");
