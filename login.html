@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #6c5ce7;
+      --primary-hover: #5649d1;
+      --error-color: #ff7675;
+      --success-color: #00b894;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-radius: 16px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.12);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* canvas partikel */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: linear-gradient(135deg, #6c5ce7, #000);
+    }
+
+    .auth-wrapper {
+      position: relative;
+      z-index: 1; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 1rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      overflow: hidden;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card-content.first-load {
+      animation: fadeIn 0.5s ease;
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .card h2 {
+      margin: 0 0 1.5rem;
+      color: var(--primary-color);
+      font-size: 1.6rem;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: #f1f3f9;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e0e0e0;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .input-group:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+    }
+
+    .input-group i {
+      margin-right: 0.75rem;
+      color: #7f8c8d;
+      font-size: 1rem;
+    }
+
+    .input-group input {
+      border: none;
+      outline: none;
+      background: transparent;
+      flex: 1;
+      font-size: 1rem;
+      color: #2c3e50;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      cursor: pointer;
+      color: #7f8c8d;
+      transition: transform 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .toggle-password:hover {
+      color: var(--primary-color);
+      transform: scale(1.2);
+    }
+
+    .toggle-password.animate {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .switch {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .switch a {
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 0.4rem;
+      transition: var(--transition);
+    }
+
+    .switch a:hover {
+      text-decoration: underline;
+      color: var(--primary-hover);
+    }
+
+#toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.toast {
+  margin-bottom: 10px;
+  padding: 0.85rem 1.2rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.toast.success { background: var(--success-color); }
+.toast.error { background: var(--error-color); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .card-content.animate-out {
+      animation: fadeSlideOut 0.3s forwards;
+    }
+
+    .card-content.animate-in {
+      animation: fadeSlideIn 0.3s forwards;
+    }
+
+    @keyframes fadeSlideOut {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(-40px); }
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Partikel Background -->
+  <div id="particles-js"></div>
+
+  <div class="auth-wrapper">
+    <div class="card" id="authCard">
+      <div class="card-content" id="cardContent">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i></div>
+        <h2 id="formTitle"><i class="fa-solid fa-right-to-bracket"></i> Login</h2>
+        <form id="authForm">
+          <div class="input-group">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email" required />
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required />
+            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+          </div>
+          <button type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i> <span>Login</span></button>
+        </form>
+        <div class="switch">
+          <span id="switchText">Belum punya akun?</span>
+          <a href="#" id="switchLink">
+            <i class="fa-solid fa-user-plus"></i> Daftar Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- FingerprintJS -->
+  <script src="https://openfpcdn.io/fingerprintjs/v3/umd.min.js"></script>
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // Init Particles
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out" }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" }
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+
+  <script>
+    let mode = "login";
+    let deviceId = null;
+
+    // init fingerprint
+    FingerprintJS.load().then(fp => {
+      fp.get().then(result => deviceId = result.visitorId);
+    });
+
+    const cardContent = document.getElementById("cardContent");
+    const formTitle = document.getElementById("formTitle");
+    const authForm = document.getElementById("authForm");
+    const switchLink = document.getElementById("switchLink");
+    const switchText = document.getElementById("switchText");
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    // redirect jika sudah login
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedUser = localStorage.getItem("userData");
+      if (savedUser) {
+        window.location.href = "profile.html";
+      }
+      cardContent.classList.add("first-load");
+      setTimeout(() => cardContent.classList.remove("first-load"), 600);
+    });
+
+    // toast function
+    function showToast(type, msg) {
+      const container = document.getElementById("toast-container");
+      const toast = document.createElement("div");
+      toast.className = "toast " + type;
+      toast.innerHTML = msg;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 4000);
+    }
+
+    // toggle password
+    togglePassword.addEventListener("click", () => {
+      togglePassword.classList.add("animate");
+      setTimeout(() => {
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+        togglePassword.classList.remove("animate");
+      }, 100);
+    });
+
+    // switch login/register
+    switchLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      cardContent.classList.add("animate-out");
+
+      setTimeout(() => {
+        if (mode === "login") {
+          mode = "register";
+          formTitle.innerHTML = '<i class="fa-solid fa-user-plus"></i> Register';
+          authForm.querySelector("button span").textContent = "Register";
+          switchText.textContent = "Sudah punya akun?";
+          switchLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login Sekarang';
+        } else {
+          mode = "login";
+          formTitle.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
+          authForm.querySelector("button span").textContent = "Login";
+          switchText.textContent = "Belum punya akun?";
+          switchLink.innerHTML = '<i class="fa-solid fa-user-plus"></i> Daftar Sekarang';
+        }
+        cardContent.classList.remove("animate-out");
+        cardContent.classList.add("animate-in");
+        setTimeout(() => cardContent.classList.remove("animate-in"), 300);
+      }, 300);
+    });
+
+    // submit form
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = passwordInput.value;
+
+      let bodyData = { email, password };
+      if (mode === "register") {
+        bodyData.deviceId = deviceId;
+      }
+
+      try {
+        const res = await fetch(`https://api.yydz.biz.id/api/user/${mode}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bodyData)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Gagal");
+
+        if (mode === "register") {
+          showToast("success", "✅ Registrasi sukses, silakan login.");
+          setTimeout(() => switchLink.click(), 1500);
+        } else {
+          localStorage.setItem("userData", JSON.stringify(data));
+          showToast("success", "✅ Login sukses, Waiting...");
+          setTimeout(() => window.location.href = "profile.html", 1200);
+        }
+      } catch (err) {
+        showToast("error", "❌ Error: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

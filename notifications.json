@@ -1,14 +1,8 @@
 [
-  {
-    "id": "#01",
-    "date": "01-07-2025",
-    "title": "UI Interface Update",
-    "message": "The interface has been updated to be more modern, responsive, and attractive to enhance user experience."
-  },
-  {
-    "id": "#02",
-    "date": "13-09-2025",
-    "title": "API Samehadaku Stability",
-    "message": "Added fallback information for Samehadaku API. Sometimes the API may return errors depending on request limits or server response. Recommended solutions:\n- Run the request on a VPS or other hosting service for better uptime.\n- Test the API response directly in the browser before implementation.\n- Implement retry/fallback handling when the main endpoint fails.\n- Note: In some cases, integration works on websites even if local testing fails."
-  }
+{
+  "id": "#01",
+  "date": "24-09-2025",
+  "title": "Major Update: 50+ Endpoints, UI Refresh, Login & API Key Generator",
+  "message": "🔔 Update Terbaru (24-09-2025):\n\n- #02 Big Update: 50+ API Endpoints\nKami baru saja menambahkan lebih dari 50 endpoint baru untuk meningkatkan fleksibilitas penggunaan API. Endpoint mencakup berbagai kategori populer sehingga developer bisa langsung eksplorasi tanpa konfigurasi tambahan.\n\n- #03 UI/UX Refresh\nTampilan dashboard API kini lebih modern dan responsif. Layout diperbarui agar lebih rapih, navigasi dipermudah, dan setiap API memiliki detail parameter yang lebih jelas.\n\n- #04 Login & Auth System\nSekarang sudah ada sistem login! User dapat menyimpan profil, mengatur banner, serta mengelola API Key langsung dari akun masing-masing. Data user tersimpan dengan aman di database.\n\n- #05 Automatic API Key Generator\nFitur generate API Key otomatis ditambahkan. User bisa langsung membuat API Key baru dari dashboard tanpa perlu request manual."
+}
 ]
