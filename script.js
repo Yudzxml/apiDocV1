@@ -996,7 +996,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("Query string:", queryString);
   console.log("All params:", Object.fromEntries(paramsFromUrl.entries()));
 
-  // 🔑 ambil userData dari localStorage
+  // 🔑 ambil apikey dari localStorage
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -1049,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputField.required = true;
     inputField.autocomplete = "off";
 
-    // 🚀 kalau param apikey → otomatis isi dari localStorage
+    // isi otomatis apikey
     if (paramKey.toLowerCase() === "apikey" && userApikey) {
       inputField.value = userApikey;
     }
@@ -1066,7 +1066,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const requiredParams = [];
   paramsFromUrl.forEach((val, key) => {
-    if (!val || val.trim() === "") requiredParams.push(key);
+    if (!val || val.trim() === "") {
+      // kalau param apikey kosong tapi userApikey ada → langsung inject
+      if (key.toLowerCase() === "apikey" && userApikey) {
+        paramsFromUrl.set("apikey", userApikey);
+      } else {
+        requiredParams.push(key);
+      }
+    }
   });
 
   console.log("Params that need input:", requiredParams);
