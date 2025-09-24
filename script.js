@@ -961,22 +961,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   DOM.modal.desc.textContent = apiData.desc;
   DOM.modal.content.innerHTML = "";
   DOM.modal.endpoint.textContent = `https://api.yydz.biz.id${apiData.path.split("?")[0]}`;
-
   DOM.modal.spinner.classList.add("d-none");
   DOM.modal.content.classList.add("d-none");
   DOM.modal.container.classList.add("d-none");
   DOM.modal.endpoint.classList.remove("d-none");
-
   DOM.modal.queryInputContainer.innerHTML = "";
   DOM.modal.submitBtn.classList.add("d-none");
   DOM.modal.submitBtn.disabled = true;
   DOM.modal.submitBtn.innerHTML = '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>';
-
   ["download-image-btn", "download-video-btn", "share-api-btn"].forEach(cls => {
     const btn = DOM.modal.element.querySelector(`.${cls}`);
     if (btn) btn.style.display = "none";
   });
-
   if (!DOM.modal.element.querySelector(".share-api-btn")) {
     const newShareBtn = document.createElement("button");
     newShareBtn.className = "btn btn-info me-2 share-api-btn";
@@ -985,13 +981,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalFooter = DOM.modal.element.querySelector(".modal-footer");
     modalFooter.insertBefore(newShareBtn, DOM.modal.submitBtn);
   }
-
   const shareBtn = DOM.modal.element.querySelector(".share-api-btn");
   if (shareBtn) shareBtn.style.display = "inline-block";
-
   const [basePath, queryString = ""] = apiData.path.split("?");
   const paramsFromUrl = new URLSearchParams(queryString);
-
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -1002,25 +995,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (e) {
     console.warn("Gagal parse userData:", e);
   }
-
   const buildParamInput = (paramKey, desc) => {
     const group = document.createElement("div");
     group.className = "param-group mb-3";
-
     const labelContainer = document.createElement("div");
     labelContainer.className = "param-label-container";
-
     const label = document.createElement("label");
     label.className = "form-label";
     label.textContent = paramKey;
     label.htmlFor = `param-${paramKey}`;
-
     const requiredSpan = document.createElement("span");
     requiredSpan.className = "required-indicator ms-1";
     requiredSpan.textContent = "*";
     label.appendChild(requiredSpan);
     labelContainer.appendChild(label);
-
     if (desc) {
       const tooltipIcon = document.createElement("i");
       tooltipIcon.className = "fas fa-info-circle param-info ms-1";
@@ -1029,12 +1017,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       tooltipIcon.title = desc;
       labelContainer.appendChild(tooltipIcon);
     }
-
     group.appendChild(labelContainer);
-
     const inputContainer = document.createElement("div");
     inputContainer.className = "input-container";
-
     const inputField = document.createElement("input");
     inputField.type = "text";
     inputField.className = "form-control custom-input";
@@ -1043,22 +1028,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputField.dataset.param = paramKey;
     inputField.required = true;
     inputField.autocomplete = "off";
-
-    // isi otomatis apikey
     if (paramKey.toLowerCase() === "apikey" && userApikey) {
       inputField.value = userApikey;
     }
-
     inputField.addEventListener("input", validateModalInputs);
-
     inputContainer.appendChild(inputField);
     group.appendChild(inputContainer);
     return group;
   };
-
   const paramContainer = document.createElement("div");
   paramContainer.className = "param-container";
-
   const requiredParams = [];
   paramsFromUrl.forEach((val, key) => {
     if (!val || val.trim() === "") {
@@ -1069,21 +1048,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   });
-
   requiredParams.forEach(key => {
-  if (key.toLowerCase() === "apikey" && userApikey) return;
-
-  const group = buildParamInput(key, apiData.params?.[key]);
-  paramContainer.appendChild(group);
-});
-
+    if (key.toLowerCase() === "apikey" && userApikey) return;
+    const group = buildParamInput(key, apiData.params?.[key]);
+    paramContainer.appendChild(group);
+  });
   if (apiData.innerDesc) {
     const innerDescDiv = document.createElement("div");
     innerDescDiv.className = "inner-desc mt-3";
     innerDescDiv.innerHTML = `<i class="fas fa-info-circle me-2"></i> ${apiData.innerDesc.replace(/\n/g, "<br>")}`;
     paramContainer.appendChild(innerDescDiv);
   }
-
   if (paramContainer.children.length > 0) {
     DOM.modal.queryInputContainer.appendChild(paramContainer);
     DOM.modal.submitBtn.classList.remove("d-none");
@@ -1104,11 +1079,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
   DOM.modal.submitBtn.disabled = !allFilled;
   DOM.modal.submitBtn.classList.toggle("btn-active", allFilled);
-
   inputs.forEach(input => {
     if (input.value.trim()) input.classList.remove("is-invalid");
   });
-
   const errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger.fade-in");
   if (errorMsg && allFilled) {
     errorMsg.classList.replace("fade-in", "fade-out");
@@ -1118,11 +1091,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const handleSubmitQuery = async () => {
   if (!currentApiData) return;
-
+  let userApikey = "";
+  try {
+    const savedUser = localStorage.getItem("userData");
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      userApikey = userData?.data?.apikey || "";
+    }
+  } catch {}
   const inputs = DOM.modal.queryInputContainer.querySelectorAll("input");
   const newParams = new URLSearchParams(currentApiData.path.split("?")[1] || "");
   let isValid = true;
-
   inputs.forEach(input => {
     if (input.required && !input.value.trim()) {
       isValid = false;
@@ -1131,10 +1110,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       setTimeout(() => input.parentElement.classList.remove("shake-animation"), 500);
     } else {
       input.classList.remove("is-invalid");
-      if (input.value.trim()) newParams.set(input.dataset.param, input.value.trim());
+      if (input.dataset.param.toLowerCase() === "apikey" && !input.value.trim() && userApikey) {
+        newParams.set("apikey", userApikey);
+      } else if (input.value.trim()) {
+        newParams.set(input.dataset.param, input.value.trim());
+      }
     }
   });
-
   if (!isValid) {
     let errorMsg = DOM.modal.queryInputContainer.querySelector(".alert.alert-danger");
     if (!errorMsg) {
@@ -1146,176 +1128,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     errorMsg.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Please fill in all required fields.';
     errorMsg.classList.remove("fade-out");
     errorMsg.classList.add("fade-in");
-
     DOM.modal.submitBtn.classList.add("shake-animation");
     setTimeout(() => DOM.modal.submitBtn.classList.remove("shake-animation"), 500);
     return;
   }
-
   DOM.modal.submitBtn.disabled = true;
-  DOM.modal.submitBtn.innerHTML =
-    '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
-
+  DOM.modal.submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
   const fullUrl = `https://api.yydz.biz.id${currentApiData.path.split("?")[0]}?${newParams.toString()}`;
   console.log("Submitting API request with all params:", fullUrl);
   DOM.modal.endpoint.textContent = fullUrl;
-
   await handleApiRequest(fullUrl, currentApiData.name);
 };
-
-  const handleApiRequest = async (apiUrl, apiName) => {
-    DOM.modal.spinner.classList.remove("d-none")
-    DOM.modal.container.classList.add("d-none")
-    DOM.modal.content.innerHTML = ""
-
-    try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 20000)
-
-      const response = await fetch(apiUrl, { signal: controller.signal })
-      clearTimeout(timeoutId)
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ message: response.statusText }))
-
-        if (settings.apiSettings?.requireApikey) {
-          if (response.status === 401 || response.status === 403) {
-            showToast(`API request failed: ${errorData.message || "Invalid API key"}`, "error", "Request Failed")
-            DOM.modal.spinner.classList.add("d-none")
-            DOM.modal.container.classList.add("d-none")
-            DOM.modal.content.innerHTML = ""
-            return
-          } else if (response.status === 429) {
-            showToast(`API request failed: ${errorData.message || "Rate limit exceeded"}`, "error", "Request Failed")
-            DOM.modal.spinner.classList.add("d-none")
-            DOM.modal.container.classList.add("d-none")
-            DOM.modal.content.innerHTML = ""
-            return
-          }
-        }
-        
-        showToast(`API request failed: ${errorData.message || response.statusText}`, "error", "Request Failed")
-
-        throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`)
-      }
-
-      const contentType = response.headers.get("Content-Type")
-      if (contentType && contentType.includes("image/")) {
-        const blob = await response.blob()
-        const imageUrl = URL.createObjectURL(blob)
-        const img = document.createElement("img")
-        img.src = imageUrl
-        img.alt = apiName
-        img.className = "response-image img-fluid rounded shadow-sm fade-in"
-
-        DOM.modal.content.appendChild(img)
-
-        let downloadImageBtn = DOM.modal.element.querySelector(".download-image-btn")
-        if (!downloadImageBtn) {
-          downloadImageBtn = document.createElement("a")
-          downloadImageBtn.className = "btn btn-success me-2 download-image-btn"
-          downloadImageBtn.innerHTML = '<i class="fas fa-download me-2"></i> Download Image'
-          downloadImageBtn.style.textDecoration = "none"
-
-          const modalFooter = DOM.modal.element.querySelector(".modal-footer")
-          modalFooter.insertBefore(downloadImageBtn, DOM.modal.submitBtn)
-        }
-
-        downloadImageBtn.href = imageUrl
-        downloadImageBtn.download = `${apiName.toLowerCase().replace(/\s+/g, "-")}.${blob.type.split("/")[1] || "png"}`
-        downloadImageBtn.style.display = "inline-block"
-      } else if (contentType && contentType.includes("video/")) {
-        const blob = await response.blob()
-        const videoUrl = URL.createObjectURL(blob)
-        const video = document.createElement("video")
-        video.src = videoUrl
-        video.controls = true
-        video.className = "response-video w-100 rounded shadow-sm fade-in"
-        video.style.maxHeight = "400px"
-        video.preload = "metadata"
-
-        DOM.modal.content.appendChild(video)
-
-        let downloadVideoBtn = DOM.modal.element.querySelector(".download-video-btn")
-        if (!downloadVideoBtn) {
-          downloadVideoBtn = document.createElement("a")
-          downloadVideoBtn.className = "btn btn-success me-2 download-video-btn"
-          downloadVideoBtn.innerHTML = '<i class="fas fa-download me-2"></i> Download Video'
-          downloadVideoBtn.style.textDecoration = "none"
-
-          const modalFooter = DOM.modal.element.querySelector(".modal-footer")
-          modalFooter.insertBefore(downloadVideoBtn, DOM.modal.submitBtn)
-        }
-
-        downloadVideoBtn.href = videoUrl
-        downloadVideoBtn.download = `${apiName.toLowerCase().replace(/\s+/g, "-")}.${blob.type.split("/")[1] || "mp4"}`
-        downloadVideoBtn.style.display = "inline-block"
-      } else if (contentType && contentType.includes("application/json")) {
-        const data = await response.json()
-        const formattedJson = syntaxHighlightJson(JSON.stringify(data, null, 2))
-        DOM.modal.content.innerHTML = formattedJson
-        if (JSON.stringify(data, null, 2).split("\n").length > 20) {
-          addCodeFolding(DOM.modal.content)
-        }
-      } else {
-        const textData = await response.text()
-        DOM.modal.content.textContent = textData || "Response has no content or unknown format."
-      }
-
-      DOM.modal.container.classList.remove("d-none")
-      DOM.modal.content.classList.remove("d-none")
-      DOM.modal.container.classList.add("slide-in-bottom")
-      showToast(`API request successful for ${apiName}`, "success", "Request Success")
-
-      if (DOM.modal.submitBtn) {
-        DOM.modal.submitBtn.disabled = false
-        DOM.modal.submitBtn.innerHTML =
-          '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>'
-        DOM.modal.submitBtn.classList.remove("d-none")
-      }
-    } catch (error) {
-      console.error("API Request Error:", error)
-      const errorHtml = `
-                <div class="error-container text-center p-3">
-                    <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2"></i>
-                    <h6 class="text-danger">An Error Occurred</h6>
-                    <p class="text-muted small">${error.message || "Could not retrieve data from server."}</p>
-                    ${
-                      currentApiData && currentApiData.path.split("?")[1]
-                        ? `<button class="btn btn-sm btn-outline-primary mt-2 retry-query-btn">
-                        <i class="fas fa-sync-alt me-1"></i> Try Again
-                    </button>`
-                        : ""
-                    }
-                </div>`
-      DOM.modal.content.innerHTML = errorHtml
-      DOM.modal.container.classList.remove("d-none")
-      DOM.modal.content.classList.remove("d-none")
-      showToast(`API request failed: ${error.message || "Network error"}`, "error", "Request Failed")
-
-      const retryBtn = DOM.modal.content.querySelector(".retry-query-btn")
-      if (retryBtn) {
-        retryBtn.onclick = () => {
-          if (DOM.modal.queryInputContainer.firstChild) {
-            DOM.modal.queryInputContainer.firstChild.style.display = ""
-            DOM.modal.queryInputContainer.firstChild.classList.remove("fade-out")
-          }
-          DOM.modal.submitBtn.disabled = false
-          DOM.modal.submitBtn.innerHTML = '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>'
-          DOM.modal.container.classList.add("d-none")
-        }
-      }
-    } finally {
-      DOM.modal.spinner.classList.add("d-none")
-      if (DOM.modal.submitBtn) {
-        DOM.modal.submitBtn.disabled = false
-        DOM.modal.submitBtn.innerHTML =
-          '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>'
-        DOM.modal.submitBtn.classList.remove("d-none")
-      }
-    }
-  }
-
+  
   const syntaxHighlightJson = (json) => {
     json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     return json.replace(
