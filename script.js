@@ -994,6 +994,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const [basePath, queryString = ""] = apiData.path.split("?");
   const paramsFromUrl = new URLSearchParams(queryString);
 
+  // ambil apikey dari localStorage
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -1003,6 +1004,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (e) {
     console.warn("Gagal parse userData:", e);
+  }
+
+  // inject apikey ke params kalau ada di localStorage
+  if (userApikey && !paramsFromUrl.has("apikey")) {
+    paramsFromUrl.set("apikey", userApikey);
   }
 
   const buildParamInput = (paramKey, desc) => {
