@@ -1163,6 +1163,20 @@ requiredParams.forEach(key => {
     return;
   }
 
+  // 🔑 Inject apikey dari localStorage (override kalau kosong)
+  try {
+    const savedUser = localStorage.getItem("userData");
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      const userApikey = userData?.data?.apikey || "";
+      if (userApikey) {
+        newParams.set("apikey", userApikey);
+      }
+    }
+  } catch (e) {
+    console.warn("Gagal parse userData:", e);
+  }
+
   DOM.modal.submitBtn.disabled = true;
   DOM.modal.submitBtn.innerHTML =
     '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Processing...';
