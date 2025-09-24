@@ -1006,7 +1006,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("Gagal parse userData:", e);
   }
 
-  // inject apikey ke params kalau ada di localStorage
   if (userApikey && !paramsFromUrl.has("apikey")) {
     paramsFromUrl.set("apikey", userApikey);
   }
@@ -1066,15 +1065,22 @@ document.addEventListener("DOMContentLoaded", async () => {
   const paramContainer = document.createElement("div");
   paramContainer.className = "param-container";
 
-  const requiredParams = [];
-  paramsFromUrl.forEach((val, key) => {
-    if (!val || val.trim() === "") requiredParams.push(key);
-  });
 
-  requiredParams.forEach(key => {
-    const group = buildParamInput(key, apiData.params?.[key]);
-    paramContainer.appendChild(group);
-  });
+if (userApikey) {
+  paramsFromUrl.set("apikey", userApikey);
+}
+
+const requiredParams = [];
+paramsFromUrl.forEach((val, key) => {
+  if (!val || val.trim() === "") {
+    requiredParams.push(key);
+  }
+});
+
+requiredParams.forEach(key => {
+  const group = buildParamInput(key, apiData.params?.[key]);
+  paramContainer.appendChild(group);
+});
 
   if (apiData.innerDesc) {
     const innerDescDiv = document.createElement("div");
@@ -1084,13 +1090,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (paramContainer.children.length > 0) {
-    // ada param kosong -> tampilkan form input
+
     DOM.modal.queryInputContainer.appendChild(paramContainer);
     DOM.modal.submitBtn.classList.remove("d-none");
     DOM.modal.submitBtn.disabled = true;
     initializeTooltips(DOM.modal.queryInputContainer);
   } else {
-    // semua param udah ada -> langsung fetch tapi modal tetap tampil
     const fullUrl = new URL(`https://api.yydz.biz.id${basePath}`);
     paramsFromUrl.forEach((val, key) => {
       if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
