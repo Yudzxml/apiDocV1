@@ -957,10 +957,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const setupModalForApi = (apiData) => {
+  // Setup dasar modal
   DOM.modal.label.textContent = apiData.name;
   DOM.modal.desc.textContent = apiData.desc;
   DOM.modal.content.innerHTML = "";
-  DOM.modal.endpoint.textContent = `https://api.yydz.biz.id${apiData.path.split("?")[0]}`;
   DOM.modal.spinner.classList.add("d-none");
   DOM.modal.content.classList.add("d-none");
   DOM.modal.container.classList.add("d-none");
@@ -970,11 +970,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   DOM.modal.submitBtn.disabled = true;
   DOM.modal.submitBtn.innerHTML = '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>';
 
+  // Sembunyikan tombol tambahan
   ["download-image-btn", "download-video-btn", "share-api-btn"].forEach(cls => {
     const btn = DOM.modal.element.querySelector(`.${cls}`);
     if (btn) btn.style.display = "none";
   });
 
+  // Tambahkan tombol Share API jika belum ada
   if (!DOM.modal.element.querySelector(".share-api-btn")) {
     const newShareBtn = document.createElement("button");
     newShareBtn.className = "btn btn-info me-2 share-api-btn";
@@ -983,14 +985,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalFooter = DOM.modal.element.querySelector(".modal-footer");
     modalFooter.insertBefore(newShareBtn, DOM.modal.submitBtn);
   }
-
   const shareBtn = DOM.modal.element.querySelector(".share-api-btn");
   if (shareBtn) shareBtn.style.display = "inline-block";
 
+  // Parsing path & params
   const [basePath, queryString = ""] = apiData.path.split("?");
   const paramsFromUrl = new URLSearchParams(queryString);
 
-  // ambil apikey dari localStorage kalau ada
+  // Ambil apikey dari localStorage kalau ada
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -1002,7 +1004,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("Gagal parse userData:", e);
   }
 
-  // builder input field
+  // Builder input field
   const buildParamInput = (paramKey, desc) => {
     const group = document.createElement("div");
     group.className = "param-group mb-3";
@@ -1057,7 +1059,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return group;
   };
 
-  // container param
+  // Container param
   const paramContainer = document.createElement("div");
   paramContainer.className = "param-container";
 
@@ -1085,21 +1087,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     paramContainer.appendChild(innerDescDiv);
   }
 
-  // kalau masih ada input wajib → tampilkan form
+  // Bangun endpoint URL (selalu konsisten)
+  const fullUrl = new URL(`https://api.yydz.biz.id${basePath}`);
+  paramsFromUrl.forEach((val, key) => {
+    if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
+  });
+  DOM.modal.endpoint.textContent = fullUrl.toString();
+
+  // Jika masih ada required params → tampilkan input
   if (paramContainer.children.length > 0) {
     DOM.modal.queryInputContainer.appendChild(paramContainer);
     DOM.modal.submitBtn.classList.remove("d-none");
     DOM.modal.submitBtn.disabled = true;
     initializeTooltips(DOM.modal.queryInputContainer);
   } else {
-    // semua param udah ada → auto fetch
-    const fullUrl = new URL(`https://api.yydz.biz.id${basePath}`);
-    paramsFromUrl.forEach((val, key) => {
-      if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
-    });
-    
-    DOM.modal.endpoint.textContent = fullUrl.toString();
-
     console.log("All parameters filled, sending request to:", fullUrl.toString());
     handleApiRequest(fullUrl.toString(), apiData.name);
   }
