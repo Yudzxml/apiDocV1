@@ -969,10 +969,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   DOM.modal.submitBtn.classList.add("d-none");
   DOM.modal.submitBtn.disabled = true;
   DOM.modal.submitBtn.innerHTML = '<span>Send</span><i class="fas fa-paper-plane ms-2" aria-hidden="true"></i>';
+
   ["download-image-btn", "download-video-btn", "share-api-btn"].forEach(cls => {
     const btn = DOM.modal.element.querySelector(`.${cls}`);
     if (btn) btn.style.display = "none";
   });
+
   if (!DOM.modal.element.querySelector(".share-api-btn")) {
     const newShareBtn = document.createElement("button");
     newShareBtn.className = "btn btn-info me-2 share-api-btn";
@@ -981,10 +983,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalFooter = DOM.modal.element.querySelector(".modal-footer");
     modalFooter.insertBefore(newShareBtn, DOM.modal.submitBtn);
   }
+
   const shareBtn = DOM.modal.element.querySelector(".share-api-btn");
   if (shareBtn) shareBtn.style.display = "inline-block";
+
   const [basePath, queryString = ""] = apiData.path.split("?");
   const paramsFromUrl = new URLSearchParams(queryString);
+
+  // ambil apikey dari localStorage kalau ada
   let userApikey = "";
   try {
     const savedUser = localStorage.getItem("userData");
@@ -995,20 +1001,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (e) {
     console.warn("Gagal parse userData:", e);
   }
+
+  // builder input field
   const buildParamInput = (paramKey, desc) => {
     const group = document.createElement("div");
     group.className = "param-group mb-3";
+
     const labelContainer = document.createElement("div");
     labelContainer.className = "param-label-container";
+
     const label = document.createElement("label");
     label.className = "form-label";
     label.textContent = paramKey;
     label.htmlFor = `param-${paramKey}`;
+
     const requiredSpan = document.createElement("span");
     requiredSpan.className = "required-indicator ms-1";
     requiredSpan.textContent = "*";
     label.appendChild(requiredSpan);
+
     labelContainer.appendChild(label);
+
     if (desc) {
       const tooltipIcon = document.createElement("i");
       tooltipIcon.className = "fas fa-info-circle param-info ms-1";
@@ -1017,9 +1030,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       tooltipIcon.title = desc;
       labelContainer.appendChild(tooltipIcon);
     }
+
     group.appendChild(labelContainer);
+
     const inputContainer = document.createElement("div");
     inputContainer.className = "input-container";
+
     const inputField = document.createElement("input");
     inputField.type = "text";
     inputField.className = "form-control custom-input";
@@ -1028,16 +1044,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputField.dataset.param = paramKey;
     inputField.required = true;
     inputField.autocomplete = "off";
+
     if (paramKey.toLowerCase() === "apikey" && userApikey) {
       inputField.value = userApikey;
     }
+
     inputField.addEventListener("input", validateModalInputs);
+
     inputContainer.appendChild(inputField);
     group.appendChild(inputContainer);
+
     return group;
   };
+
+  // container param
   const paramContainer = document.createElement("div");
   paramContainer.className = "param-container";
+
   const requiredParams = [];
   paramsFromUrl.forEach((val, key) => {
     if (!val || val.trim() === "") {
@@ -1048,27 +1071,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   });
+
   requiredParams.forEach(key => {
     if (key.toLowerCase() === "apikey" && userApikey) return;
     const group = buildParamInput(key, apiData.params?.[key]);
     paramContainer.appendChild(group);
   });
+
   if (apiData.innerDesc) {
     const innerDescDiv = document.createElement("div");
     innerDescDiv.className = "inner-desc mt-3";
     innerDescDiv.innerHTML = `<i class="fas fa-info-circle me-2"></i> ${apiData.innerDesc.replace(/\n/g, "<br>")}`;
     paramContainer.appendChild(innerDescDiv);
   }
+
+  // kalau masih ada input wajib → tampilkan form
   if (paramContainer.children.length > 0) {
     DOM.modal.queryInputContainer.appendChild(paramContainer);
     DOM.modal.submitBtn.classList.remove("d-none");
     DOM.modal.submitBtn.disabled = true;
     initializeTooltips(DOM.modal.queryInputContainer);
   } else {
+    // semua param udah ada → auto fetch
     const fullUrl = new URL(`https://api.yydz.biz.id${basePath}`);
     paramsFromUrl.forEach((val, key) => {
       if (val && val.trim() !== "") fullUrl.searchParams.set(key, val.trim());
     });
+    
+    DOM.modal.endpoint.textContent = fullUrl.toString();
+
     console.log("All parameters filled, sending request to:", fullUrl.toString());
     handleApiRequest(fullUrl.toString(), apiData.name);
   }
