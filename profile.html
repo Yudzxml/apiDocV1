@@ -171,28 +171,43 @@ function renderUser(user){
   handleImageEdit(bannerImg,"banner");
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-const savedUser = localStorage.getItem("userData");
-if (!savedUser) {
-  showToast("error","❌ Anda belum login!");
-  setTimeout(() => window.location.href = "login.html", 1500);
-  return;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUser = localStorage.getItem("userData");
+  if (!savedUser) {
+    showToast("error", "❌ Anda belum login!");
+    setTimeout(() => window.location.href = "login.html", 1500);
+    return;
+  }
 
-const userData = JSON.parse(savedUser);
-const user = (userData.data && Object.keys(userData.data).length > 0) ? userData.data : userData;
+  let userData;
+  try {
+    userData = JSON.parse(savedUser);
+  } catch (e) {
+    console.error("❌ Error parsing userData:", e);
+    localStorage.removeItem("userData");
+    showToast("error", "❌ Data login korup, silakan login ulang!");
+    setTimeout(() => window.location.href = "login.html", 1500);
+    return;
+  }
 
-renderUser(user);
-fetchAndRenderUser(user.apikey);
+  const user = (userData?.data && Object.keys(userData.data).length > 0) ? userData.data : userData;
 
-document.getElementById("logoutBtn")?.addEventListener("click", () => {
-  localStorage.removeItem("userData");
-  showToast("success","✅ Logout berhasil!");
-  setTimeout(() => window.location.href = "login.html", 1000);
-});
+  renderUser(user);
+  if (user?.apikey) {
+    fetchAndRenderUser(user.apikey);
+  } else {
+    console.warn("⚠️ API key tidak ditemukan di user data");
+  }
 
-document.getElementById("checkEndpointBtn")?.addEventListener("click", () => {
-  window.location.href = "/doc/get";
+  document.getElementById("logoutBtn")?.addEventListener("click", () => {
+    localStorage.removeItem("userData");
+    showToast("success", "✅ Logout berhasil!");
+    setTimeout(() => window.location.href = "login.html", 1000);
+  });
+
+  document.getElementById("checkEndpointBtn")?.addEventListener("click", () => {
+    window.location.href = "/doc/get";
+  });
 });
 </script>
 </body>
