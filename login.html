@@ -286,113 +286,121 @@
     });
   </script>
 
-  <script>
-    let mode = "login";
-    let deviceId = null;
+<script>
+  let mode = "login";
+  let deviceId = null;
 
-    // init fingerprint
-    FingerprintJS.load().then(fp => {
-      fp.get().then(result => deviceId = result.visitorId);
-    });
+  // init fingerprint
+  FingerprintJS.load().then(fp => {
+    fp.get().then(result => deviceId = result.visitorId);
+  });
 
-    const cardContent = document.getElementById("cardContent");
-    const formTitle = document.getElementById("formTitle");
-    const authForm = document.getElementById("authForm");
-    const switchLink = document.getElementById("switchLink");
-    const switchText = document.getElementById("switchText");
-    const togglePassword = document.getElementById("togglePassword");
-    const passwordInput = document.getElementById("password");
+  const cardContent = document.getElementById("cardContent");
+  const formTitle = document.getElementById("formTitle");
+  const authForm = document.getElementById("authForm");
+  const switchLink = document.getElementById("switchLink");
+  const switchText = document.getElementById("switchText");
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
 
-    // redirect jika sudah login
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedUser = localStorage.getItem("userData");
-      if (savedUser) {
-        window.location.href = "profile.html";
+  // redirect jika sudah login
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedUser = localStorage.getItem("userData");
+    if (savedUser) {
+      window.location.href = "profile.html";
+    }
+    cardContent.classList.add("first-load");
+    setTimeout(() => cardContent.classList.remove("first-load"), 600);
+  });
+
+  // toast function
+  function showToast(type, msg) {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = "toast " + type;
+    toast.innerHTML = msg;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  // toggle password
+  togglePassword.addEventListener("click", () => {
+    togglePassword.classList.add("animate");
+    setTimeout(() => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+      togglePassword.classList.remove("animate");
+    }, 100);
+  });
+
+  // switch login/register
+  switchLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    cardContent.classList.add("animate-out");
+
+    setTimeout(() => {
+      if (mode === "login") {
+        mode = "register";
+        formTitle.innerHTML = '<i class="fa-solid fa-user-plus"></i> Register';
+        authForm.querySelector("button span").textContent = "Register";
+        switchText.textContent = "Sudah punya akun?";
+        switchLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login Sekarang';
+      } else {
+        mode = "login";
+        formTitle.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
+        authForm.querySelector("button span").textContent = "Login";
+        switchText.textContent = "Belum punya akun?";
+        switchLink.innerHTML = '<i class="fa-solid fa-user-plus"></i> Daftar Sekarang';
       }
-      cardContent.classList.add("first-load");
-      setTimeout(() => cardContent.classList.remove("first-load"), 600);
-    });
+      cardContent.classList.remove("animate-out");
+      cardContent.classList.add("animate-in");
+      setTimeout(() => cardContent.classList.remove("animate-in"), 300);
+    }, 300);
+  });
 
-    // toast function
-    function showToast(type, msg) {
-      const container = document.getElementById("toast-container");
-      const toast = document.createElement("div");
-      toast.className = "toast " + type;
-      toast.innerHTML = msg;
-      container.appendChild(toast);
-      setTimeout(() => toast.remove(), 4000);
+  // submit form
+  authForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!email || !password) {
+      showToast("error", "❌ Email & password wajib diisi");
+      return;
     }
 
-    // toggle password
-    togglePassword.addEventListener("click", () => {
-      togglePassword.classList.add("animate");
-      setTimeout(() => {
-        const isPassword = passwordInput.type === "password";
-        passwordInput.type = isPassword ? "text" : "password";
-        togglePassword.classList.toggle("fa-eye");
-        togglePassword.classList.toggle("fa-eye-slash");
-        togglePassword.classList.remove("animate");
-      }, 100);
-    });
+    let bodyData = { email, password };
+    if (mode === "register") {
+      bodyData.deviceId = deviceId;
+    }
 
-    // switch login/register
-    switchLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      cardContent.classList.add("animate-out");
+    try {
+      const res = await fetch(`https://api.yydz.biz.id/api/user/${mode}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData)
+      });
 
-      setTimeout(() => {
-        if (mode === "login") {
-          mode = "register";
-          formTitle.innerHTML = '<i class="fa-solid fa-user-plus"></i> Register';
-          authForm.querySelector("button span").textContent = "Register";
-          switchText.textContent = "Sudah punya akun?";
-          switchLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login Sekarang';
-        } else {
-          mode = "login";
-          formTitle.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
-          authForm.querySelector("button span").textContent = "Login";
-          switchText.textContent = "Belum punya akun?";
-          switchLink.innerHTML = '<i class="fa-solid fa-user-plus"></i> Daftar Sekarang';
-        }
-        cardContent.classList.remove("animate-out");
-        cardContent.classList.add("animate-in");
-        setTimeout(() => cardContent.classList.remove("animate-in"), 300);
-      }, 300);
-    });
+      const json = await res.json();
 
-    // submit form
-    authForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = passwordInput.value;
+      if (json.status !== 200) {
+        throw new Error(json.error || "Gagal " + mode);
+      }
 
-      let bodyData = { email, password };
       if (mode === "register") {
-        bodyData.deviceId = deviceId;
+        showToast("success", "✅ Registrasi sukses, silakan login.");
+        setTimeout(() => switchLink.click(), 1500);
+      } else {
+        localStorage.setItem("userData", JSON.stringify(json.data));
+        showToast("success", "✅ Login sukses, redirect...");
+        setTimeout(() => window.location.href = "profile.html", 1200);
       }
-
-      try {
-        const res = await fetch(`https://api.yydz.biz.id/api/user/${mode}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bodyData)
-        });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Gagal");
-
-        if (mode === "register") {
-          showToast("success", "✅ Registrasi sukses, silakan login.");
-          setTimeout(() => switchLink.click(), 1500);
-        } else {
-          localStorage.setItem("userData", JSON.stringify(data));
-          showToast("success", "✅ Login sukses, Waiting...");
-          setTimeout(() => window.location.href = "profile.html", 1200);
-        }
-      } catch (err) {
-        showToast("error", "❌ Error: " + err.message);
-      }
-    });
-  </script>
+    } catch (err) {
+      showToast("error", "❌ Error: " + err.message);
+    }
+  });
+</script>
 </body>
 </html>

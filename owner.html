@@ -157,37 +157,41 @@ h1 {
 </style>
 </head>
 <body>
-
 <div id="apiKeyManager">
   <h1>YUDZ API'S MANAGER</h1>
 
-  <label>adminKeys:</label>
+  <label>Admin Key:</label>
   <input type="text" id="adminKey" placeholder="Masukkan API key admin">
 
-  <label>Action</label>
+  <label>Action:</label>
   <select id="action">
-    <option value="addapikey">Tambah Apikeys</option>
-    <option value="delapikey">Hapus Apikeys</option>
-    <option value="editapikey">Edit Apikeys</option>
-    <option value="checkapikey">Check Apikeys</option>
-    <option value="changeapikey">Custom Apikeys</option>
+    <optgroup label="API Keys">
+      <option value="addapikey">Tambah Apikey</option>
+      <option value="delapikey">Hapus Apikey</option>
+      <option value="editapikey">Edit Apikey</option>
+      <option value="checkapikey">Check Apikey</option>
+      <option value="changeapikey">Custom Apikey</option>
+      <option value="getapikey">Get Apikey Info</option>
+    </optgroup>
+    <optgroup label="User Management">
+      <option value="register">Register User</option>
+      <option value="login">Login User</option>
+      <option value="edituser">Edit User</option>
+      <option value="getuserinfo">Get User Info</option>
+      <option value="deleteuser">Delete User</option>
+    </optgroup>
+    <optgroup label="Maintenance">
+      <option value="updatecollection">Update Collection Docs</option>
+    </optgroup>
   </select>
 
-  <div id="resetOptionWrapper">
-    <label>resetKeys:</label>
-    <select id="resetOption">
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-    </select>
-  </div>
-
   <div id="targetKeyWrapper">
-    <label>apiKeys:</label>
+    <label>API Key:</label>
     <input type="text" id="targetKey" placeholder="Masukkan target API key">
   </div>
 
   <div id="newKeyWrapper">
-    <label>newKey:</label>
+    <label>New API Key:</label>
     <input type="text" id="newKey" placeholder="Masukkan key baru">
   </div>
 
@@ -197,8 +201,31 @@ h1 {
   </div>
 
   <div id="expireWrapper">
-    <label>expireDays:</label>
+    <label>Expire Days:</label>
     <input type="number" id="expireDays" placeholder="Expire dalam hari">
+  </div>
+
+  <div id="resetOptionWrapper">
+    <label>Reset Keys:</label>
+    <select id="resetOption">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+  </div>
+
+  <div id="usernameWrapper">
+    <label>Username:</label>
+    <input type="text" id="username" placeholder="Username">
+  </div>
+
+  <div id="passwordWrapper">
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Password">
+  </div>
+
+  <div id="emailWrapper">
+    <label>Email:</label>
+    <input type="email" id="email" placeholder="Email">
   </div>
 
   <button id="submitBtn">Submit</button>
@@ -209,47 +236,71 @@ h1 {
 
 <script>
 const actionSelect = document.getElementById("action");
-const limitWrapper = document.getElementById("limitWrapper");
-const expireWrapper = document.getElementById("expireWrapper");
-const newKeyWrapper = document.getElementById("newKeyWrapper");
-const resetOptionWrapper = document.getElementById("resetOptionWrapper");
-const submitBtn = document.getElementById("submitBtn");
 const responseEl = document.getElementById("response");
+
+const wrappers = {
+  targetKeyWrapper: document.getElementById("targetKeyWrapper"),
+  newKeyWrapper: document.getElementById("newKeyWrapper"),
+  limitWrapper: document.getElementById("limitWrapper"),
+  expireWrapper: document.getElementById("expireWrapper"),
+  resetOptionWrapper: document.getElementById("resetOptionWrapper"),
+  usernameWrapper: document.getElementById("usernameWrapper"),
+  passwordWrapper: document.getElementById("passwordWrapper"),
+  emailWrapper: document.getElementById("emailWrapper")
+};
 
 const updateFormVisibility = () => {
   const action = actionSelect.value;
-  limitWrapper.style.display = (action==="addapikey" || action==="editapikey") ? "block" : "none";
-  expireWrapper.style.display = (action==="addapikey" || action==="editapikey") ? "block" : "none";
-  newKeyWrapper.style.display = (action==="changeapikey") ? "block" : "none";
-  resetOptionWrapper.style.display = (action==="addapikey") ? "block" : "none";
-};
+  Object.values(wrappers).forEach(el => el.style.display = "none");
 
+  if(["addapikey","delapikey","editapikey","checkapikey","changeapikey","getapikey"].includes(action)){
+    wrappers.targetKeyWrapper.style.display = "block";
+  }
+  if(action==="changeapikey"){
+    wrappers.newKeyWrapper.style.display = "block";
+  }
+  if(["addapikey","editapikey"].includes(action)){
+    wrappers.limitWrapper.style.display = "block";
+    wrappers.expireWrapper.style.display = "block";
+  }
+  if(action==="addapikey"){
+    wrappers.resetOptionWrapper.style.display = "block";
+  }
+  if(["register","login","edituser"].includes(action)){
+    wrappers.usernameWrapper.style.display = "block";
+    wrappers.passwordWrapper.style.display = "block";
+  }
+  if(["register","edituser"].includes(action)){
+    wrappers.emailWrapper.style.display = "block";
+  }
+};
 actionSelect.addEventListener("change", updateFormVisibility);
 updateFormVisibility();
 
-submitBtn.addEventListener("click", async ()=>{
+document.getElementById("submitBtn").addEventListener("click", async ()=>{
   const adminKey = document.getElementById("adminKey").value.trim();
   const action = actionSelect.value;
-  const targetKey = document.getElementById("targetKey").value.trim();
+  const params = new URLSearchParams();
+
+  const key = document.getElementById("targetKey").value.trim();
   const newKey = document.getElementById("newKey").value.trim();
   const limit = document.getElementById("limit").value;
   const expireDays = document.getElementById("expireDays").value;
-  const reset = document.getElementById("resetOption")?.value || "true";
+  const reset = document.getElementById("resetOption").value;
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-  if(!targetKey){
-    responseEl.textContent = "Error: Target API Key wajib diisi";
-    return;
-  }
-  if(action==="changeapikey" && !newKey){
-    responseEl.textContent = "Error: New API Key wajib diisi untuk action change";
-    return;
-  }
+  if(key) params.append("key", key);
+  if(newKey) params.append("newkey", newKey);
+  if(limit) params.append("limit", limit);
+  if(expireDays) params.append("expireDays", expireDays);
+  if(action==="addapikey") params.append("reset", reset);
+  if(username) params.append("username", username);
+  if(password) params.append("password", password);
+  if(email) params.append("email", email);
 
-  let url = `https://api.yydz.biz.id/api/user/${action}?key=${encodeURIComponent(targetKey)}`;
-  if(action==="changeapikey") url += `&newkey=${encodeURIComponent(newKey)}`;
-  if(limit) url += `&limit=${limit}`;
-  if(expireDays) url += `&expireDays=${expireDays}`;
-  if(action==="addapikey") url += `&reset=${reset}`;
+  let url = `https://api.yydz.biz.id/api/user/${action}?${params.toString()}`;
 
   try {
     const res = await fetch(url, { method:"GET", headers: {"x-apikey": adminKey} });
@@ -260,6 +311,5 @@ submitBtn.addEventListener("click", async ()=>{
   }
 });
 </script>
-
 </body>
 </html>
