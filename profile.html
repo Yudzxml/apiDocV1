@@ -172,25 +172,27 @@ function renderUser(user){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-  const savedUser=localStorage.getItem("userData");
-  if(!savedUser){
-    showToast("error","❌ Anda belum login!");
-    setTimeout(()=>window.location.href="login.html",1500);
-    return;
-  }
-  const userData=JSON.parse(savedUser),user=userData.data||{};
-  renderUser(user);
-  fetchAndRenderUser(user.apikey);
+const savedUser = localStorage.getItem("userData");
+if (!savedUser) {
+  showToast("error","❌ Anda belum login!");
+  setTimeout(() => window.location.href = "login.html", 1500);
+  return;
+}
 
-  document.getElementById("logoutBtn")?.addEventListener("click",()=>{
-    localStorage.removeItem("userData");
-    showToast("success","✅ Logout berhasil!");
-    setTimeout(()=>window.location.href="login.html",1000);
-  });
+const userData = JSON.parse(savedUser);
+const user = (userData.data && Object.keys(userData.data).length > 0) ? userData.data : userData;
 
-  document.getElementById("checkEndpointBtn")?.addEventListener("click",()=>{
-    window.location.href="/doc/get";
-  });
+renderUser(user);
+fetchAndRenderUser(user.apikey);
+
+document.getElementById("logoutBtn")?.addEventListener("click", () => {
+  localStorage.removeItem("userData");
+  showToast("success","✅ Logout berhasil!");
+  setTimeout(() => window.location.href = "login.html", 1000);
+});
+
+document.getElementById("checkEndpointBtn")?.addEventListener("click", () => {
+  window.location.href = "/doc/get";
 });
 </script>
 </body>
