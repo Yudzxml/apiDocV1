@@ -364,9 +364,13 @@
 
   function startCountdown(targetTime) {
     clearInterval(cooldownTimer);
-    const countdownEl = document.createElement("div");
-    countdownEl.className = "countdown";
-    cardContent.appendChild(countdownEl);
+
+    let countdownEl = document.querySelector(".countdown");
+    if (!countdownEl) {
+      countdownEl = document.createElement("div");
+      countdownEl.className = "countdown";
+      cardContent.appendChild(countdownEl);
+    }
 
     cooldownTimer = setInterval(() => {
       const remaining = targetTime - Date.now();
@@ -384,6 +388,14 @@
 
   authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // cek cooldown sebelum submit
+    const cooldown = localStorage.getItem("registerCooldown");
+    if (mode === "register" && cooldown && Date.now() < parseInt(cooldown)) {
+      showToast("error", "⏳ Anda masih dalam masa tunggu sebelum bisa register lagi.");
+      return;
+    }
+
     const email = document.getElementById("email").value.trim();
     const password = passwordInput.value.trim();
 
@@ -414,7 +426,6 @@
       const json = await res.json();
 
       if (mode === "register") {
-        // ✅ Backend hanya kirim "message"
         if (!json.message) throw new Error("Registrasi gagal tanpa pesan.");
         showToast("success", json.message);
 
@@ -426,12 +437,12 @@
           </div>
         `;
 
-        const cooldownTime = Date.now() + (30 * 60 * 1000);
+        // cooldown 2 menit (120 detik)
+        const cooldownTime = Date.now() + (2 * 60 * 1000);
         localStorage.setItem("registerCooldown", cooldownTime);
         startCountdown(cooldownTime);
 
       } else {
-        // 🔑 Login tetap cek status
         if (json.status !== 200) throw new Error(json.error || "Gagal login");
         localStorage.setItem("userData", JSON.stringify(json.data));
         showToast("success", "✅ Login sukses, redirect...");
