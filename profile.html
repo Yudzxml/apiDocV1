@@ -119,28 +119,39 @@ async function fetchAndRenderUser(apikey){
   }
 }
 
+function formatExpire(expire) {
+  if (!expire) return "-";
+  const d = new Date(expire);
+  if (isNaN(d)) return expire; // fallback kalau bukan timestamp valid
+  return d.toLocaleString("id-ID", {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit", second: "2-digit"
+  });
+}
+
 function renderUser(user){
   const profilePic=document.getElementById("profilePic"),
         bannerImg=document.getElementById("bannerImg"),
         profileInfo=document.getElementById("profileInfo");
 
-  if(profilePic)profilePic.src=user.profile||"https://cdn.yupra.my.id/yp/jh9sycv3.jpg";
-  if(bannerImg)bannerImg.src=user.banner||"https://cdn.yupra.my.id/yp/m01x45f7.jpg";
+  if(profilePic) profilePic.src=user.profile||"https://cdn.yupra.my.id/yp/jh9sycv3.jpg";
+  if(bannerImg) bannerImg.src=user.banner||"https://cdn.yupra.my.id/yp/m01x45f7.jpg";
 
   function createRow(icon,label,value,editable=false,id=""){
-    return editable?
-      `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><input type="text" class="info-value editable" id="${id}" value="${value||''}"/><button class="edit-btn" data-target="${id}" title="Simpan"><i class="fa-solid fa-floppy-disk"></i></button></div>`
-    : `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><span class="info-value">${value||"-"}</span></div>`;
+    return editable
+      ? `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><input type="text" class="info-value editable" id="${id}" value="${value||''}"/><button class="edit-btn" data-target="${id}" title="Simpan"><i class="fa-solid fa-floppy-disk"></i></button></div>`
+      : `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><span class="info-value">${value||"-"}</span></div>`;
   }
 
   profileInfo.innerHTML=`
     ${createRow("fa-solid fa-envelope","Email",user.email)}
     ${createRow("fa-solid fa-key","API Key",user.apikey,user.role==="Premium","apikeyInput")}
     ${createRow("fa-solid fa-gauge","Limit",user.limit)}
-    ${createRow("fa-solid fa-clock","Expired",user.expiry)}
+    ${createRow("fa-solid fa-clock","Expired",formatExpire(user.expire))}
     ${createRow("fa-solid fa-user-gear","Role",user.role)}
   `;
 
+  // === sisanya biarkan sama ===
   document.querySelectorAll(".edit-btn").forEach(btn=>{
     btn.addEventListener("click",async()=>{
       const tid=btn.getAttribute("data-target"),
