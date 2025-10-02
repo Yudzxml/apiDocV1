@@ -197,11 +197,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes slideInRight {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
     .card-content.animate-out {
       animation: fadeSlideOut 0.3s forwards;
     }
@@ -219,10 +214,16 @@
       from { opacity: 0; transform: translateX(40px); }
       to { opacity: 1; transform: translateX(0); }
     }
+
+    .countdown {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e17055;
+    }
   </style>
 </head>
 <body>
-  <!-- Partikel Background -->
   <div id="particles-js"></div>
 
   <div class="auth-wrapper">
@@ -259,36 +260,10 @@
   <!-- Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-  <script>
-    // Init Particles
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3, random: true },
-        line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out" }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" }
-        },
-        modes: {
-          repulse: { distance: 100, duration: 0.4 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
-  </script>
-
 <script>
   let mode = "login";
   let deviceId = null;
+  let cooldownTimer;
 
   // init fingerprint
   FingerprintJS.load().then(fp => {
@@ -303,7 +278,6 @@
   const togglePassword = document.getElementById("togglePassword");
   const passwordInput = document.getElementById("password");
 
-  // redirect jika sudah login
   document.addEventListener("DOMContentLoaded", () => {
     const savedUser = localStorage.getItem("userData");
     if (savedUser) {
@@ -311,19 +285,22 @@
     }
     cardContent.classList.add("first-load");
     setTimeout(() => cardContent.classList.remove("first-load"), 600);
+
+    const cooldown = localStorage.getItem("registerCooldown");
+    if (cooldown && Date.now() < parseInt(cooldown)) {
+      startCountdown(parseInt(cooldown));
+    }
   });
 
-  // toast function
   function showToast(type, msg) {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = "toast " + type;
     toast.innerHTML = msg;
     container.appendChild(toast);
-    setTimeout(() => toast.remove(), 4000);
+    setTimeout(() => toast.remove(), 5000);
   }
 
-  // toggle password
   togglePassword.addEventListener("click", () => {
     togglePassword.classList.add("animate");
     setTimeout(() => {
@@ -335,7 +312,6 @@
     }, 100);
   });
 
-  // switch login/register
   switchLink.addEventListener("click", (e) => {
     e.preventDefault();
     cardContent.classList.add("animate-out");
@@ -360,7 +336,26 @@
     }, 300);
   });
 
-  // submit form
+  function startCountdown(targetTime) {
+    clearInterval(cooldownTimer);
+    const countdownEl = document.createElement("div");
+    countdownEl.className = "countdown";
+    cardContent.appendChild(countdownEl);
+
+    cooldownTimer = setInterval(() => {
+      const remaining = targetTime - Date.now();
+      if (remaining <= 0) {
+        clearInterval(cooldownTimer);
+        countdownEl.textContent = "✅ Anda bisa register lagi sekarang.";
+        localStorage.removeItem("registerCooldown");
+      } else {
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+        countdownEl.textContent = `⏳ Tunggu ${minutes}m ${seconds}s sebelum register lagi.`;
+      }
+    }, 1000);
+  }
+
   authForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value.trim();
@@ -377,21 +372,37 @@
     }
 
     try {
-      const res = await fetch(`https://api.yydz.biz.id/api/user/${mode}`, {
+      let url = "";
+      if (mode === "register") {
+        url = "/api/register";
+      } else {
+        url = `https://api.yydz.biz.id/api/user/login`;
+      }
+
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bodyData)
       });
 
       const json = await res.json();
-
-      if (json.status !== 200) {
-        throw new Error(json.error || "Gagal " + mode);
-      }
+      if (json.status !== 200) throw new Error(json.error || "Gagal " + mode);
 
       if (mode === "register") {
-        showToast("success", "✅ Registrasi sukses, silakan login.");
-        setTimeout(() => switchLink.click(), 1500);
+        showToast("success", json.message || "✅ Registrasi sukses, cek email Anda.");
+
+        cardContent.innerHTML = `
+          <div class="success-box">
+            <h2>🎉 Registrasi Berhasil!</h2>
+            <p>${json.message || "Silakan cek email untuk verifikasi akun sebelum login."}</p>
+            <div id="cooldownBox" class="countdown"></div>
+          </div>
+        `;
+
+        const cooldownTime = Date.now() + (30 * 60 * 1000);
+        localStorage.setItem("registerCooldown", cooldownTime);
+        startCountdown(cooldownTime);
+
       } else {
         localStorage.setItem("userData", JSON.stringify(json.data));
         showToast("success", "✅ Login sukses, redirect...");

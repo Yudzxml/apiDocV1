@@ -1,0 +1,8 @@
+{
+  "name": "yydz-auth",
+  "version": "1.0.0",
+  "dependencies": {
+    "nodemailer": "^6.9.14",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
