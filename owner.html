@@ -170,63 +170,23 @@ h1 {
       <option value="delapikey">Hapus Apikey</option>
       <option value="editapikey">Edit Apikey</option>
       <option value="checkapikey">Check Apikey</option>
-      <option value="changeapikey">Custom Apikey</option>
-      <option value="getapikey">Get Apikey Info</option>
     </optgroup>
     <optgroup label="User Management">
       <option value="register">Register User</option>
       <option value="login">Login User</option>
       <option value="edituser">Edit User</option>
       <option value="getuserinfo">Get User Info</option>
-      <option value="deleteuser">Delete User</option>
     </optgroup>
     <optgroup label="Maintenance">
       <option value="updatecollection">Update Collection Docs</option>
     </optgroup>
+    <optgroup label="System">
+      <option value="status">Cek Status Server</option>
+    </optgroup>
   </select>
 
-  <div id="targetKeyWrapper">
-    <label>API Key:</label>
-    <input type="text" id="targetKey" placeholder="Masukkan target API key">
-  </div>
-
-  <div id="newKeyWrapper">
-    <label>New API Key:</label>
-    <input type="text" id="newKey" placeholder="Masukkan key baru">
-  </div>
-
-  <div id="limitWrapper">
-    <label>Limit:</label>
-    <input type="number" id="limit" placeholder="Limit API key baru / edit">
-  </div>
-
-  <div id="expireWrapper">
-    <label>Expire Days:</label>
-    <input type="number" id="expireDays" placeholder="Expire dalam hari">
-  </div>
-
-  <div id="resetOptionWrapper">
-    <label>Reset Keys:</label>
-    <select id="resetOption">
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-    </select>
-  </div>
-
-  <div id="usernameWrapper">
-    <label>Username:</label>
-    <input type="text" id="username" placeholder="Username">
-  </div>
-
-  <div id="passwordWrapper">
-    <label>Password:</label>
-    <input type="password" id="password" placeholder="Password">
-  </div>
-
-  <div id="emailWrapper">
-    <label>Email:</label>
-    <input type="email" id="email" placeholder="Email">
-  </div>
+  <!-- Dynamic Wrappers -->
+  <div id="dynamicFields"></div>
 
   <button id="submitBtn">Submit</button>
 
@@ -235,79 +195,133 @@ h1 {
 </div>
 
 <script>
-const actionSelect = document.getElementById("action");
 const responseEl = document.getElementById("response");
+const actionSelect = document.getElementById("action");
+const dynamicFields = document.getElementById("dynamicFields");
 
-const wrappers = {
-  targetKeyWrapper: document.getElementById("targetKeyWrapper"),
-  newKeyWrapper: document.getElementById("newKeyWrapper"),
-  limitWrapper: document.getElementById("limitWrapper"),
-  expireWrapper: document.getElementById("expireWrapper"),
-  resetOptionWrapper: document.getElementById("resetOptionWrapper"),
-  usernameWrapper: document.getElementById("usernameWrapper"),
-  passwordWrapper: document.getElementById("passwordWrapper"),
-  emailWrapper: document.getElementById("emailWrapper")
+const fieldTemplates = {
+  targetKey: { label: "API Key", type: "text", id: "targetKey" },
+  newKey: { label: "New API Key", type: "text", id: "newKey" },
+  email: { label: "Email", type: "email", id: "email" },
+  password: { label: "Password", type: "password", id: "password" },
+  deviceId: { label: "Device ID", type: "text", id: "deviceId" },
+  role: { label: "Role", type: "text", id: "role", placeholder:"user / Premium / admin" },
+  profile: { label: "Profile", type: "text", id: "profile" },
+  banner: { label: "Banner", type: "text", id: "banner" },
+  status: { label: "Status", type: "text", id: "status", placeholder:"active / inactive" },
+  limit: { label: "Limit", type: "number", id: "limit", placeholder:"100" },
+  expireDays: { label: "Expire Days", type: "number", id: "expireDays", placeholder:"30" },
+  reset: { label: "Reset Otomatis", type: "checkbox", id: "reset" },
+  collectionName: { label: "Collection Name", type: "text", id: "collectionName" },
+  filterKey: { label: "Filter Key", type: "text", id: "filterKey" },
+  filterValue: { label: "Filter Value", type: "text", id: "filterValue" },
+  updateKey: { label: "Update Key", type: "text", id: "updateKey" },
+  updateValue: { label: "Update Value", type: "text", id: "updateValue" },
+  optionsJson: { label: "Options JSON", type: "text", id: "optionsJson", placeholder:'{"upsert":true}' },
 };
 
-const updateFormVisibility = () => {
-  const action = actionSelect.value;
-  Object.values(wrappers).forEach(el => el.style.display = "none");
-
-  if(["addapikey","delapikey","editapikey","checkapikey","changeapikey","getapikey"].includes(action)){
-    wrappers.targetKeyWrapper.style.display = "block";
-  }
-  if(action==="changeapikey"){
-    wrappers.newKeyWrapper.style.display = "block";
-  }
-  if(["addapikey","editapikey"].includes(action)){
-    wrappers.limitWrapper.style.display = "block";
-    wrappers.expireWrapper.style.display = "block";
-  }
-  if(action==="addapikey"){
-    wrappers.resetOptionWrapper.style.display = "block";
-  }
-  if(["register","login","edituser"].includes(action)){
-    wrappers.usernameWrapper.style.display = "block";
-    wrappers.passwordWrapper.style.display = "block";
-  }
-  if(["register","edituser"].includes(action)){
-    wrappers.emailWrapper.style.display = "block";
-  }
+const actionFields = {
+  addapikey: ["targetKey","limit","expireDays","reset"],
+  editapikey: ["targetKey","newKey","limit","expireDays","reset"],
+  delapikey: ["targetKey"],
+  checkapikey: ["targetKey"],
+  getuserinfo: ["targetKey"],
+  register: ["email","password","deviceId"],
+  login: ["email","password"],
+  edituser: ["targetKey","newKey","email","password","role","profile","banner","status"],
+  updatecollection: ["collectionName","filterKey","filterValue","updateKey","updateValue","optionsJson"],
+  status: []
 };
-actionSelect.addEventListener("change", updateFormVisibility);
-updateFormVisibility();
+
+function renderFields() {
+  dynamicFields.innerHTML = "";
+  const selected = actionSelect.value;
+  (actionFields[selected] || []).forEach(fieldName=>{
+    const f = fieldTemplates[fieldName];
+    if(!f) return;
+    const wrapper = document.createElement("div");
+    const label = document.createElement("label");
+    label.textContent = f.label + ":";
+    const input = document.createElement("input");
+    input.type = f.type;
+    input.id = f.id;
+    if(f.placeholder) input.placeholder = f.placeholder;
+    wrapper.appendChild(label);
+    wrapper.appendChild(input);
+    dynamicFields.appendChild(wrapper);
+  });
+}
+actionSelect.addEventListener("change", renderFields);
+renderFields();
 
 document.getElementById("submitBtn").addEventListener("click", async ()=>{
   const adminKey = document.getElementById("adminKey").value.trim();
   const action = actionSelect.value;
-  const params = new URLSearchParams();
+  let url = `https://api.yydz.biz.id/api/user/${action}`;
+  let options = { method: "GET", headers: {} };
 
-  const key = document.getElementById("targetKey").value.trim();
-  const newKey = document.getElementById("newKey").value.trim();
-  const limit = document.getElementById("limit").value;
-  const expireDays = document.getElementById("expireDays").value;
-  const reset = document.getElementById("resetOption").value;
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const email = document.getElementById("email").value.trim();
+  if(adminKey) options.headers["x-apikey"] = adminKey;
 
-  if(key) params.append("key", key);
-  if(newKey) params.append("newkey", newKey);
-  if(limit) params.append("limit", limit);
-  if(expireDays) params.append("expireDays", expireDays);
-  if(action==="addapikey") params.append("reset", reset);
-  if(username) params.append("username", username);
-  if(password) params.append("password", password);
-  if(email) params.append("email", email);
+  const getVal = id => document.getElementById(id)?.value.trim();
+  const checked = id => document.getElementById(id)?.checked;
 
-  let url = `https://api.yydz.biz.id/api/user/${action}?${params.toString()}`;
+  // POST body for user management
+  if(["register","login","edituser"].includes(action)){
+    options.method = "POST";
+    options.headers["Content-Type"] = "application/json";
+    const body = {};
+    ["email","password","deviceId","role","profile","banner","status"].forEach(k=>{
+      const val = getVal(k); if(val) body[k] = val;
+    });
+    if(action==="edituser"){
+      if(getVal("targetKey")) body.apikey = getVal("targetKey");
+      if(getVal("newKey")) body.apikey = getVal("newKey");
+    }
+    options.body = JSON.stringify(body);
+  }
+
+  // Keys actions
+  if(["addapikey","editapikey"].includes(action)){
+    let params = [];
+    if(getVal("targetKey")) params.push("key="+encodeURIComponent(getVal("targetKey")));
+    if(getVal("newKey")) params.push("newKey="+encodeURIComponent(getVal("newKey")));
+    if(getVal("limit")) params.push("limit="+getVal("limit"));
+    if(getVal("expireDays")) params.push("expireDays="+getVal("expireDays"));
+    if(checked("reset")) params.push("reset=true");
+    if(params.length) url += "?"+params.join("&");
+  }
+
+  if(["delapikey","checkapikey","getuserinfo"].includes(action)){
+    if(!getVal("targetKey")){
+      responseEl.textContent = "❌ Error: key wajib diisi";
+      return;
+    }
+    url += "?key="+encodeURIComponent(getVal("targetKey"));
+  }
+
+  if(action==="updatecollection"){
+    options.method = "POST";
+    options.headers["Content-Type"] = "application/json";
+    try {
+      const body = {
+        collectionName: getVal("collectionName"),
+        filter: getVal("filterKey") ? { [getVal("filterKey")]: getVal("filterValue") } : {},
+        updateData: getVal("updateKey") ? { [getVal("updateKey")]: getVal("updateValue") } : {},
+        options: getVal("optionsJson") ? JSON.parse(getVal("optionsJson")) : {}
+      };
+      options.body = JSON.stringify(body);
+    } catch(e) {
+      responseEl.textContent = "❌ Options JSON tidak valid";
+      return;
+    }
+  }
 
   try {
-    const res = await fetch(url, { method:"GET", headers: {"x-apikey": adminKey} });
+    const res = await fetch(url, options);
     const data = await res.json();
     responseEl.textContent = JSON.stringify(data, null, 2);
   } catch(err) {
-    responseEl.textContent = "Error: " + err.message;
+    responseEl.textContent = "❌ Fetch Error: "+err.message;
   }
 });
 </script>
