@@ -41,8 +41,8 @@
       "name": "Status Server",
       "desc": "Informasi Detail Server",
       "path": "/api/user/status",
-      "status": "ready",
-    }
+      "status": "ready"
+     }
     ]
   },
   {
