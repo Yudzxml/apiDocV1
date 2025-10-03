@@ -31,20 +31,17 @@
       {
       "name": "Check Apikey",
       "desc": "cek masa aktif api dan limit",
-      "path": "/api/user/checkapikey?key=",
+      "path": "/api/user/checkapikey?apikey=",
       "status": "ready",
       "params": {
-        "key": "Masukkan API key kamu"
+        "apikey": "Masukkan API key kamu"
       }
     },
       {
       "name": "Status Server",
       "desc": "Informasi Detail Server",
-      "path": "/api/user/status?key=API_YUDZ",
+      "path": "/api/user/status",
       "status": "ready",
-      "params": {
-        "key": "Masukkan API key kamu"
-      }
     }
     ]
   },
