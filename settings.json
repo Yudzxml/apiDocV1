@@ -1093,7 +1093,7 @@
 {
   "name": "F-Droid Search",
   "desc": "Search any app from F-Droid.",
-  "path": "/api/fdroid?q=&apikey=",
+  "path": "/api/search/fdroid?q=&apikey=",
   "status": "ready",
   "params": {
     "q": "Nama aplikasi yang ingin dicari",
@@ -1103,7 +1103,7 @@
 {
   "name": "F-Droid Detail",
   "desc": "Get detailed info from F-Droid app page.",
-  "path": "/api/fdroid?url=&apikey=",
+  "path": "/api/search/fdroid?url=&apikey=",
   "status": "ready",
   "params": {
     "url": "URL atau package name aplikasi F-Droid",
