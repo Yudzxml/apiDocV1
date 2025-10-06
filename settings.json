@@ -49,6 +49,15 @@
     "name": "DOWNLOADER",
     "items": [
       {
+  "name": "TeraBox Downloader",
+  "desc": "Download file atau folder dari TeraBox/1024TeraBox menggunakan URL share publik. Mendukung pengambilan informasi file, folder, dan tautan unduhan langsung.",
+  "path": "/api/download/terabox?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL TeraBox (contoh: https://1024terabox.com/s/1lfmiCVjvfrz1HdRY7q9Gkg)",
+    "apikey": "Masukkan API key Anda"
+},
+      {
   "name": "Twitter Downloader",
   "desc": "Download media dari postingan Twitter/X (video, gambar, atau GIF) hanya dengan URL postingan",
   "path": "/api/download/twitter?url=&apikey=",
@@ -650,73 +659,166 @@
     }
   },
   {
-    "name": "Samehadaku Search",
-    "desc": "Search anime or manga on Samehadaku by keyword",
-    "path": "/api/search/samehadaku?action=search&q=&page=&apikey=",
+    "name": "Samehadaku Home",
+    "desc": "Menampilkan daftar anime terbaru dari halaman utama Samehadaku.",
+    "path": "/api/anime/samehadaku?action=home&apikey=",
     "status": "ready",
     "params": {
-      "q": "kata kunci untuk search",
-      "page": "nomor halaman, default 1",
-      "apikey": "input your apikey"
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
     "name": "Samehadaku Latest",
-    "desc": "Get latest anime/manga releases from Samehadaku",
-    "path": "/api/search/samehadaku?action=latest&page=&apikey=",
+    "desc": "Menampilkan anime rilis terbaru (update episode).",
+    "path": "/api/anime/samehadaku?action=latest&page=&apikey=",
     "status": "ready",
     "params": {
-      "page": "nomor halaman, default 1",
-      "apikey": "input your apikey"
+      "page": "Nomor halaman (default: 1)",
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
-    "name": "Samehadaku Jadwal Update",
-    "desc": "Get anime update schedule from Samehadaku",
-    "path": "/api/search/samehadaku?action=jadwalupdate&apikey=",
+    "name": "Samehadaku Search",
+    "desc": "Cari anime di Samehadaku berdasarkan kata kunci.",
+    "path": "/api/anime/samehadaku?action=search&q=&page=&apikey=",
     "status": "ready",
     "params": {
-      "apikey": "input your apikey"
+      "q": "Kata kunci pencarian (contoh: one piece, naruto)",
+      "page": "Nomor halaman hasil (default: 1)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Ongoing",
+    "desc": "Menampilkan daftar anime yang sedang tayang (ongoing).",
+    "path": "/api/anime/samehadaku?action=ongoing&page=&order=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "order": "Urutan hasil (asc atau desc)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Completed",
+    "desc": "Menampilkan daftar anime yang sudah selesai (completed).",
+    "path": "/api/anime/samehadaku?action=completed&page=&order=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "order": "Urutan hasil (asc atau desc)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Popular",
+    "desc": "Menampilkan daftar anime paling populer di Samehadaku.",
+    "path": "/api/anime/samehadaku?action=popular&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Movie",
+    "desc": "Menampilkan daftar anime movie dari Samehadaku.",
+    "path": "/api/anime/samehadaku?action=movie&page=&order=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "order": "Urutan hasil (asc atau desc)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku List",
+    "desc": "Menampilkan daftar semua anime di Samehadaku.",
+    "path": "/api/anime/samehadaku?action=list&page=&order=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "order": "Urutan hasil (asc atau desc)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Schedule",
+    "desc": "Menampilkan jadwal rilis anime harian di Samehadaku.",
+    "path": "/api/anime/samehadaku?action=schedule&apikey=",
+    "status": "ready",
+    "params": {
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Genre List",
+    "desc": "Menampilkan daftar semua genre yang tersedia di Samehadaku.",
+    "path": "/api/anime/samehadaku?action=genre&apikey=",
+    "status": "ready",
+    "params": {
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Genre Filter",
+    "desc": "Menampilkan daftar anime berdasarkan genre tertentu.",
+    "path": "/api/anime/samehadaku?action=genres&genre=&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "genre": "Nama genre (contoh: action, comedy)",
+      "page": "Nomor halaman (default: 1)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Batch List",
+    "desc": "Menampilkan daftar anime batch (paketan episode).",
+    "path": "/api/anime/samehadaku?action=batch&page=&apikey=",
+    "status": "ready",
+    "params": {
+      "page": "Nomor halaman (default: 1)",
+      "apikey": "Masukkan API key kamu"
+    }
+  },
+  {
+    "name": "Samehadaku Batch Detail",
+    "desc": "Menampilkan detail batch anime lengkap dengan link download.",
+    "path": "/api/anime/samehadaku?action=batchdetail&id=&apikey=",
+    "status": "ready",
+    "params": {
+      "id": "ID atau slug batch (contoh: kusuriya-no-hitorigoto-batch)",
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
     "name": "Samehadaku Detail",
-    "desc": "Get anime/manga detail by URL",
-    "path": "/api/search/samehadaku?action=detail&url=&apikey=",
+    "desc": "Menampilkan detail lengkap suatu anime (sinopsis, episode, genre, dsb).",
+    "path": "/api/anime/samehadaku?action=detail&id=&apikey=",
     "status": "ready",
     "params": {
-      "url": "url untuk detail anime/manga",
-      "apikey": "input your apikey"
+      "id": "ID atau slug anime (contoh: blue-lock)",
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
-    "name": "Samehadaku Genre",
-    "desc": "Get anime/manga by genre",
-    "path": "/api/search/samehadaku?action=genre&genre=&page=&apikey=",
+    "name": "Samehadaku Episode Detail",
+    "desc": "Menampilkan detail episode tertentu, termasuk link server nonton.",
+    "path": "/api/anime/samehadaku?action=episode&id=&apikey=",
     "status": "ready",
     "params": {
-      "genre": "nama genre anime/manga",
-      "page": "nomor halaman, default 1",
-      "apikey": "input your apikey"
+      "id": "ID episode (contoh: 9A955-68-xhmyrq)",
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
-    "name": "Samehadaku Top Anime",
-    "desc": "Get top ranked anime from Samehadaku",
-    "path": "/api/search/samehadaku?action=topanime&apikey=",
+    "name": "Samehadaku Stream",
+    "desc": "Mendapatkan link embed streaming dari server tertentu.",
+    "path": "/api/anime/samehadaku?action=stream&id=&apikey=",
     "status": "ready",
     "params": {
-      "apikey": "input your apikey"
-    }
-  },
-  {
-    "name": "Samehadaku Get Stream",
-    "desc": "Get streaming links for anime/manga by URL",
-    "path": "/api/search/samehadaku?action=getstream&url=&apikey=",
-    "status": "ready",
-    "params": {
-      "url": "url untuk streaming",
-      "apikey": "input your apikey"
+      "id": "ID server streaming (contoh: 9A955-68-xhmyrq)",
+      "apikey": "Masukkan API key kamu"
     }
   },
   {
@@ -1287,6 +1389,36 @@
   {
       "name": "TOOLS",
       "items": [
+        {
+  "name": "Subdomain Finder",
+  "desc": "Menemukan subdomain aktif dari sebuah domain utama menggunakan metode pemindaian DNS publik.",
+  "path": "/api/tools/subdomainfinder?host=&apikey=",
+  "status": "ready",
+  "params": {
+    "host": "Nama domain utama yang ingin dicari subdomainnya (contoh: example.com)",
+    "apikey": "Input API key kamu"
+  }
+},
+        {
+  "name": "Cek Kouta",
+  "desc": "Cek informasi kuota atau paket data dari nomor ponsel tertentu ( XL, Axis ).",
+  "path": "/api/tools/cekkouta?number=&apikey=",
+  "status": "ready",
+  "params": {
+    "number": "Nomor ponsel yang ingin dicek kuotanya (contoh: 08xxx/628xx)",
+    "apikey": "Input API key kamu"
+  }
+},
+        {
+  "name": "Weather",
+  "desc": "Ambil data cuaca terkini berdasarkan nama propinsi dari api",
+  "path": "/api/tools/weather?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Nama propinsi yang ingin dicek cuacanya (contoh: Kepulauan Riau, Jakarta, Surabaya)",
+    "apikey": "Input API key kamu"
+  }
+},
   {
   "name": "Pxpic Editor",
   "desc": "Gunakan AI PxPic untuk mengedit gambar (removebg, enhance, upscale, restore, colorize)",
