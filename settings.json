@@ -239,6 +239,18 @@
             "apikey": "input your apikey"
           }
         },
+{
+  "name": "YouTube Downloader V3",
+  "desc": "Download video atau audio dari YouTube dengan format dan kualitas yang dapat disesuaikan.",
+  "path": "/api/download/youtubev3?url=&format=&quality=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Link YouTube yang ingin diunduh",
+    "format": "Pilih jenis file — 'audio' atau 'video'",
+    "quality": "Jika audio: 128, 192, 256, 320 | Jika video: 360, 480, 720, 1080",
+    "apikey": "Masukkan API key kamu untuk otentikasi"
+  }
+},
         {
           "name": "YouTube Downloader V2",
           "desc": "Download any YouTube video via API",
