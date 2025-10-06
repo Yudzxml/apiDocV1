@@ -1433,7 +1433,7 @@
         {
   "name": "Kodepos Finder",
   "desc": "Mencari informasi kodepos berdasarkan nama daerah atau kodepos menggunakan layanan resmi Pos Indonesia.",
-  "path": "/api/search/kodepos?q=&apikey=",
+  "path": "/api/tools/kodepos?q=&apikey=",
   "status": "ready",
   "params": {
     "q": "Nama daerah atau kodepos yang ingin dicari (contoh: jakarta selatan atau 10210)",
