@@ -255,6 +255,46 @@
   {
       "name": "SEARCH",
       "items": [
+        {
+  "name": "ApkPure Search",
+  "desc": "Cari aplikasi di ApkPure berdasarkan kata kunci",
+  "path": "/api/search/apkpure?action=search&q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "kata kunci pencarian aplikasi (contoh: mobile legends)",
+    "apikey": "input your apikey"
+  }
+},
+{
+  "name": "ApkPure Detail",
+  "desc": "Ambil detail informasi aplikasi dari halaman ApkPure",
+  "path": "/api/search/apkpure?action=detail&url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "tautan aplikasi di ApkPure (contoh: https://apkpure.net/mobile-legends/com.mobile.legends)",
+    "apikey": "input your apikey"
+  }
+},
+{
+  "name": "ApkPure DetailAPK",
+  "desc": "Ambil detail file APK dari halaman ApkPure (termasuk versi, ukuran, tanggal rilis)",
+  "path": "/api/search/apkpure?action=detailapk&url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "tautan aplikasi di ApkPure (contoh: https://apkpure.net/mobile-legends/com.mobile.legends)",
+    "apikey": "input your apikey"
+  }
+},
+{
+  "name": "ApkPure Download",
+  "desc": "Ambil tautan langsung untuk mengunduh APK dari ApkPure",
+  "path": "/api/search/apkpure?action=download&url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "tautan aplikasi di ApkPure (contoh: https://apkpure.net/mobile-legends/com.mobile.legends)",
+    "apikey": "input your apikey"
+  }
+},
   {
     "name": "AnimeIndo Search",
     "desc": "Search anime on AnimeIndo by keyword",
@@ -1390,6 +1430,16 @@
   {
       "name": "TOOLS",
       "items": [
+        {
+  "name": "Kodepos Finder",
+  "desc": "Mencari informasi kodepos berdasarkan nama daerah atau kodepos menggunakan layanan resmi Pos Indonesia.",
+  "path": "/api/search/kodepos?q=&apikey=",
+  "status": "ready",
+  "params": {
+    "q": "Nama daerah atau kodepos yang ingin dicari (contoh: jakarta selatan atau 10210)",
+    "apikey": "Input API key kamu"
+  }
+},
         {
   "name": "Subdomain Finder",
   "desc": "Menemukan subdomain aktif dari sebuah domain utama menggunakan metode pemindaian DNS publik.",
