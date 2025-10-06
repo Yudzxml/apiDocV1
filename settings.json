@@ -662,7 +662,7 @@
   {
     "name": "Samehadaku Home",
     "desc": "Menampilkan daftar anime terbaru dari halaman utama Samehadaku.",
-    "path": "/api/anime/samehadaku?action=home&apikey=",
+    "path": "/api/search/samehadaku?action=home&apikey=",
     "status": "ready",
     "params": {
       "apikey": "Masukkan API key kamu"
@@ -671,7 +671,7 @@
   {
     "name": "Samehadaku Latest",
     "desc": "Menampilkan anime rilis terbaru (update episode).",
-    "path": "/api/anime/samehadaku?action=latest&page=&apikey=",
+    "path": "/api/search/samehadaku?action=latest&page=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -681,7 +681,7 @@
   {
     "name": "Samehadaku Search",
     "desc": "Cari anime di Samehadaku berdasarkan kata kunci.",
-    "path": "/api/anime/samehadaku?action=search&q=&page=&apikey=",
+    "path": "/api/search/samehadaku?action=search&q=&page=&apikey=",
     "status": "ready",
     "params": {
       "q": "Kata kunci pencarian (contoh: one piece, naruto)",
@@ -692,7 +692,7 @@
   {
     "name": "Samehadaku Ongoing",
     "desc": "Menampilkan daftar anime yang sedang tayang (ongoing).",
-    "path": "/api/anime/samehadaku?action=ongoing&page=&order=&apikey=",
+    "path": "/api/search/samehadaku?action=ongoing&page=&order=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -703,7 +703,7 @@
   {
     "name": "Samehadaku Completed",
     "desc": "Menampilkan daftar anime yang sudah selesai (completed).",
-    "path": "/api/anime/samehadaku?action=completed&page=&order=&apikey=",
+    "path": "/api/search/samehadaku?action=completed&page=&order=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -714,7 +714,7 @@
   {
     "name": "Samehadaku Popular",
     "desc": "Menampilkan daftar anime paling populer di Samehadaku.",
-    "path": "/api/anime/samehadaku?action=popular&page=&apikey=",
+    "path": "/api/search/samehadaku?action=popular&page=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -724,7 +724,7 @@
   {
     "name": "Samehadaku Movie",
     "desc": "Menampilkan daftar anime movie dari Samehadaku.",
-    "path": "/api/anime/samehadaku?action=movie&page=&order=&apikey=",
+    "path": "/api/search/samehadaku?action=movie&page=&order=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -735,7 +735,7 @@
   {
     "name": "Samehadaku List",
     "desc": "Menampilkan daftar semua anime di Samehadaku.",
-    "path": "/api/anime/samehadaku?action=list&page=&order=&apikey=",
+    "path": "/api/search/samehadaku?action=list&page=&order=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -746,7 +746,7 @@
   {
     "name": "Samehadaku Schedule",
     "desc": "Menampilkan jadwal rilis anime harian di Samehadaku.",
-    "path": "/api/anime/samehadaku?action=schedule&apikey=",
+    "path": "/api/search/samehadaku?action=schedule&apikey=",
     "status": "ready",
     "params": {
       "apikey": "Masukkan API key kamu"
@@ -755,7 +755,7 @@
   {
     "name": "Samehadaku Genre List",
     "desc": "Menampilkan daftar semua genre yang tersedia di Samehadaku.",
-    "path": "/api/anime/samehadaku?action=genre&apikey=",
+    "path": "/api/search/samehadaku?action=genre&apikey=",
     "status": "ready",
     "params": {
       "apikey": "Masukkan API key kamu"
@@ -764,7 +764,7 @@
   {
     "name": "Samehadaku Genre Filter",
     "desc": "Menampilkan daftar anime berdasarkan genre tertentu.",
-    "path": "/api/anime/samehadaku?action=genres&genre=&page=&apikey=",
+    "path": "/api/search/samehadaku?action=genres&genre=&page=&apikey=",
     "status": "ready",
     "params": {
       "genre": "Nama genre (contoh: action, comedy)",
@@ -775,7 +775,7 @@
   {
     "name": "Samehadaku Batch List",
     "desc": "Menampilkan daftar anime batch (paketan episode).",
-    "path": "/api/anime/samehadaku?action=batch&page=&apikey=",
+    "path": "/api/search/samehadaku?action=batch&page=&apikey=",
     "status": "ready",
     "params": {
       "page": "Nomor halaman (default: 1)",
@@ -785,7 +785,7 @@
   {
     "name": "Samehadaku Batch Detail",
     "desc": "Menampilkan detail batch anime lengkap dengan link download.",
-    "path": "/api/anime/samehadaku?action=batchdetail&id=&apikey=",
+    "path": "/api/search/samehadaku?action=batchdetail&id=&apikey=",
     "status": "ready",
     "params": {
       "id": "ID atau slug batch (contoh: kusuriya-no-hitorigoto-batch)",
@@ -795,7 +795,7 @@
   {
     "name": "Samehadaku Detail",
     "desc": "Menampilkan detail lengkap suatu anime (sinopsis, episode, genre, dsb).",
-    "path": "/api/anime/samehadaku?action=detail&id=&apikey=",
+    "path": "/api/search/samehadaku?action=detail&id=&apikey=",
     "status": "ready",
     "params": {
       "id": "ID atau slug anime (contoh: blue-lock)",
@@ -805,7 +805,7 @@
   {
     "name": "Samehadaku Episode Detail",
     "desc": "Menampilkan detail episode tertentu, termasuk link server nonton.",
-    "path": "/api/anime/samehadaku?action=episode&id=&apikey=",
+    "path": "/api/search/samehadaku?action=episode&id=&apikey=",
     "status": "ready",
     "params": {
       "id": "ID episode (contoh: 9A955-68-xhmyrq)",
@@ -815,7 +815,7 @@
   {
     "name": "Samehadaku Stream",
     "desc": "Mendapatkan link embed streaming dari server tertentu.",
-    "path": "/api/anime/samehadaku?action=stream&id=&apikey=",
+    "path": "/api/search/samehadaku?action=stream&id=&apikey=",
     "status": "ready",
     "params": {
       "id": "ID server streaming (contoh: 9A955-68-xhmyrq)",
