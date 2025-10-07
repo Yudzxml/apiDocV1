@@ -485,7 +485,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     initModal()
 
     const [settingsResult, notificationsResult, sponsorResult] = await Promise.allSettled([
-      fetch("/settings.json").then((res) =>
+      fetch("https://api.yydz.biz.id/settings.json").then((res) =>
         res.ok ? res.json() : Promise.reject(new Error(`Failed to load settings: ${res.status}`)),
       ),
       loadNotifications(),
