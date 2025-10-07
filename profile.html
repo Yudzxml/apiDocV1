@@ -72,121 +72,211 @@ button.main{padding:0.75rem 0}
   </div>
 </div>
 <div id="toast-container"></div>
+
 <script>
-const canvas=document.getElementById("particle-bg"),ctx=canvas.getContext("2d");let particles=[];
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
-window.addEventListener("resize",resizeCanvas);resizeCanvas();
-function initParticles(c=120){particles=[];for(let i=0;i<c;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*3+1,color:["#6c5ce7","#00b894","#ffeaa7","#fd79a8"][Math.floor(Math.random()*4)],speedX:(Math.random()-0.5)*0.6,speedY:(Math.random()-0.5)*0.6})}}
+// === Background Particle ===
+const canvas = document.getElementById("particle-bg");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function initParticles(count = 120) {
+  particles = [];
+  const colors = ["#6c5ce7", "#00b894", "#ffeaa7", "#fd79a8"];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedX: (Math.random() - 0.5) * 0.6,
+      speedY: (Math.random() - 0.5) * 0.6
+    });
+  }
+}
 initParticles();
-function drawParticles(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.radius,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();p.x+=p.speedX;p.y+=p.speedY;if(p.x<0||p.x>canvas.width)p.speedX*=-1;if(p.y<0||p.y>canvas.height)p.speedY*=-1});requestAnimationFrame(drawParticles)}
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (const p of particles) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    p.x += p.speedX;
+    p.y += p.speedY;
+    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+  }
+  requestAnimationFrame(drawParticles);
+}
 drawParticles();
 
-function showToast(type,msg){const c=document.getElementById("toast-container");if(!c)return;const t=document.createElement("div");t.className="toast "+type;t.textContent=msg;t.style.opacity=0;c.appendChild(t);requestAnimationFrame(()=>{t.style.transition="opacity 0.4s,transform 0.4s";t.style.opacity=1;t.style.transform="translateY(0)"});setTimeout(()=>{t.style.opacity=0;t.style.transform="translateY(-20px)";setTimeout(()=>t.remove(),400)},4000)}
+// === Toast Function ===
+function showToast(type, msg) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
 
-async function sendEditToAPI(d){
-  try{
-    const r=await fetch("https://api.yydz.biz.id/api/user/edituser",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(d)
+  const toast = document.createElement("div");
+  toast.className = "toast " + type;
+  toast.textContent = msg;
+  toast.style.opacity = 0;
+  container.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.style.transition = "opacity 0.4s, transform 0.4s";
+    toast.style.opacity = 1;
+    toast.style.transform = "translateY(0)";
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = 0;
+    toast.style.transform = "translateY(-20px)";
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}
+
+// === API Edit User ===
+async function sendEditToAPI(data) {
+  try {
+    if (!data.email) throw new Error("Email wajib dikirim!");
+    const body = {
+      email: data.email,
+      profile: data.profile,
+      banner: data.banner,
+      apikey: data.apikey
+    };
+    for (const key in body) {
+      if (
+        body[key] === null ||
+        body[key] === undefined ||
+        body[key] === "" ||
+        body[key] === "null"
+      ) {
+        delete body[key];
+      }
+    }
+    const response = await fetch("https://api.yydz.biz.id/api/user/edituser", {
+      method: "POST",
+      headers: {
+        "accept": "*/*",
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(body)
     });
-    const res=await r.json();
-    if(r.ok){
-      showToast("success","✅ Update berhasil tersimpan di server!");
-      await fetchAndRenderUser(d.apikey);
-    }else{
-      showToast("error","❌ Gagal: "+(res.message||"Server error"))
-    }
-  }catch(e){
-    console.error(e);
-    showToast("error","❌ Terjadi kesalahan saat mengirim ke server")
+    const res = await response.json();
+    if (!response.ok) throw new Error(res.message || `Server error (${response.status})`);
+    showToast("success", "✅ Update berhasil tersimpan di server!");
+    await fetchAndRenderUser(data.apikey);
+    return res;
+  } catch (error) {
+    console.error("❌ Error saat mengirim edit:", error);
+    showToast("error", "❌ Terjadi kesalahan: " + error.message);
+    return { status: false, error: error.message };
   }
 }
 
-async function fetchAndRenderUser(apikey){
-  try{
-    const r=await fetch("https://api.yydz.biz.id/api/user/getuserinfo?apikey="+encodeURIComponent(apikey));
-    const res=await r.json();
-    if(r.ok && res.data){
-      localStorage.setItem("userData",JSON.stringify(res));
+// === Fetch User Data ===
+async function fetchAndRenderUser(apikey) {
+  try {
+    const r = await fetch("https://api.yydz.biz.id/api/user/getuserinfo?apikey=" + encodeURIComponent(apikey));
+    const res = await r.json();
+    if (r.ok && res.data) {
+      localStorage.setItem("userData", JSON.stringify(res));
       renderUser(res.data);
-    }else{
-      showToast("error","❌ Gagal ambil data user dari server");
+    } else {
+      showToast("error", "❌ Gagal ambil data user dari server");
     }
-  }catch(e){
+  } catch (e) {
     console.error(e);
-    showToast("error","❌ Tidak bisa konek server");
+    showToast("error", "❌ Tidak bisa konek ke server");
   }
 }
 
+// === Format Expire ===
 function formatExpire(expire) {
   if (!expire) return "-";
   const d = new Date(expire);
-  if (isNaN(d)) return expire; 
+  if (isNaN(d)) return expire;
   return d.toLocaleString("id-ID", {
     day: "2-digit", month: "2-digit", year: "numeric",
     hour: "2-digit", minute: "2-digit", second: "2-digit"
   });
 }
 
-function renderUser(user){
-  const profilePic=document.getElementById("profilePic"),
-        bannerImg=document.getElementById("bannerImg"),
-        profileInfo=document.getElementById("profileInfo");
+// === Render User Data ===
+function renderUser(user) {
+  const profilePic = document.getElementById("profilePic");
+  const bannerImg = document.getElementById("bannerImg");
+  const profileInfo = document.getElementById("profileInfo");
 
-  if(profilePic) profilePic.src=user.profile||"https://cdn.yupra.my.id/yp/jh9sycv3.jpg";
-  if(bannerImg) bannerImg.src=user.banner||"https://cdn.yupra.my.id/yp/m01x45f7.jpg";
+  if (profilePic) profilePic.src = user.profile || "https://cdn.yupra.my.id/yp/jh9sycv3.jpg";
+  if (bannerImg) bannerImg.src = user.banner || "https://cdn.yupra.my.id/yp/m01x45f7.jpg";
 
-  function createRow(icon,label,value,editable=false,id=""){
+  function createRow(icon, label, value, editable = false, id = "") {
     return editable
-      ? `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><input type="text" class="info-value editable" id="${id}" value="${value||''}"/><button class="edit-btn" data-target="${id}" title="Simpan"><i class="fa-solid fa-floppy-disk"></i></button></div>`
-      : `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span><span class="info-value">${value||"-"}</span></div>`;
+      ? `<div class="info-row">
+           <i class="${icon}"></i><span class="info-label">${label}:</span>
+           <input type="text" class="info-value editable" id="${id}" value="${value || ''}"/>
+           <button class="edit-btn" data-target="${id}" title="Simpan"><i class="fa-solid fa-floppy-disk"></i></button>
+         </div>`
+      : `<div class="info-row"><i class="${icon}"></i><span class="info-label">${label}:</span>
+         <span class="info-value">${value || "-"}</span></div>`;
   }
 
-  profileInfo.innerHTML=`
-    ${createRow("fa-solid fa-envelope","Email",user.email)}
-    ${createRow("fa-solid fa-key","API Key",user.apikey,user.role==="Premium","apikeyInput")}
-    ${createRow("fa-solid fa-gauge","Limit",user.limit)}
-    ${createRow("fa-solid fa-clock","Expired",formatExpire(user.expire))}
-    ${createRow("fa-solid fa-user-gear","Role",user.role)}
+  profileInfo.innerHTML = `
+    ${createRow("fa-solid fa-envelope", "Email", user.email)}
+    ${createRow("fa-solid fa-key", "API Key", user.apikey, user.role === "Premium", "apikeyInput")}
+    ${createRow("fa-solid fa-gauge", "Limit", user.limit)}
+    ${createRow("fa-solid fa-clock", "Expired", formatExpire(user.expire))}
+    ${createRow("fa-solid fa-user-gear", "Role", user.role)}
   `;
 
-  // === sisanya biarkan sama ===
-  document.querySelectorAll(".edit-btn").forEach(btn=>{
-    btn.addEventListener("click",async()=>{
-      const tid=btn.getAttribute("data-target"),
-            input=document.getElementById(tid);
-      if(!input)return;
-      const newValue=input.value.trim();
-      if(!newValue){showToast("error","❌ Nilai tidak boleh kosong!");return}
-      const field=tid.replace("Input","");
-      user[field]=newValue;
-      localStorage.setItem("userData",JSON.stringify({data:user}));
-      await sendEditToAPI({apikey:user.apikey,[field]:newValue,role:user.role});
+  // === Event: Edit API Key ===
+  document.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const tid = btn.getAttribute("data-target");
+      const input = document.getElementById(tid);
+      if (!input) return;
+      const newValue = input.value.trim();
+      if (!newValue) return showToast("error", "❌ Nilai tidak boleh kosong!");
+      const field = tid.replace("Input", "");
+      user[field] = newValue;
+      localStorage.setItem("userData", JSON.stringify({ data: user }));
+      await sendEditToAPI({ email: user.email, apikey: user.apikey, [field]: newValue });
     });
   });
 
-  function handleImageEdit(el,prop){
-    if(!el)return;
-    el.addEventListener("click",async()=>{
-      const url=prompt(`Masukkan URL ${prop}:`,el.src);
-      if(url){
-        el.src=url;user[prop]=url;
-        localStorage.setItem("userData",JSON.stringify({data:user}));
-        showToast("success",`✅ ${prop} diperbarui!`);
-        await sendEditToAPI({apikey:user.apikey,[prop]:url,role:user.role});
+  // === Event: Edit Gambar (Profile & Banner) ===
+  const handleImageEdit = (el, prop) => {
+    if (!el) return;
+    el.addEventListener("click", async () => {
+      const url = prompt(`Masukkan URL ${prop}:`, el.src);
+      if (url) {
+        el.src = url;
+        user[prop] = url;
+        localStorage.setItem("userData", JSON.stringify({ data: user }));
+        showToast("success", `✅ ${prop} diperbarui!`);
+        await sendEditToAPI({ email: user.email, apikey: user.apikey, [prop]: url });
       }
     });
-  }
-  handleImageEdit(profilePic,"profile");
-  handleImageEdit(bannerImg,"banner");
+  };
+  handleImageEdit(profilePic, "profile");
+  handleImageEdit(bannerImg, "banner");
 }
 
+// === Page Load Logic ===
 document.addEventListener("DOMContentLoaded", () => {
   const savedUser = localStorage.getItem("userData");
   if (!savedUser) {
     showToast("error", "❌ Anda belum login!");
-    setTimeout(() => window.location.href = "login.html", 1500);
+    setTimeout(() => (window.location.href = "login.html"), 1500);
     return;
   }
 
@@ -197,23 +287,20 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("❌ Error parsing userData:", e);
     localStorage.removeItem("userData");
     showToast("error", "❌ Data login korup, silakan login ulang!");
-    setTimeout(() => window.location.href = "login.html", 1500);
+    setTimeout(() => (window.location.href = "login.html"), 1500);
     return;
   }
 
-  const user = (userData?.data && Object.keys(userData.data).length > 0) ? userData.data : userData;
-
+  const user = userData?.data && Object.keys(userData.data).length > 0 ? userData.data : userData;
   renderUser(user);
-  if (user?.apikey) {
-    fetchAndRenderUser(user.apikey);
-  } else {
-    console.warn("⚠️ API key tidak ditemukan di user data");
-  }
+
+  if (user?.apikey) fetchAndRenderUser(user.apikey);
+  else console.warn("⚠️ API key tidak ditemukan di user data");
 
   document.getElementById("logoutBtn")?.addEventListener("click", () => {
     localStorage.removeItem("userData");
     showToast("success", "✅ Logout berhasil!");
-    setTimeout(() => window.location.href = "login.html", 1000);
+    setTimeout(() => (window.location.href = "login.html"), 1000);
   });
 
   document.getElementById("checkEndpointBtn")?.addEventListener("click", () => {

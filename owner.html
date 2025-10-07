@@ -200,8 +200,8 @@ const actionSelect = document.getElementById("action");
 const dynamicFields = document.getElementById("dynamicFields");
 
 const fieldTemplates = {
-  targetKey: { label: "API Key", type: "text", id: "targetKey" },
-  newKey: { label: "New API Key", type: "text", id: "newKey" },
+  targetKey: { label: "APIKey", type: "text", id: "targetKey" },
+  newKey: { label: "New APIKey", type: "text", id: "newKey" },
   email: { label: "Email", type: "email", id: "email" },
   password: { label: "Password", type: "password", id: "password" },
   deviceId: { label: "Device ID", type: "text", id: "deviceId" },
@@ -296,7 +296,7 @@ document.getElementById("submitBtn").addEventListener("click", async ()=>{
       responseEl.textContent = "❌ Error: key wajib diisi";
       return;
     }
-    url += "?key="+encodeURIComponent(getVal("targetKey"));
+    url += "?apikey="+encodeURIComponent(getVal("targetKey"));
   }
 
   if(action==="updatecollection"){
