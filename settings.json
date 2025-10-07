@@ -1463,6 +1463,27 @@
       "name": "TOOLS",
       "items": [
         {
+  "name": "JavaScript Obfuscator",
+  "desc": "Menyamarkan (encode) kode JavaScript menjadi bentuk yang sulit dibaca menggunakan berbagai level obfuscation. Proses dilakukan via URL request.",
+  "path": "/api/tools/obfuscate?url=&type=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL berisi kode JavaScript yang ingin diobfuscate (contoh: https://example.com/script.js atau raw JS code yang diencode dalam URL)",
+    "type": "Level obfuscation yang diinginkan (pilihan: low, medium, hard, extreme)",
+    "apikey": "Input API key kamu"
+  }
+},
+        {
+  "name": "JavaScript Deobfuscator",
+  "desc": "Menguraikan atau mendekripsi code js yang telah diobfuscate, serta menampilkan nilai asli",
+  "path": "/api/tools/deobfuscate?url=&apikey=",
+  "status": "ready",
+  "params": {
+    "url": "Masukkan URL file js yang ingin dideobfuscate (contoh: https://yydz.biz.id/getFile.js)",
+    "apikey": "Input API key kamu"
+  }
+},
+        {
   "name": "Kodepos Finder",
   "desc": "Mencari informasi kodepos berdasarkan nama daerah atau kodepos menggunakan layanan resmi Pos Indonesia.",
   "path": "/api/tools/kodepos?q=&apikey=",
