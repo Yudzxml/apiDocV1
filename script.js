@@ -310,17 +310,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  const loadNotifications = async () => {
-    try {
-      const response = await fetch("/notifications.json")
-      if (!response.ok) throw new Error(`Failed to load notifications: ${response.status}`)
-      allNotifications = await response.json()
-      updateNotificationBadge()
-    } catch (error) {
-      console.error("Error loading notifications:", error)
-    }
-  }
-
   const showSponsorModal = () => {
     if (!sponsorSettings.enabled || !sponsorSettings.sponsors) return
 
@@ -415,68 +404,89 @@ document.addEventListener("DOMContentLoaded", async () => {
       }, sponsorSettings.showInterval)
     }
   }
+  
 
-  const getSessionReadNotificationIds = () => {
-    const ids = sessionStorage.getItem("sessionReadNotificationIds")
-    return ids ? JSON.parse(ids) : []
+const loadNotifications = async () => {
+  try {
+    const response = await fetch("/notifications.json");
+    if (!response.ok) throw new Error(`Failed to load notifications: ${response.status}`);
+    allNotifications = await response.json();
+    updateNotificationBadge();
+  } catch (error) {
+    console.error("Error loading notifications:", error);
+  }
+};
+
+const getSessionReadNotificationIds = () => {
+  const ids = sessionStorage.getItem("sessionReadNotificationIds");
+  return ids ? JSON.parse(ids) : [];
+};
+
+const addSessionReadNotificationId = (id) => {
+  const ids = getSessionReadNotificationIds();
+  if (!ids.includes(id)) {
+    ids.push(id);
+    sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids));
+  }
+};
+
+const updateNotificationBadge = () => {
+  if (!DOM?.notificationBadge || !Array.isArray(allNotifications) || !allNotifications.length) {
+    DOM?.notificationBadge?.classList.remove("active");
+    return;
   }
 
-  const addSessionReadNotificationId = (id) => {
-    const ids = getSessionReadNotificationIds()
-    if (!ids.includes(id)) {
-      ids.push(id)
-      sessionStorage.setItem("sessionReadNotificationIds", JSON.stringify(ids))
-    }
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sessionReadIds = getSessionReadNotificationIds();
+
+  // Filter notifikasi yang belum dibaca
+  const unreadNotifications = allNotifications.filter((notif) => {
+    const notifDate = new Date(notif.date.split("-").reverse().join("-")); // dd-mm-yyyy → yyyy-mm-dd
+    notifDate.setHours(0, 0, 0, 0);
+    return !sessionReadIds.includes(notif.id) && notifDate <= today;
+  });
+
+  if (unreadNotifications.length > 0) {
+    DOM.notificationBadge.classList.add("active");
+    DOM.notificationBell?.setAttribute(
+      "aria-label",
+      `Notifications (${unreadNotifications.length} unread)`
+    );
+  } else {
+    DOM.notificationBadge.classList.remove("active");
+    DOM.notificationBell?.setAttribute("aria-label", "No new notifications");
+  }
+};
+
+const handleNotificationBellClick = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const sessionReadIds = getSessionReadNotificationIds();
+
+  const notificationsToShow = allNotifications.filter((notif) => {
+    const notifDate = new Date(notif.date.split("-").reverse().join("-")); // dd-mm-yyyy → yyyy-mm-dd
+    notifDate.setHours(0, 0, 0, 0);
+    return !sessionReadIds.includes(notif.id) && notifDate <= today;
+  });
+
+  if (notificationsToShow.length > 0) {
+    notificationsToShow.forEach((notif) => {
+      showToast(
+        notif.message,
+        "notification",
+        `Notification (${new Date(notif.date.split("-").reverse().join("-")).toLocaleDateString("en-US")})`
+      );
+      addSessionReadNotificationId(notif.id);
+    });
+  } else {
+    showToast("No new notifications at this time.", "info");
   }
 
-  const updateNotificationBadge = () => {
-    if (!DOM.notificationBadge || !allNotifications.length) {
-      if (DOM.notificationBadge) DOM.notificationBadge.classList.remove("active")
-      return
-    }
-
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-
-    const sessionReadIds = getSessionReadNotificationIds()
-
-    const unreadNotifications = allNotifications.filter((notif) => {
-      const notificationDate = new Date(notif.date)
-      notificationDate.setHours(0, 0, 0, 0)
-      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-    })
-
-    if (unreadNotifications.length > 0) {
-      DOM.notificationBadge.classList.add("active")
-      DOM.notificationBell.setAttribute("aria-label", `Notifications (${unreadNotifications.length} unread)`)
-    } else {
-      DOM.notificationBadge.classList.remove("active")
-      DOM.notificationBell.setAttribute("aria-label", "No new notifications")
-    }
-  }
-
-  const handleNotificationBellClick = () => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    const sessionReadIds = getSessionReadNotificationIds()
-
-    const notificationsToShow = allNotifications.filter((notif) => {
-      const notificationDate = new Date(notif.date)
-      notificationDate.setHours(0, 0, 0, 0)
-      return !notif.read && notificationDate <= today && !sessionReadIds.includes(notif.id)
-    })
-
-    if (notificationsToShow.length > 0) {
-      notificationsToShow.forEach((notif) => {
-        showToast(notif.message, "notification", `Notification (${new Date(notif.date).toLocaleDateString("en-US")})`)
-        addSessionReadNotificationId(notif.id)
-      })
-    } else {
-      showToast("No new notifications at this time.", "info")
-    }
-
-    updateNotificationBadge()
-  }
+  updateNotificationBadge();
+};
 
   const init = async () => {
     setupEventListeners()
