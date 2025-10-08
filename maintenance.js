@@ -4,23 +4,25 @@ async function cekMaintenance() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const api = await response.json();
     const data = api.data;
-    const path = window.location.pathname;
-    const isMaintenancePage = path.endsWith('/maintenance.html');
-    const isOwnerPage = path.endsWith('/owner.html');
-    const isRoot = path === '/' || path === '/index.html';
+    const path = window.location.pathname.replace(/\/$/, '');
+    const isMaintenancePage = path === '/maintenance' || path === '/maintenance.html';
+    const isOwnerPage = path === '/owner' || path === '/owner.html';
+    const isRoot = path === '' || path === '/' || path === '/index.html';
     const formatTanggal = (iso) => {
+      if (!iso) return '-';
       const d = new Date(iso);
-      return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+      const pad = (n) => n.toString().padStart(2, '0');
+      return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
     }
     if (data.maintenance === true && !isMaintenancePage && !isOwnerPage) {
-      window.location.href = '/maintenance.html';
+      window.location.href = '/maintenance';
       return;
     }
     if (data.maintenance === false && isMaintenancePage) {
       window.location.href = '/';
       return;
     }
-    console.log(`✅ Status Maintenance: ${data.maintenance ? 'Aktif' : 'Non-aktif'} | Tanggal: ${data.date ? formatTanggal(data.date) : '-'} | Path: ${path}`);
+    console.log(`✅ Status Maintenance: ${data.maintenance ? 'Aktif' : 'Non-aktif'} | Tanggal: ${formatTanggal(data.date)} | Path: ${path}`);
   } catch (error) {
     console.warn('⚠️ Tidak bisa memeriksa status maintenance:', error);
   }
