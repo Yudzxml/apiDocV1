@@ -426,7 +426,9 @@
       const json = await res.json();
 
       if (mode === "register") {
-        if (!json.message) throw new Error("Registrasi gagal tanpa pesan.");
+        if (!json.message || json.error) {
+          throw new Error(json.error || "Registrasi gagal tanpa pesan.");
+        }
         showToast("success", json.message);
 
         cardContent.innerHTML = `
