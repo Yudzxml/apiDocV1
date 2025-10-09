@@ -16,6 +16,18 @@ module.exports = async function handler(req, res) {
     if (!email || !password) {
       return res.status(400).json({ error: "Email & password wajib diisi" });
     }
+    
+    async function cekEmailTerdaftar(email) {
+  const response = await fetch(`https://api.yydz.biz.id/api/user/cekemail?email=${email}`);
+  if (!response.ok) throw new Error("Gagal cek email");
+  const { data } = await response.json();
+  return data?.exists === true;
+}
+    
+    if (await cekEmailTerdaftar(email)) {
+      return res.status(400).json({ error: "Email Sudah Terdaftar" });
+    }
+    
 
     // ✅ Generate token valid 1 jam
     const payload = { email, password, deviceId };
