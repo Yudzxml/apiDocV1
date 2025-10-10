@@ -292,6 +292,7 @@ let mode = "login";
 let deviceId = null;
 let cooldownTimer;
 
+// Load FingerprintJS untuk deviceId
 FingerprintJS.load().then(fp => {
   fp.get().then(result => deviceId = result.visitorId);
 });
@@ -304,23 +305,22 @@ const switchText = document.getElementById("switchText");
 const togglePassword = document.getElementById("togglePassword");
 const passwordInput = document.getElementById("password");
 
+// Saat halaman dimuat
 document.addEventListener("DOMContentLoaded", () => {
   const savedUser = localStorage.getItem("userData");
-  if (savedUser) {
-    window.location.href = "profile.html";
-  }
+  if (savedUser) window.location.href = "profile.html";
 
   cardContent.classList.add("first-load");
   setTimeout(() => cardContent.classList.remove("first-load"), 600);
 
   const cooldown = localStorage.getItem("registerCooldown");
-  if (cooldown && Date.now() < parseInt(cooldown)) {
-    startCountdown(parseInt(cooldown));
-  }
+  if (cooldown && Date.now() < parseInt(cooldown)) startCountdown(parseInt(cooldown));
 });
 
+// Toast function
 function showToast(type, msg) {
   const container = document.getElementById("toast-container");
+  if (!container) return;
   const toast = document.createElement("div");
   toast.className = "toast " + type;
   toast.innerHTML = msg;
@@ -328,6 +328,7 @@ function showToast(type, msg) {
   setTimeout(() => toast.remove(), 5000);
 }
 
+// Toggle password visibility
 togglePassword.addEventListener("click", () => {
   togglePassword.classList.add("animate");
   setTimeout(() => {
@@ -339,6 +340,7 @@ togglePassword.addEventListener("click", () => {
   }, 100);
 });
 
+// Switch login/register
 switchLink.addEventListener("click", (e) => {
   e.preventDefault();
   cardContent.classList.add("animate-out");
@@ -363,6 +365,7 @@ switchLink.addEventListener("click", (e) => {
   }, 300);
 });
 
+// Countdown untuk register cooldown
 function startCountdown(targetTime) {
   clearInterval(cooldownTimer);
 
@@ -387,8 +390,12 @@ function startCountdown(targetTime) {
   }, 1000);
 }
 
+// Submit form login/register
 authForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  const submitBtn = authForm.querySelector("button");
+  const originalBtnText = submitBtn.querySelector("span").textContent;
 
   const cooldown = localStorage.getItem("registerCooldown");
   if (mode === "register" && cooldown && Date.now() < parseInt(cooldown)) {
@@ -398,7 +405,6 @@ authForm.addEventListener("submit", async (e) => {
 
   const email = document.getElementById("email").value.trim();
   const password = passwordInput.value.trim();
-
   if (!email || !password) {
     showToast("error", "❌ Email & password wajib diisi");
     return;
@@ -407,6 +413,11 @@ authForm.addEventListener("submit", async (e) => {
   const bodyData = { email, password, deviceId };
 
   try {
+    // Disable tombol & tambah animasi loading
+    submitBtn.disabled = true;
+    submitBtn.querySelector("span").textContent = mode === "register" ? "Register..." : "Login...";
+    submitBtn.classList.add("loading");
+
     let url = mode === "register" ? "/api/register" : "https://api.yydz.biz.id/api/user/login";
     const res = await fetch(url, {
       method: "POST",
@@ -428,7 +439,7 @@ authForm.addEventListener("submit", async (e) => {
         </div>
       `;
 
-      const cooldownTime = Date.now() + (2 * 60 * 1000);
+      const cooldownTime = Date.now() + 2 * 60 * 1000; // 2 menit
       localStorage.setItem("registerCooldown", cooldownTime);
       startCountdown(cooldownTime);
 
@@ -440,8 +451,41 @@ authForm.addEventListener("submit", async (e) => {
     }
   } catch (err) {
     showToast("error", "❌ Error: " + (err.message || err.error || "Terjadi kesalahan tak terduga."));
+  } finally {
+    // Tambah delay 3 detik sebelum enable tombol lagi
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.querySelector("span").textContent = originalBtnText;
+      submitBtn.classList.remove("loading");
+    }, 3000); // 3 detik
   }
 });
 </script>
+
+<style>
+/* Tombol loading spinner */
+button.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+button.loading::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+</style>
 </body>
 </html>
