@@ -288,172 +288,160 @@
   </script>
 
 <script>
-  let mode = "login";
-  let deviceId = null;
-  let cooldownTimer;
+let mode = "login";
+let deviceId = null;
+let cooldownTimer;
 
-  FingerprintJS.load().then(fp => {
-    fp.get().then(result => deviceId = result.visitorId);
-  });
+FingerprintJS.load().then(fp => {
+  fp.get().then(result => deviceId = result.visitorId);
+});
 
-  const cardContent = document.getElementById("cardContent");
-  const formTitle = document.getElementById("formTitle");
-  const authForm = document.getElementById("authForm");
-  const switchLink = document.getElementById("switchLink");
-  const switchText = document.getElementById("switchText");
-  const togglePassword = document.getElementById("togglePassword");
-  const passwordInput = document.getElementById("password");
+const cardContent = document.getElementById("cardContent");
+const formTitle = document.getElementById("formTitle");
+const authForm = document.getElementById("authForm");
+const switchLink = document.getElementById("switchLink");
+const switchText = document.getElementById("switchText");
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("password");
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const savedUser = localStorage.getItem("userData");
-    if (savedUser) {
-      window.location.href = "profile.html";
-    }
-    cardContent.classList.add("first-load");
-    setTimeout(() => cardContent.classList.remove("first-load"), 600);
-
-    const cooldown = localStorage.getItem("registerCooldown");
-    if (cooldown && Date.now() < parseInt(cooldown)) {
-      startCountdown(parseInt(cooldown));
-    }
-  });
-
-  function showToast(type, msg) {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = "toast " + type;
-    toast.innerHTML = msg;
-    container.appendChild(toast);
-    setTimeout(() => toast.remove(), 5000);
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUser = localStorage.getItem("userData");
+  if (savedUser) {
+    window.location.href = "profile.html";
   }
 
-  togglePassword.addEventListener("click", () => {
-    togglePassword.classList.add("animate");
-    setTimeout(() => {
-      const isPassword = passwordInput.type === "password";
-      passwordInput.type = isPassword ? "text" : "password";
-      togglePassword.classList.toggle("fa-eye");
-      togglePassword.classList.toggle("fa-eye-slash");
-      togglePassword.classList.remove("animate");
-    }, 100);
-  });
+  cardContent.classList.add("first-load");
+  setTimeout(() => cardContent.classList.remove("first-load"), 600);
 
-  switchLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    cardContent.classList.add("animate-out");
+  const cooldown = localStorage.getItem("registerCooldown");
+  if (cooldown && Date.now() < parseInt(cooldown)) {
+    startCountdown(parseInt(cooldown));
+  }
+});
 
-    setTimeout(() => {
-      if (mode === "login") {
-        mode = "register";
-        formTitle.innerHTML = '<i class="fa-solid fa-user-plus"></i> Register';
-        authForm.querySelector("button span").textContent = "Register";
-        switchText.textContent = "Sudah punya akun?";
-        switchLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login Sekarang';
-      } else {
-        mode = "login";
-        formTitle.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
-        authForm.querySelector("button span").textContent = "Login";
-        switchText.textContent = "Belum punya akun?";
-        switchLink.innerHTML = '<i class="fa-solid fa-user-plus"></i> Daftar Sekarang';
-      }
-      cardContent.classList.remove("animate-out");
-      cardContent.classList.add("animate-in");
-      setTimeout(() => cardContent.classList.remove("animate-in"), 300);
-    }, 300);
-  });
+function showToast(type, msg) {
+  const container = document.getElementById("toast-container");
+  const toast = document.createElement("div");
+  toast.className = "toast " + type;
+  toast.innerHTML = msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+}
 
-  function startCountdown(targetTime) {
-    clearInterval(cooldownTimer);
+togglePassword.addEventListener("click", () => {
+  togglePassword.classList.add("animate");
+  setTimeout(() => {
+    const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+    togglePassword.classList.remove("animate");
+  }, 100);
+});
 
-    let countdownEl = document.querySelector(".countdown");
-    if (!countdownEl) {
-      countdownEl = document.createElement("div");
-      countdownEl.className = "countdown";
-      cardContent.appendChild(countdownEl);
+switchLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  cardContent.classList.add("animate-out");
+
+  setTimeout(() => {
+    if (mode === "login") {
+      mode = "register";
+      formTitle.innerHTML = '<i class="fa-solid fa-user-plus"></i> Register';
+      authForm.querySelector("button span").textContent = "Register";
+      switchText.textContent = "Sudah punya akun?";
+      switchLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login Sekarang';
+    } else {
+      mode = "login";
+      formTitle.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
+      authForm.querySelector("button span").textContent = "Login";
+      switchText.textContent = "Belum punya akun?";
+      switchLink.innerHTML = '<i class="fa-solid fa-user-plus"></i> Daftar Sekarang';
     }
+    cardContent.classList.remove("animate-out");
+    cardContent.classList.add("animate-in");
+    setTimeout(() => cardContent.classList.remove("animate-in"), 300);
+  }, 300);
+});
 
-    cooldownTimer = setInterval(() => {
-      const remaining = targetTime - Date.now();
-      if (remaining <= 0) {
-        clearInterval(cooldownTimer);
-        countdownEl.textContent = "✅ Anda bisa register lagi sekarang.";
-        localStorage.removeItem("registerCooldown");
-      } else {
-        const minutes = Math.floor(remaining / 60000);
-        const seconds = Math.floor((remaining % 60000) / 1000);
-        countdownEl.textContent = `⏳ Tunggu ${minutes}m ${seconds}s sebelum register lagi.`;
-      }
-    }, 1000);
+function startCountdown(targetTime) {
+  clearInterval(cooldownTimer);
+
+  let countdownEl = document.querySelector(".countdown");
+  if (!countdownEl) {
+    countdownEl = document.createElement("div");
+    countdownEl.className = "countdown";
+    cardContent.appendChild(countdownEl);
   }
 
-  authForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // cek cooldown sebelum submit
-    const cooldown = localStorage.getItem("registerCooldown");
-    if (mode === "register" && cooldown && Date.now() < parseInt(cooldown)) {
-      showToast("error", "⏳ Anda masih dalam masa tunggu sebelum bisa register lagi.");
-      return;
+  cooldownTimer = setInterval(() => {
+    const remaining = targetTime - Date.now();
+    if (remaining <= 0) {
+      clearInterval(cooldownTimer);
+      countdownEl.textContent = "✅ Anda bisa register lagi sekarang.";
+      localStorage.removeItem("registerCooldown");
+    } else {
+      const minutes = Math.floor(remaining / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+      countdownEl.textContent = `⏳ Tunggu ${minutes}m ${seconds}s sebelum register lagi.`;
     }
+  }, 1000);
+}
 
-    const email = document.getElementById("email").value.trim();
-    const password = passwordInput.value.trim();
+authForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      showToast("error", "❌ Email & password wajib diisi");
-      return;
-    }
+  const cooldown = localStorage.getItem("registerCooldown");
+  if (mode === "register" && cooldown && Date.now() < parseInt(cooldown)) {
+    showToast("error", "⏳ Anda masih dalam masa tunggu sebelum bisa register lagi.");
+    return;
+  }
 
-    let bodyData = { email, password };
+  const email = document.getElementById("email").value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    showToast("error", "❌ Email & password wajib diisi");
+    return;
+  }
+
+  const bodyData = { email, password, deviceId };
+
+  try {
+    let url = mode === "register" ? "/api/register" : "https://api.yydz.biz.id/api/user/login";
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyData)
+    });
+
+    const json = await res.json();
+
     if (mode === "register") {
-      bodyData.deviceId = deviceId;
+      if (!json.message || json.error) throw new Error(json.error || "Registrasi gagal tanpa pesan.");
+      showToast("success", json.message);
+
+      cardContent.innerHTML = `
+        <div class="success-box">
+          <h2>🎉 Registrasi Berhasil!</h2>
+          <p>${json.message}</p>
+          <div id="cooldownBox" class="countdown"></div>
+        </div>
+      `;
+
+      const cooldownTime = Date.now() + (2 * 60 * 1000);
+      localStorage.setItem("registerCooldown", cooldownTime);
+      startCountdown(cooldownTime);
+
+    } else {
+      if (json.status !== 200) throw new Error(json.error || "Gagal login");
+      localStorage.setItem("userData", JSON.stringify(json.data));
+      showToast("success", "✅ Login sukses, redirect...");
+      setTimeout(() => window.location.href = "profile.html", 1200);
     }
-
-    try {
-      let url = "";
-      if (mode === "register") {
-        url = "/api/register";
-      } else {
-        url = `https://api.yydz.biz.id/api/user/login`;
-      }
-
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bodyData)
-      });
-
-      const json = await res.json();
-
-      if (mode === "register") {
-        if (!json.message || json.error) {
-          throw new Error(json.error || "Registrasi gagal tanpa pesan.");
-        }
-        showToast("success", json.message);
-
-        cardContent.innerHTML = `
-          <div class="success-box">
-            <h2>🎉 Registrasi Berhasil!</h2>
-            <p>${json.message}</p>
-            <div id="cooldownBox" class="countdown"></div>
-          </div>
-        `;
-
-        // cooldown 2 menit (120 detik)
-        const cooldownTime = Date.now() + (2 * 60 * 1000);
-        localStorage.setItem("registerCooldown", cooldownTime);
-        startCountdown(cooldownTime);
-
-      } else {
-        if (json.status !== 200) throw new Error(json.error || "Gagal login");
-        localStorage.setItem("userData", JSON.stringify(json.data));
-        showToast("success", "✅ Login sukses, redirect...");
-        setTimeout(() => window.location.href = "profile.html", 1200);
-      }
-    } catch (err) {
-      showToast("error", "❌ Error: " + (err.message || err.error || "Terjadi kesalahan tak terduga."));
-    }
-  });
+  } catch (err) {
+    showToast("error", "❌ Error: " + (err.message || err.error || "Terjadi kesalahan tak terduga."));
+  }
+});
 </script>
 </body>
 </html>

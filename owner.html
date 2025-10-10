@@ -2,328 +2,163 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YUDZ API'S MANAGER</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --primary-color: #6c5ce7;
-  --secondary-color: #a29bfe;
-  --accent-color: #00cec9;
-  --background-color: #f4f6ff;
-  --card-background: #ffffff;
-  --text-color: #2c3e50;
-  --text-muted: #7f8c8d;
-  --border-color: rgba(0,0,0,0.1);
-  --highlight-color: rgba(108,92,231,0.1);
-  --shadow: 0 8px 20px rgba(0,0,0,0.08);
-  --hover-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  --border-radius: 12px;
-  --border-radius-lg: 20px;
-  --transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
-  --hover-transform: translateY(-4px);
-  --space-sm: 12px;
-  --space-md: 18px;
-  --space-lg: 28px;
-  --space-xl: 36px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: "Outfit", sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: var(--space-xl) 1rem;
-  margin: 0;
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
 }
-
-#apiKeyManager {
-  width: 100%;
-  max-width: 480px;
-  background: var(--card-background);
-  border-radius: var(--border-radius-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow);
+.card {
+  border-radius: 1rem;
+  border: none;
+  background-color: #1e1e1e;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+}
+.card-body {
+  padding: 2rem;
+}
+.card-title {
+  font-size: 2.2rem;
+  font-weight: 800;
   text-align: center;
-  animation: fadeIn 0.6s ease forwards;
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 900;
-  background: linear-gradient(135deg,var(--primary-color),var(--accent-color));
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: var(--space-lg);
 }
-
-#apiKeyManager label {
-  display: block;
+.form-label {
   font-weight: 600;
-  margin-bottom: var(--space-sm);
+  color: #e0e0e0;
+}
+.form-control, .form-select, textarea {
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.75rem;
   font-size: 0.95rem;
-  text-align: left;
-}
-
-#apiKeyManager input,
-#apiKeyManager select {
-  width: 100%;
-  max-width: 100%;
-  padding: 0.7rem 1rem;
-  margin-bottom: var(--space-md);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: var(--transition);
-  text-align: left;
-  background: linear-gradient(145deg,#f0f2ff,#fff);
-  cursor: pointer;
-}
-
-#apiKeyManager input:focus,
-#apiKeyManager select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--highlight-color);
-  outline: none;
-  transform: translateY(-1px);
-}
-
-#apiKeyManager button {
-  width: 100%;
-  padding: 0.75rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background: linear-gradient(135deg,var(--primary-color),var(--secondary-color));
+  border: 1px solid #444;
+  background-color: #2a2a2a;
   color: #fff;
+  transition: all 0.3s ease;
+}
+.form-control::placeholder, .form-select::placeholder, textarea::placeholder {
+  color: #bbb;
+  opacity: 1;
+}
+.form-control:focus, .form-select:focus, textarea:focus {
+  border-color: #00cec9;
+  box-shadow: 0 0 8px rgba(0, 206, 201, 0.5);
+  outline: none;
+  background-color: #333;
+  color: #fff;
+}
+#submitBtn {
   font-weight: 700;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 6px 16px rgba(108,92,231,0.25);
+  padding: 0.65rem;
+  font-size: 1rem;
+  border-radius: 0.6rem;
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  color: #fff;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-
-#apiKeyManager button:hover {
-  transform: var(--hover-transform);
-  box-shadow: var(--hover-shadow);
+#submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
-
-#apiKeyManager pre {
-  background: #f0f2ff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: var(--space-md);
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  max-height: 280px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.04);
-  text-align: left;
+#submitBtn.loading::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  margin-top: -12px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
-
-#newKeyWrapper,
-#resetOptionWrapper,
-#limitWrapper,
-#expireWrapper {
-  display: none;
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
-
+pre {
+  background-color: #2a2a2a;
+  border-radius: 0.6rem;
+  padding: 1rem;
+  max-height: 320px;
+  overflow: auto;
+  font-size: 0.9rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+h5 {
+  margin-top: 2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.6s forwards;
+}
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px);}
-  to { opacity: 1; transform: translateY(0);}
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* Mobile friendly adjustments */
-@media (max-width: 600px) {
-  #apiKeyManager {
-    padding: var(--space-md);
-  }
-  h1 {
-    font-size: 1.8rem;
-  }
-  #apiKeyManager input,
-  #apiKeyManager select,
-  #apiKeyManager button {
-    font-size: 0.95rem;
-  }
+@media (max-width: 576px) {
+  .card-body { padding: 1.5rem; }
+  .card-title { font-size: 1.6rem; margin-bottom: 1.5rem; }
+  #submitBtn { font-size: 0.95rem; }
 }
 </style>
 </head>
 <body>
-<div id="apiKeyManager">
-  <h1>YUDZ API'S MANAGER</h1>
-
-  <label>Admin Key:</label>
-  <input type="text" id="adminKey" placeholder="Masukkan API key admin">
-
-  <label>Action:</label>
-  <select id="action">
-    <optgroup label="API Keys">
-      <option value="addapikey">Tambah Apikey</option>
-      <option value="delapikey">Hapus Apikey</option>
-      <option value="editapikey">Edit Apikey</option>
-      <option value="checkapikey">Check Apikey</option>
-    </optgroup>
-    <optgroup label="User Management">
-      <option value="register">Register User</option>
-      <option value="login">Login User</option>
-      <option value="edituser">Edit User</option>
-      <option value="getuserinfo">Get User Info</option>
-    </optgroup>
-    <optgroup label="Maintenance">
-      <option value="updatecollection">Update Collection Docs</option>
-    </optgroup>
-    <optgroup label="System">
-      <option value="status">Cek Status Server</option>
-    </optgroup>
-  </select>
-
-  <!-- Dynamic Wrappers -->
-  <div id="dynamicFields"></div>
-
-  <button id="submitBtn">Submit</button>
-
-  <h3>Response:</h3>
-  <pre id="response">Menunggu aksi...</pre>
+<div class="container py-5">
+  <div class="card mx-auto fade-in" style="max-width: 650px;">
+    <div class="card-body">
+      <h1 class="card-title">YUDZ API'S MANAGER</h1>
+      <div class="mb-4 fade-in" style="animation-delay: 0.1s;">
+        <label for="adminKey" class="form-label">Admin Key (Opsional untuk user biasa)</label>
+        <input type="text" class="form-control" id="adminKey" placeholder="Masukkan API key admin jika diperlukan">
+      </div>
+      <div class="mb-4 fade-in" style="animation-delay: 0.2s;">
+        <label for="action" class="form-label">Pilih Aksi</label>
+        <select class="form-select" id="action"></select>
+      </div>
+      <div id="dynamicFields"></div>
+      <button class="btn w-100 mt-3 fade-in" id="submitBtn" style="animation-delay: 0.3s;">Submit</button>
+      <h5 class="fade-in" style="animation-delay: 0.4s;">Response:</h5>
+      <pre id="response" class="fade-in" style="animation-delay: 0.5s;">Menunggu aksi...</pre>
+    </div>
+  </div>
 </div>
-
 <script>
-const responseEl = document.getElementById("response");
-const actionSelect = document.getElementById("action");
-const dynamicFields = document.getElementById("dynamicFields");
-
-const fieldTemplates = {
-  targetKey: { label: "APIKey", type: "text", id: "targetKey" },
-  newKey: { label: "New APIKey", type: "text", id: "newKey" },
-  email: { label: "Email", type: "email", id: "email" },
-  password: { label: "Password", type: "password", id: "password" },
-  deviceId: { label: "Device ID", type: "text", id: "deviceId" },
-  role: { label: "Role", type: "text", id: "role", placeholder:"user / Premium / admin" },
-  profile: { label: "Profile", type: "text", id: "profile" },
-  banner: { label: "Banner", type: "text", id: "banner" },
-  status: { label: "Status", type: "text", id: "status", placeholder:"active / inactive" },
-  limit: { label: "Limit", type: "number", id: "limit", placeholder:"100" },
-  expireDays: { label: "Expire Days", type: "number", id: "expireDays", placeholder:"30" },
-  reset: { label: "Reset Otomatis", type: "checkbox", id: "reset" },
-  collectionName: { label: "Collection Name", type: "text", id: "collectionName" },
-  filterKey: { label: "Filter Key", type: "text", id: "filterKey" },
-  filterValue: { label: "Filter Value", type: "text", id: "filterValue" },
-  updateKey: { label: "Update Key", type: "text", id: "updateKey" },
-  updateValue: { label: "Update Value", type: "text", id: "updateValue" },
-  optionsJson: { label: "Options JSON", type: "text", id: "optionsJson", placeholder:'{"upsert":true}' },
-};
-
-const actionFields = {
-  addapikey: ["targetKey","limit","expireDays","reset"],
-  editapikey: ["targetKey","newKey","limit","expireDays","reset"],
-  delapikey: ["targetKey"],
-  checkapikey: ["targetKey"],
-  getuserinfo: ["targetKey"],
-  register: ["email","password","deviceId"],
-  login: ["email","password"],
-  edituser: ["targetKey","newKey","email","password","role","profile","banner","status"],
-  updatecollection: ["collectionName","filterKey","filterValue","updateKey","updateValue","optionsJson"],
-  status: []
-};
-
-function renderFields() {
-  dynamicFields.innerHTML = "";
-  const selected = actionSelect.value;
-  (actionFields[selected] || []).forEach(fieldName=>{
-    const f = fieldTemplates[fieldName];
-    if(!f) return;
-    const wrapper = document.createElement("div");
-    const label = document.createElement("label");
-    label.textContent = f.label + ":";
-    const input = document.createElement("input");
-    input.type = f.type;
-    input.id = f.id;
-    if(f.placeholder) input.placeholder = f.placeholder;
-    wrapper.appendChild(label);
-    wrapper.appendChild(input);
-    dynamicFields.appendChild(wrapper);
-  });
-}
-actionSelect.addEventListener("change", renderFields);
-renderFields();
-
-document.getElementById("submitBtn").addEventListener("click", async ()=>{
-  const adminKey = document.getElementById("adminKey").value.trim();
-  const action = actionSelect.value;
-  let url = `https://api.yydz.biz.id/api/user/${action}`;
-  let options = { method: "GET", headers: {} };
-
-  if(adminKey) options.headers["x-apikey"] = adminKey;
-
-  const getVal = id => document.getElementById(id)?.value.trim();
-  const checked = id => document.getElementById(id)?.checked;
-
-  // POST body for user management
-  if(["register","login","edituser"].includes(action)){
-    options.method = "POST";
-    options.headers["Content-Type"] = "application/json";
-    const body = {};
-    ["email","password","deviceId","role","profile","banner","status"].forEach(k=>{
-      const val = getVal(k); if(val) body[k] = val;
-    });
-    if(action==="edituser"){
-      if(getVal("targetKey")) body.apikey = getVal("targetKey");
-      if(getVal("newKey")) body.apikey = getVal("newKey");
-    }
-    options.body = JSON.stringify(body);
-  }
-
-  // Keys actions
-  if(["addapikey","editapikey"].includes(action)){
-    let params = [];
-    if(getVal("targetKey")) params.push("key="+encodeURIComponent(getVal("targetKey")));
-    if(getVal("newKey")) params.push("newKey="+encodeURIComponent(getVal("newKey")));
-    if(getVal("limit")) params.push("limit="+getVal("limit"));
-    if(getVal("expireDays")) params.push("expireDays="+getVal("expireDays"));
-    if(checked("reset")) params.push("reset=true");
-    if(params.length) url += "?"+params.join("&");
-  }
-
-  if(["delapikey","checkapikey","getuserinfo"].includes(action)){
-    if(!getVal("targetKey")){
-      responseEl.textContent = "❌ Error: key wajib diisi";
-      return;
-    }
-    url += "?apikey="+encodeURIComponent(getVal("targetKey"));
-  }
-
-  if(action==="updatecollection"){
-    options.method = "POST";
-    options.headers["Content-Type"] = "application/json";
-    try {
-      const body = {
-        collectionName: getVal("collectionName"),
-        filter: getVal("filterKey") ? { [getVal("filterKey")]: getVal("filterValue") } : {},
-        updateData: getVal("updateKey") ? { [getVal("updateKey")]: getVal("updateValue") } : {},
-        options: getVal("optionsJson") ? JSON.parse(getVal("optionsJson")) : {}
-      };
-      options.body = JSON.stringify(body);
-    } catch(e) {
-      responseEl.textContent = "❌ Options JSON tidak valid";
-      return;
-    }
-  }
-
-  try {
-    const res = await fetch(url, options);
-    const data = await res.json();
-    responseEl.textContent = JSON.stringify(data, null, 2);
-  } catch(err) {
-    responseEl.textContent = "❌ Fetch Error: "+err.message;
-  }
-});
+const dynamicFields=document.getElementById("dynamicFields");
+const actionSelect=document.getElementById("action");
+const responseEl=document.getElementById("response");
+const submitBtn=document.getElementById("submitBtn");
+const actions={edituser:"Edit User",editanyuser:"Edit Any User",getuserinfo:"Get User Info",checkapikey:"Check API Key"};
+function populateActionOptions(){actionSelect.innerHTML="";for(let key in actions){const option=document.createElement("option");option.value=key;option.textContent=actions[key];actionSelect.appendChild(option);}}
+function createField(labelText,id,type="text",placeholder=""){const div=document.createElement("div");div.className="mb-3 fade-in";div.style.animationDelay="0.6s";const label=document.createElement("label");label.className="form-label";label.textContent=labelText;label.setAttribute("for",id);div.appendChild(label);const input=document.createElement("input");input.type=type;input.className="form-control";input.id=id;input.placeholder=placeholder;div.appendChild(input);return div;}
+function renderFields(action){dynamicFields.innerHTML="";switch(action){case"edituser":dynamicFields.appendChild(createField("Email:","email","email","user@example.com"));dynamicFields.appendChild(createField("Banner (opsional):","banner"));dynamicFields.appendChild(createField("Profile (opsional):","profile"));dynamicFields.appendChild(createField("API Key (opsional):","apikey"));break;case"editanyuser":dynamicFields.appendChild(createField("Target Email:","targetEmail","email","target@example.com"));["banner","profile","apikey","expired","initlimit","limit","role","password","deviceId"].forEach(field=>{dynamicFields.appendChild(createField(`${field.charAt(0).toUpperCase()+field.slice(1)} (opsional):`,field));});break;case"getuserinfo":dynamicFields.appendChild(createField("Email:","email","email","user@example.com"));dynamicFields.appendChild(createField("Device ID (opsional):","deviceId"));break;case"checkapikey":dynamicFields.appendChild(createField("API Key:","apikey"));break;}}
+actionSelect.addEventListener("change",()=>renderFields(actionSelect.value));
+populateActionOptions();
+renderFields(actionSelect.value);
+async function apiCall(action,data={}){const adminKey=document.getElementById("adminKey").value.trim();try{let url="",options={method:"POST",headers:{"Content-Type":"application/json"},body:null};switch(action){case"edituser":url="https://api.yydz.biz.id/api/user/edituser";options.body=JSON.stringify(data);break;case"editanyuser":url="https://api.yydz.biz.id/api/user/editanyuser";options.headers["x-apikey"]=adminKey;options.body=JSON.stringify(data);break;case"getuserinfo":url=`https://api.yydz.biz.id/api/user/getuserinfo?${new URLSearchParams(data).toString()}`;options.method="GET";options.body=null;break;case"checkapikey":url=`https://api.yydz.biz.id/api/user/cekapikey?${new URLSearchParams(data).toString()}`;options.method="GET";options.body=null;break;default:return{error:"Aksi belum didukung"}}const res=await fetch(url,options);const json=await res.json();if(!res.ok)throw new Error(json.error||"Terjadi kesalahan");return json}catch(err){return{error:err.message}}}
+submitBtn.addEventListener("click",async()=>{responseEl.textContent="Loading...";submitBtn.classList.add("loading");const action=actionSelect.value;let payload={};try{switch(action){case"edituser":payload.email=document.getElementById("email").value;payload.updates={};["banner","profile","apikey"].forEach(id=>{const val=document.getElementById(id).value.trim();if(val)payload.updates[id]=val;});break;case"editanyuser":payload.targetEmail=document.getElementById("targetEmail").value;payload.updates={};["banner","profile","apikey","expired","initlimit","limit","role","password","deviceId"].forEach(id=>{const val=document.getElementById(id).value.trim();if(val)payload.updates[id]=val;});break;case"getuserinfo":payload.email=document.getElementById("email").value;const deviceId=document.getElementById("deviceId").value.trim();if(deviceId)payload.deviceId=deviceId;break;case"checkapikey":payload.apikey=document.getElementById("apikey").value;break;}const result=await apiCall(action,payload);responseEl.textContent=JSON.stringify(result,null,2);}catch(err){responseEl.textContent=`Error: ${err.message}`;}finally{submitBtn.classList.remove("loading");}});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
