@@ -17,16 +17,21 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Email & password wajib diisi" });
     }
     
-    async function cekEmailTerdaftar(email) {
-  const response = await fetch(`https://api.yydz.biz.id/api/user/cekemail?email=${email}`);
-  if (!response.ok) throw new Error("Gagal cek email");
-  const { data } = await response.json();
-  return data?.exists === true;
+    async function cekEmailTerdaftar(email, deviceId) {
+  try {
+    const response = await fetch(`https://api.yydz.biz.id/api/user/getuserinfo?email=${email}&deviceId=${deviceId}`);
+    if (!response.ok) return false;
+
+    const result = await response.json();
+    if (result.error) return false;
+    return !!result.data?.email;
+  } catch {
+    return false;
+  }
 }
-    
-    if (await cekEmailTerdaftar(email)) {
-      return res.status(400).json({ error: "Email Sudah Terdaftar" });
-    }
+if (await cekEmailTerdaftar(email, deviceId)) {
+  return res.status(400).json({ error: "Email Sudah Terdaftar" });
+}
     
 
     // ✅ Generate token valid 1 jam
