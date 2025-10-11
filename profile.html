@@ -181,7 +181,7 @@ async function sendEditToAPI(data) {
     if (!response.ok) throw new Error(res.message || `Server error (${response.status})`);
 
     showToast("success", "✅ Update berhasil tersimpan di server!");
-    if (data.apikey) await fetchAndRenderUser(data.apikey);
+    if (data.email) await fetchAndRenderUser(data.email);
     return res;
   } catch (error) {
     console.error("❌ Error saat mengirim edit:", error);
@@ -288,6 +288,7 @@ function renderUser(user) {
 // === Page Load ===
 document.addEventListener("DOMContentLoaded", () => {
   const savedUser = localStorage.getItem("userData");
+  console.log(savedUser)
   if (!savedUser) {
     showToast("error", "❌ Anda belum login!");
     setTimeout(() => window.location.href = "login.html", 1500);
