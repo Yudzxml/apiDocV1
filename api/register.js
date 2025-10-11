@@ -19,27 +19,34 @@ module.exports = async function handler(req, res) {
     
     async function cekEmailAtauDevice(email, deviceId) {
   try {
-    const response = await fetch(`https://api.yydz.biz.id/api/user/cekemail?email=${email}&deviceId=${deviceId}`);
-    if (!response.ok) return { error: "Gagal menghubungi API" };
+    if (!email && !deviceId) throw new Error("Email atau deviceId wajib diisi");
+
+    const response = await fetch(
+      `https://api.yydz.biz.id/api/user/cekemail?email=${encodeURIComponent(email)}&deviceId=${encodeURIComponent(deviceId)}`
+    );
+
+    if (!response.ok) throw new Error("Gagal menghubungi API");
 
     const result = await response.json();
 
-    if (result.status === 500) return { error: result.error };
-    if (result.status === 200 && result.data === true) return { data: true };
+    if (result.status === 500) throw new Error(result.error || "Terjadi kesalahan server");
 
-    return { error: "Unknown error" };
-  } catch {
-    return { error: "Gagal menghubungi API" };
+    if (result.status === 200) {
+      if (result.data === false) throw new Error(result.error || "Email atau Device ID sudah terdaftar");
+      return true;
+    }
+
+    throw new Error(result.error || "Response API tidak diketahui");
+
+  } catch (e) {
+    return { error: e.message || "Terjadi kesalahan" };
   }
 }
 
-// Contoh penggunaan
 const cek = await cekEmailAtauDevice(email, deviceId);
 if (cek.error) {
   return res.status(400).json({ error: cek.error });
 }
-
-    
 
     // ✅ Generate token valid 1 jam
     const payload = { email, password, deviceId };
