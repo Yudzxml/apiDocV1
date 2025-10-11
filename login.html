@@ -428,7 +428,8 @@ authForm.addEventListener("submit", async (e) => {
     const json = await res.json();
 
     if (mode === "register") {
-      if (!json.message || json.error) throw new Error(json.error || "Registrasi gagal tanpa pesan.");
+      if (!json.message || json.error) { return showToast("error", "⚠️ Ups! Registrasi gagal, email dan perangkat ini sudah digunakan.");
+      }
       showToast("success", json.message);
 
       cardContent.innerHTML = `
