@@ -245,7 +245,7 @@ function renderUser(user) {
 
   profileInfo.innerHTML = `
     ${createRow("fa-solid fa-envelope", "Email", user.email)}
-    ${createRow("fa-solid fa-key", "Apikey", user.apikey, user.role === "Premium", "apikeyInput")}
+    ${createRow("fa-solid fa-key", "Apikey", user.apikey, user.role === "premium", "apikeyInput")}
     ${createRow("fa-solid fa-gauge", "Limit", user.limit)}
     ${createRow("fa-solid fa-clock", "Expired", formatExpire(user.expired))}
     ${createRow("fa-solid fa-user-gear", "Role", user.role)}
