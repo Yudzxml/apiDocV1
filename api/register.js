@@ -17,21 +17,28 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Email & password wajib diisi" });
     }
     
-    async function cekEmailTerdaftar(email, deviceId) {
+    async function cekEmailAtauDevice(email, deviceId) {
   try {
-    const response = await fetch(`https://api.yydz.biz.id/api/user/getuserinfo?email=${email}&deviceId=${deviceId}`);
-    if (!response.ok) return false;
+    const response = await fetch(`https://api.yydz.biz.id/api/user/cekemail?email=${email}&deviceId=${deviceId}`);
+    if (!response.ok) return { error: "Gagal menghubungi API" };
 
     const result = await response.json();
-    if (result.error) return false;
-    return !!result.data?.email;
+
+    if (result.status === 500) return { error: result.error };
+    if (result.status === 200 && result.data === true) return { data: true };
+
+    return { error: "Unknown error" };
   } catch {
-    return false;
+    return { error: "Gagal menghubungi API" };
   }
 }
-if (await cekEmailTerdaftar(email, deviceId)) {
-  return res.status(400).json({ error: "Email Sudah Terdaftar" });
+
+// Contoh penggunaan
+const cek = await cekEmailAtauDevice(email, deviceId);
+if (cek.error) {
+  return res.status(400).json({ error: cek.error });
 }
+
     
 
     // ✅ Generate token valid 1 jam
